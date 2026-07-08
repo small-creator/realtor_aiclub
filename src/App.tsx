@@ -804,7 +804,8 @@ ${smsInputs.agentName}입니다.
               <span className="section-subtitle">HOW TO JOIN</span>
               <h2 className="section-title">중개사 AI 클럽 합류 방법</h2>
               <p className="section-desc">
-                두 가지 합류 방법 중 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
+                우리 클럽은 아무나 활동할 수 없는 <strong style={{ color: '#fff', fontWeight: 600 }}>철저한 '인증제 폐쇄형 플랫폼'으로 운영</strong>됩니다.<br/>
+                <strong style={{ color: '#fff', fontWeight: 600 }}>유일한 두 가지 합류 방법</strong> 중 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
               </p>
             </div>
 
@@ -856,7 +857,8 @@ ${smsInputs.agentName}입니다.
               <span className="section-subtitle">VIBE CODING SIMULATOR</span>
               <h2 className="section-title">정규과정 바이브 코딩 시뮬레이터</h2>
               <p className="section-desc">
-                아래에서 만들고자 하는 자동화 지시어 칩을 선택하고 실행을 클릭하세요. AI가 내부적으로 복잡한 개발 언어로 번역하여 시스템 코드를 생성하는 과정을 시각적으로 체험할 수 있습니다.
+                아래에서 만들고자 하는 자동화 지시어 칩을 선택하고 실행을 클릭보세요.<br/> 
+                우리도 동일한 방식(바이브코딩)으로 나만의 중개업 자동화 프로그램을 만들어요.
               </p>
             </div>
 
@@ -1330,7 +1332,7 @@ ${smsInputs.agentName}입니다.
               <span className="section-subtitle">CREW REVIEWS</span>
               <h2 className="section-title">정규과정 이수 후기</h2>
               <p className="section-desc">
-                막막한 두려움을 안고 출발한 현업 중개사 선배님들이 직접 부딪히며 느낀 솔직한 이야기입니다.
+                막막한 두려움을 안고 출발한 현업 중개사들이 직접 부딪히며 느낀 솔직한 이야기입니다.
               </p>
             </div>
 
@@ -1408,7 +1410,7 @@ ${smsInputs.agentName}입니다.
                 <h2 className="section-title" style={{ fontSize: '32px', margin: 0 }}>중개사AI클럽 정규과정 대기</h2>
                 <p className="section-desc" style={{ marginTop: '12px', fontSize: '16px', lineHeight: '1.6', color: 'var(--color-text-secondary)' }}>
                   현재 정규과정은 조기 마감되었습니다.<br />
-                  다음 크루 추가 모집 공지는 아래 <strong>중개업 자동화 커뮤니티 공식 단톡방</strong>에서 가장 먼저 발표됩니다.
+                  다음 크루 추가 모집 공지는 아래 <strong>중개업 자동화 커뮤니티 공식 단톡방</strong>에서 가장 먼저 공지됩니다.
                 </p>
               </div>
 
