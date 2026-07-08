@@ -597,7 +597,7 @@ ${smsInputs.agentName}입니다.
           <div className="container flex-col items-center gap-6">
             <div className="hero-badge reveal">
               <span className="hero-badge-dot animate-ping" />
-              <span>대한민국 최초의 공인중개사 AI 커뮤니티</span>
+              <span>대한민국 최초 공인중개사 AI 커뮤니티</span>
             </div>
 
             <h1 className="hero-title reveal reveal-delay-1">
