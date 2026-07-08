@@ -915,7 +915,7 @@ ${smsInputs.agentName}입니다.
                       label={isGenerating ? "Vibe Code 빌딩 중..." : "바이브 코드 생성 및 실행 ⚡"}
                       variant="primary"
                       onClick={() => runVibeSimulation(vibePromptType)}
-                      disabled={isGenerating}
+                      isDisabled={isGenerating}
                       style={{ width: '100%', padding: '14px 0' }}
                     />
                   </div>
