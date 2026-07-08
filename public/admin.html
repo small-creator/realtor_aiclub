@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>관리자 | 중개사 AI 클럽</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary": "#8b5cf6",
+        "border": "rgba(255, 255, 255, 0.08)",
+        "muted": "#94a3b8",
+        "grey-700": "#64748b",
+        "on-surface": "#f8fafc",
+        "success": "#10b981",
+        "on-background": "#f8fafc",
+        "secondary-container": "rgba(139, 92, 246, 0.15)",
+        "on-secondary-container": "#c084fc",
+        "surface-container-low": "#0f0f15",
+        "on-secondary": "#ffffff",
+        "surface-container-lowest": "#07070a",
+        "primary": "#06b6d4",
+        "primary-container": "rgba(6, 182, 212, 0.15)",
+        "on-primary": "#ffffff",
+        "error": "#ef4444",
+        "outline-variant": "rgba(255, 255, 255, 0.1)",
+        "surface-container-highest": "#1e1e2f",
+        "surface-dim": "#0c0c12",
+        "inverse-on-surface": "#07070a",
+        "surface-container": "#141420",
+        "canvas": "#07070a",
+        "grey-600": "#94a3b8",
+        "on-surface-variant": "#cbd5e1"
+      },
+      "borderRadius": { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+      "spacing": { "lg": "24px","base": "16px","xxl": "48px","xl": "32px" },
+      "fontFamily": { "body-lg": ["Inter","sans-serif"],"display-lg": ["Plus Jakarta Sans","sans-serif"],"body-md": ["Inter","sans-serif"],"label-sm": ["Inter","sans-serif"],"heading-md": ["Plus Jakarta Sans","sans-serif"],"display-hero": ["Plus Jakarta Sans","sans-serif"] },
+      "fontSize": { "body-lg": ["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg": ["26px",{"lineHeight":"36px","fontWeight":"700"}],"body-md": ["14px",{"lineHeight":"22px","fontWeight":"400"}],"label-sm": ["12px",{"lineHeight":"16px","fontWeight":"500"}],"heading-md": ["20px",{"lineHeight":"28px","fontWeight":"600"}],"display-hero": ["30px",{"lineHeight":"40px","fontWeight":"700"}] }
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; background-color: #07070a; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; vertical-align: middle; }
+.admin-card { background-color: #141420; border: 1px solid rgba(255, 255, 255, 0.06); }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+<header class="bg-canvas/80 backdrop-blur-md border-b border-border fixed top-0 w-full z-50">
+  <nav class="flex justify-between items-center h-20 px-base md:px-xxl max-w-7xl mx-auto w-full">
+    <a href="/" class="font-display-lg text-display-lg text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[28px] text-cyan-400">sparkles</span>
+      <span>중개사 AI 클럽</span>
+    </a>
+    <div class="hidden md:flex items-center gap-xl">
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/">홈페이지</a>
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="news.html">AI 뉴스 &amp; 팁</a>
+      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="admin.html">관리자</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-28 pb-xxl px-base md:px-xxl max-w-5xl mx-auto w-full">
+
+  <div id="login-section" class="hidden flex items-center justify-center min-h-[70vh]">
+    <div class="admin-card rounded-2xl p-xl w-full max-w-md">
+      <div class="text-center mb-xl">
+        <div class="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-lg">
+          <span class="material-symbols-outlined text-cyan-400 text-[32px]" style="font-variation-settings:'FILL' 1;">lock</span>
+        </div>
+        <h1 class="font-display-lg text-2xl font-bold text-on-surface">관리자 로그인</h1>
+        <p class="font-body-md text-body-md text-muted mt-2">게시판 관리를 위해 비밀번호를 입력하세요</p>
+      </div>
+      <div class="space-y-lg">
+        <div>
+          <label class="block text-sm font-semibold text-on-surface mb-2" for="password-input">비밀번호</label>
+          <input id="password-input" type="password" class="w-full bg-[#0f0f15] border border-border rounded-xl px-base py-3 font-body-lg text-body-lg text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none min-h-[44px]" placeholder="관리자 비밀번호 입력">
+        </div>
+        <div id="login-error" class="hidden text-error font-body-md text-body-md bg-red-950/20 border border-red-900/30 rounded-xl px-base py-3"></div>
+        <button id="login-btn" class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-base hover:opacity-90 transition-all min-h-[44px]">로그인</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard-section" class="hidden">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-base mb-xl">
+      <h1 class="font-display-hero text-2xl md:text-3xl font-bold text-on-surface">게시글 관리</h1>
+      <div class="flex gap-base w-full sm:w-auto">
+        <a href="news-write.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-primary text-on-primary px-lg py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-all min-h-[44px]">
+          <span class="material-symbols-outlined">add</span>새 글 작성
+        </a>
+        <button id="logout-btn" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-surface-container border border-border text-grey-700 px-lg py-3 rounded-xl font-bold text-sm hover:bg-opacity-80 transition-all min-h-[44px]">
+          <span class="material-symbols-outlined">logout</span>로그아웃
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-card rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-[#0f0f15] border-b border-border">
+            <tr>
+              <th class="text-left px-lg py-3.5 font-bold text-sm text-on-surface w-16">번호</th>
+              <th class="text-left px-lg py-3.5 font-bold text-sm text-on-surface w-28">카테고리</th>
+              <th class="text-left px-lg py-3.5 font-bold text-sm text-on-surface">제목</th>
+              <th class="text-left px-lg py-3.5 font-bold text-sm text-on-surface w-36 hidden sm:table-cell">작성일</th>
+              <th class="text-center px-lg py-3.5 font-bold text-sm text-on-surface w-36">관리</th>
+            </tr>
+          </thead>
+          <tbody id="posts-table-body" class="divide-y divide-border">
+            <tr><td colspan="5" class="text-center py-xl text-muted font-body-md text-body-md">불러오는 중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="fixed bottom-0 left-0 right-0 bg-canvas/90 backdrop-blur-md border-t border-border flex md:hidden justify-around items-center h-16 z-50">
+  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="/">
+    <span class="material-symbols-outlined">home</span><span class="text-[10px]">홈</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="news.html">
+    <span class="material-symbols-outlined">newspaper</span><span class="text-[10px]">소식</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-primary font-bold min-w-[44px] min-h-[44px] justify-center" href="admin.html">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">person</span><span class="text-[10px]">관리</span>
+  </a>
+</div>
+
+<script src="db.js"></script>
+<script>
+async function renderPosts() {
+  const tbody = document.getElementById('posts-table-body');
+  const posts = await getPosts();
+  if (!posts || posts.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-xl text-muted font-body-md text-body-md">작성된 게시글이 없습니다.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = posts.map((p, i) => {
+    const categoryColor = p.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+    return `
+      <tr class="hover:bg-[#1e1e2f]/20 transition-colors">
+        <td class="px-lg py-4 font-body-md text-body-md text-muted">${posts.length - i}</td>
+        <td class="px-lg py-4">
+          <span class="px-2.5 py-0.5 rounded-full font-label-sm text-[11px] font-bold ${categoryColor}">${escapeHtml(p.category||'')}</span>
+        </td>
+        <td class="px-lg py-4">
+          <a href="news-detail.html?id=${p.id}" class="font-body-md text-body-md text-on-surface hover:text-primary transition-colors line-clamp-1">${escapeHtml(p.title||'')}</a>
+        </td>
+        <td class="px-lg py-4 font-body-md text-body-md text-muted hidden sm:table-cell">${escapeHtml(p.date||'')}</td>
+        <td class="px-lg py-4">
+          <div class="flex items-center justify-center gap-2">
+            <a href="news-write.html?id=${p.id}" class="flex items-center gap-1 px-3 py-1.5 bg-[#0f0f15] border border-border text-on-surface rounded-lg font-label-sm text-xs hover:bg-[#1a1a26] transition-all min-h-[36px]">
+              <span class="material-symbols-outlined text-[16px]">edit</span>수정
+            </a>
+            <button onclick="handleDelete(${p.id}, this)" class="flex items-center gap-1 px-3 py-1.5 bg-red-950/20 border border-red-900/30 text-error rounded-lg font-label-sm text-xs hover:bg-red-900/20 transition-all min-h-[36px]">
+              <span class="material-symbols-outlined text-[16px]">delete</span>삭제
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function handleDelete(id, btn) {
+  if (!confirm('이 게시글을 삭제하시겠습니까?')) return;
+  btn.disabled = true;
+  btn.textContent = '삭제 중...';
+  try {
+    await deletePost(id);
+    await renderPosts();
+  } catch(e) {
+    alert('삭제 실패: ' + e.message);
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">delete</span>삭제';
+  }
+}
+
+async function initPage() {
+  if (isAdmin()) {
+    document.getElementById('login-section').classList.add('hidden');
+    document.getElementById('dashboard-section').classList.remove('hidden');
+    renderPosts();
+  } else {
+    document.getElementById('login-section').classList.remove('hidden');
+    document.getElementById('login-section').classList.add('flex');
+    document.getElementById('dashboard-section').classList.add('hidden');
+  }
+}
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('isAdmin');
+  location.reload();
+});
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const input = document.getElementById('password-input').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = '확인 중...';
+  errEl.classList.add('hidden');
+  try {
+    const cfg = await loadConfig();
+    const pwd = cfg.admin_password || 'admin1234';
+    if (input === pwd) {
+      sessionStorage.setItem('isAdmin', 'true');
+      location.reload();
+    } else {
+      errEl.textContent = '비밀번호가 올바르지 않습니다.';
+      errEl.classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = '로그인';
+    }
+  } catch(e) {
+    errEl.textContent = '오류가 발생했습니다: ' + e.message;
+    errEl.classList.remove('hidden');
+    btn.disabled = false;
+    btn.textContent = '로그인';
+  }
+});
+
+document.getElementById('password-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+
+initPage();
+</script>
+</body>
+</html>

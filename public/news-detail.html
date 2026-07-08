@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>게시글 상세 | 중개사 AI 클럽</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary": "#8b5cf6",
+        "border": "rgba(255, 255, 255, 0.08)",
+        "muted": "#94a3b8",
+        "grey-700": "#64748b",
+        "on-surface": "#f8fafc",
+        "success": "#10b981",
+        "on-background": "#f8fafc",
+        "secondary-container": "rgba(139, 92, 246, 0.15)",
+        "on-secondary-container": "#c084fc",
+        "surface-container-low": "#0f0f15",
+        "on-secondary": "#ffffff",
+        "surface-container-lowest": "#07070a",
+        "primary": "#06b6d4",
+        "primary-container": "rgba(6, 182, 212, 0.15)",
+        "on-primary": "#ffffff",
+        "error": "#ef4444",
+        "outline-variant": "rgba(255, 255, 255, 0.1)",
+        "surface-container-highest": "#1e1e2f",
+        "surface-dim": "#0c0c12",
+        "inverse-on-surface": "#07070a",
+        "surface-container": "#141420",
+        "canvas": "#07070a",
+        "grey-600": "#94a3b8",
+        "on-surface-variant": "#cbd5e1"
+      },
+      "borderRadius": { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+      "spacing": { "lg": "24px","base": "16px","xxl": "48px","xl": "32px" },
+      "fontFamily": { "body-lg": ["Inter","sans-serif"],"display-lg": ["Plus Jakarta Sans","sans-serif"],"body-md": ["Inter","sans-serif"],"label-sm": ["Inter","sans-serif"],"heading-lg": ["Plus Jakarta Sans","sans-serif"],"display-hero": ["Plus Jakarta Sans","sans-serif"],"heading-md": ["Plus Jakarta Sans","sans-serif"] },
+      "fontSize": { "body-lg": ["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg": ["26px",{"lineHeight":"36px","fontWeight":"700"}],"body-md": ["14px",{"lineHeight":"22px","fontWeight":"400"}],"label-sm": ["12px",{"lineHeight":"16px","fontWeight":"500"}],"heading-lg": ["22px",{"lineHeight":"30px","fontWeight":"700"}],"display-hero": ["30px",{"lineHeight":"40px","fontWeight":"700"}],"heading-md": ["20px",{"lineHeight":"28px","fontWeight":"600"}] }
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; background-color: #07070a; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; vertical-align: middle; }
+.detail-card { background-color: #141420; border: 1px solid rgba(255, 255, 255, 0.06); }
+.prose-content { color: #cbd5e1; }
+.prose-content strong { color: #f8fafc; }
+.prose-content h1, .prose-content h2, .prose-content h3 { color: #06b6d4; font-weight: 800; }
+.prose-content p { line-height: 1.8; margin-bottom: 1rem; }
+.prose-content ul, .prose-content ol { margin-bottom: 1rem; }
+</style>
+</head>
+<body class="bg-canvas text-on-surface">
+
+<header class="bg-canvas/80 backdrop-blur-md border-b border-border fixed top-0 w-full z-50">
+  <nav class="flex justify-between items-center h-20 px-base md:px-xxl max-w-7xl mx-auto w-full">
+    <a href="/" class="font-display-lg text-display-lg text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[28px] text-cyan-400">sparkles</span>
+      <span>중개사 AI 클럽</span>
+    </a>
+    <div class="hidden md:flex items-center gap-xl">
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/">홈페이지</a>
+      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="news.html">AI 뉴스 &amp; 팁</a>
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="admin.html">관리자</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-32 pb-xxl px-base md:px-xxl max-w-4xl mx-auto w-full min-h-screen">
+  <div class="mb-lg">
+    <a href="news.html" class="inline-flex items-center gap-2 text-grey-600 hover:text-primary transition-colors font-body-md text-body-md min-h-[44px]">
+      <span class="material-symbols-outlined">arrow_back</span>목록으로 돌아가기
+    </a>
+  </div>
+
+  <article id="post-container" class="detail-card rounded-2xl p-lg md:p-xl">
+    <div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 불러오는 중...</div>
+  </article>
+
+  <div id="admin-actions" class="hidden mt-lg gap-base">
+    <button id="edit-btn" class="flex-1 flex items-center justify-center gap-2 px-lg py-3.5 bg-primary text-on-primary rounded-xl font-heading-md text-base hover:opacity-90 transition-all min-h-[44px]">
+      <span class="material-symbols-outlined">edit</span>수정하기
+    </button>
+    <button id="delete-btn" class="flex-1 flex items-center justify-center gap-2 px-lg py-3.5 bg-error text-white rounded-xl font-heading-md text-base hover:opacity-90 transition-all min-h-[44px]">
+      <span class="material-symbols-outlined">delete</span>삭제하기
+    </button>
+  </div>
+</main>
+
+<footer class="w-full py-xxl px-base md:px-xxl flex flex-col md:flex-row justify-between items-center gap-base bg-surface border-t border-border mt-xxl">
+  <div class="flex flex-col gap-2">
+    <div class="font-heading-md text-heading-md text-grey-700">중개사 AI 클럽</div>
+    <p class="font-body-md text-body-md text-grey-600">&copy; 2026 중개사 AI 클럽. Co-Build · Share · Synergize. 모든 문서 자료는 정예 크루 독점적 자산입니다.</p>
+  </div>
+</footer>
+
+<div class="fixed bottom-0 left-0 right-0 bg-canvas/90 backdrop-blur-md border-t border-border flex md:hidden justify-around items-center h-16 z-50">
+  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="/">
+    <span class="material-symbols-outlined">home</span><span class="text-[10px]">홈</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-primary font-bold min-w-[44px] min-h-[44px] justify-center" href="news.html">
+    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">newspaper</span><span class="text-[10px]">소식</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="admin.html">
+    <span class="material-symbols-outlined">person</span><span class="text-[10px]">관리</span>
+  </a>
+</div>
+
+<script src="db.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const postId = Number(params.get('id') || location.pathname.split('/').pop());
+
+async function init() {
+  const posts = await getPosts();
+  const post = posts.find(p => p.id === postId);
+  const container = document.getElementById('post-container');
+
+  if (!post) {
+    container.innerHTML = '<div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 찾을 수 없습니다.</div>';
+    return;
+  }
+
+  document.title = `${post.title} | 중개사 AI 클럽`;
+  const categoryColor = post.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+
+  container.innerHTML = `
+    <div class="mb-6 flex items-center gap-3">
+      <span class="px-2.5 py-0.5 rounded-full font-label-sm text-[11px] font-bold ${categoryColor}">${escapeHtml(post.category||'')}</span>
+      <span class="text-muted font-label-sm text-xs">${escapeHtml(post.date||'')}</span>
+    </div>
+    <h1 class="font-display-hero text-2xl md:text-3xl text-on-surface mb-6 leading-snug font-bold">${escapeHtml(post.title||'')}</h1>
+    <hr class="border-border mb-8">
+    <div class="prose-content font-body-lg text-body-lg text-on-surface leading-relaxed">${renderMarkdown(post.content||'')}</div>
+  `;
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "datePublished": post.date,
+    "author": {
+      "@type": "Organization",
+      "name": "중개사 AI 클럽"
+    },
+    "description": markdownToText(post.content || '').slice(0, 150),
+    "articleBody": markdownToText(post.content || '')
+  };
+  let script = document.getElementById('jsonld-schema');
+  if (!script) {
+    script = document.createElement('script');
+    script.id = 'jsonld-schema';
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+  script.text = JSON.stringify(schema);
+
+  if (isAdmin()) {
+    const actions = document.getElementById('admin-actions');
+    actions.classList.remove('hidden');
+    actions.classList.add('flex');
+    document.getElementById('edit-btn').onclick = () => location.href = `news-write.html?id=${post.id}`;
+    document.getElementById('delete-btn').onclick = async () => {
+      if (!confirm('이 게시글을 삭제하시겠습니까?')) return;
+      document.getElementById('delete-btn').disabled = true;
+      document.getElementById('delete-btn').textContent = '삭제 중...';
+      try {
+        await deletePost(post.id);
+        location.href = 'news.html';
+      } catch(e) {
+        alert('삭제 실패: ' + e.message);
+        document.getElementById('delete-btn').disabled = false;
+        document.getElementById('delete-btn').innerHTML = '<span class="material-symbols-outlined">delete</span>삭제';
+      }
+    };
+  }
+}
+
+init();
+</script>
+</body>
+</html>
