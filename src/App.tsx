@@ -1173,19 +1173,26 @@ ${smsInputs.agentName}입니다.
                   </p>
                 </div>
 
+                <div className="master-footer" style={{ marginBottom: '12px', background: 'rgba(255,255,255,0.02)' }}>
+                  <h4 className="master-title" style={{ fontSize: '17px', marginBottom: '8px' }}>🤖 "바이브 코딩(Vibe Coding)이란 무엇인가요?"</h4>
+                  <p className="master-desc" style={{ fontSize: '13.5px', lineHeight: '1.6' }}>
+                    개발자가 직접 알고리즘을 한 줄씩 코딩하던 과거를 지나, 중개사는 자연어로 컴퓨터에게 **역할(Role), 목표(Goal), 형식(Format)**만 지시하고 실제 복잡한 코드는 AI가 빌딩하게 만드는 현대적 개발 기법입니다. 영어 단어 하나 모르는 왕초보도 마우스 클릭과 간단한 단어 매칭만으로 결과물을 뽑아낼 수 있습니다.
+                  </p>
+                </div>
+
                 <div className="timeline" style={{ textAlign: 'left' }}>
                   <div className="timeline-item">
                     <div className="timeline-badge">1강</div>
                     <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
                       <h3>웹 정보 수집 및 단순 반복 업무 자동화 실무</h3>
                       <p className="master-desc" style={{ marginBottom: '16px' }}>
-                        인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 포털 등록 작업을 컴퓨터가 스스로 대신하게 만듭니다.
+                        인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 매물광고 같은 반복 작업을 컴퓨터가 스스로 대신하게 만듭니다.
                       </p>
                       <ul className="timeline-list">
-                        <li><strong>네이버 부동산 단지 매물 엑셀 다운로드</strong>: 내가 찍은 특정 아파트 단지의 매물 목록 전체(가격, 면적, 층수 등)를 단 1초 만에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
-                        <li><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 모듈을 얹습니다.</li>
-                        <li><strong>매물 광고 포털 자동 로그인</strong>: 매일 아침 수동으로 입력하던 여러 사이트의 아이디/비밀번호 로그인을 클릭 한 번에 패스하는 스크립트를 구현합니다.</li>
-                        <li><strong>매물 광고 정보 자동 입력 및 등록</strong>: 엑셀 파일에 적어둔 매물 정보들을 이실장, 부동산뱅크 등의 등록 폼에 컴퓨터가 알아서 타이핑하고 전송 완료하는 자동화 프로그램을 완성합니다.</li>
+                        <li><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 or 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
+                        <li><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
+                        <li><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
+                        <li><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
                       </ul>
                     </div>
                   </div>
@@ -1195,23 +1202,32 @@ ${smsInputs.agentName}입니다.
                     <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
                       <h3>나만의 AI 직원 채용 및 단독 프로그램 제작</h3>
                       <p className="master-desc" style={{ marginBottom: '16px' }}>
-                        매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 인공지능 에이전트팀을 고용하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
+                        매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 에이전트 워크플로우를 설계하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
                       </p>
                       <ul className="timeline-list">
-                        <li><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 가격 정보를 수집하고, 네이버 지도로 거리를 계산하고, 블로그 소개글을 작성해 썸네일과 함께 업로드까지 마칩니다.</li>
-                        <li><strong>인터넷 주소를 가진 나만의 부동산 홈페이지</strong>: 크루뿐만 아니라 일반 고객들도 모바일과 PC로 접속해 언제든 매물을 구경할 수 있는 나만의 웹 영토를 가집니다.</li>
-                        <li><strong>검색 엔진 상위 노출 및 유입 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 매물이 검색 엔진 상위에 추천되어 고객 유입으로 연결되는 구조를 내재화합니다.</li>
+                        <li><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
+                        <li><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
+                        <li><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
                         <li><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
                       </ul>
                     </div>
                   </div>
-                </div>
 
-                <div className="master-footer" style={{ marginTop: '24px', background: 'rgba(255,255,255,0.02)' }}>
-                  <h4 className="master-title" style={{ fontSize: '17px', marginBottom: '8px' }}>🤖 "바이브 코딩(Vibe Coding)이란 무엇인가요?"</h4>
-                  <p className="master-desc" style={{ fontSize: '13.5px', lineHeight: '1.6' }}>
-                    개발자가 직접 알고리즘을 한 줄씩 코딩하던 과거를 지나, 중개사는 자연어로 컴퓨터에게 **역할(Role), 목표(Goal), 형식(Format)**만 지시하고 실제 복잡한 코드는 AI가 빌딩하게 만드는 현대적 개발 기법입니다. 영어 단어 하나 모르는 왕초보도 마우스 클릭과 간단한 단어 매칭만으로 결과물을 뽑아낼 수 있습니다.
-                  </p>
+                  <div className="timeline-item">
+                    <div className="timeline-badge">3강</div>
+                    <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <h3>나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연</h3>
+                      <p className="master-desc" style={{ marginBottom: '16px' }}>
+                        2강까지 습득한 기술을 바탕으로 수강생들이 기획한 중개업 자동화 아이디어를 실제 프로그램으로 구현하기 위해 설계 프로세스를 컨설팅받고 작동 모델을 직접 눈으로 확인합니다.
+                      </p>
+                      <ul className="timeline-list">
+                        <li><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
+                        <li><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
+                        <li><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
+                        <li><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
