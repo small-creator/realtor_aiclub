@@ -650,6 +650,35 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
             </div>
+            
+            <div className="compare-table-container reveal reveal-delay-4" style={{ marginBottom: '40px' }}>
+              <table className="compare-table">
+                <thead>
+                  <tr>
+                    <th>업무 구분</th>
+                    <th>❌ 기존 수동 방식</th>
+                    <th>✨ AI 자동화 방식</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>매물 수집 및 동향 분석</strong></td>
+                    <td>매일 1시간 이상 소요 (직접 검색 및 엑셀 수동 정리)</td>
+                    <td><strong>단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>블로그 마케팅 자동화</strong></td>
+                    <td>매물 정보 기획, 원고 작성, 썸네일 제작 등 최소 1시간 이상</td>
+                    <td><strong>5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>매물광고 자동화</strong></td>
+                    <td>CP사, 블로그, 당근 등 플랫폼마다 개별 등록 (2시간)</td>
+                    <td><strong>5분 이내 완료</strong> (매물광고 신규 & 재등록 자동화)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             <div className="master-footer reveal" style={{ backgroundColor: 'rgba(20, 20, 32, 0.5)' }}>
               <h4 className="master-title" style={{ fontSize: '18px', marginBottom: '8px' }}>🤝 혼자가 아닌, 함께 만들어가는 집단지성 커뮤니티</h4>
@@ -847,6 +876,35 @@ ${smsInputs.agentName}입니다.
                   합격 가능성 진단하기 🔍
                 </button>
               </div>
+            </div>
+
+            <div className="compare-table-container reveal reveal-delay-3" style={{ marginTop: '48px', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+              <table className="compare-table">
+                <thead>
+                  <tr>
+                    <th>항목</th>
+                    <th>🏫 정규 교육 과정</th>
+                    <th>🚀 프리패스 트랙</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>추천 대상</strong></td>
+                    <td>코딩 왕초보 및 직접 내 프로그램을 기획하고 구현하고 싶은 중개사</td>
+                    <td>이미 개발해서 현업에 사용 중인 본인만의 자동화 도구가 있는 능력자</td>
+                  </tr>
+                  <tr>
+                    <td><strong>참여 조건</strong></td>
+                    <td>공식 정규 교육 수강 및 과정 완수</td>
+                    <td>공유 가능한 고유의 자동화 프로그램 1개 기부</td>
+                  </tr>
+                  <tr>
+                    <td><strong>주요 혜택</strong></td>
+                    <td>기초 교육 + AI 설계 코칭 + 비밀 창고 무제한 이용</td>
+                    <td>교육 수강 없이 비밀 창고 데이터 및 공유 프로그램 즉시 이용</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
