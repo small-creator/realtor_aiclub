@@ -9,3 +9,5 @@ dist-ssr
 .gemini
 git_push.bat
 public/config/git_config.json
+search-registration-guide.md
+
