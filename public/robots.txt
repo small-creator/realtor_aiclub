@@ -1,0 +1,23 @@
+User-agent: OAI-SearchBot
+Allow: /
+Clean-param: utm_source
+Disallow: /admin/
+Disallow: /private-user-data/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: GPTBot
+Disallow: /raw-databases/
+Disallow: /unverified-internal-reports/
+
+Sitemap: https://realtor-aiclub.vercel.app/sitemap.xml

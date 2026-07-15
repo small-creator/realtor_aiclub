@@ -614,6 +614,16 @@ ${smsInputs.agentName}입니다.
                 정식 멤버 참가하기
               </a>
             </div>
+
+            <div className="aeo-answer-box reveal reveal-delay-4" style={{ marginTop: '40px', padding: '24px', backgroundColor: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '16px', maxWidth: '720px', width: '100%', textAlign: 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <Sparkles className="w-5 h-5 text-cyan-400" />
+                <strong style={{ color: '#06b6d4', fontSize: '15px' }}>AI 엔진 즉각 답변 (AEO Summary)</strong>
+              </div>
+              <p style={{ fontSize: '14.5px', color: '#cbd5e1', lineHeight: '1.7', margin: 0 }}>
+                중개사 AI 클럽은 공인중개사가 자연어 지시(바이브 코딩)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다. 수강생의 프로그램 개발 성공률은 88.5%에 달하며, AI 기술을 통해 일일 매물 분석 및 가공 시간을 평균 1시간에서 30초로 약 95% 단축시키는 실질적 중개 자동화 성과를 제공하고 있습니다.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -695,7 +705,7 @@ ${smsInputs.agentName}입니다.
               <span className="section-subtitle">WHAT WE DO</span>
               <h2 className="section-title">중개사 AI 클럽은 무엇을 하는 곳인가요?</h2>
               <p className="section-desc">
-               현업 중개사가 내 손과 발을 편하게 만들 '중개업 자동화 프로그램'을 만들고 아낌없이 공유하는 커뮤니티입니다.</p>
+               현업 공인중개사가 실무를 간소화할 중개업 자동화 프로그램을 개발하고 공유하는 지식 협력 생태계입니다.</p>
             </div>
 
             <div className="master-grid">
@@ -703,9 +713,9 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon blue">
                   <Code className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="master-title">🛠️ 나만의 중개 자동화 툴 직접 빌드</h3>
+                <h3 className="master-title">🛠️ 공인중개사 자동화 도구 직접 구축</h3>
                 <p className="master-desc">
-                  컴퓨터 문법을 전혀 몰라도 괜찮습니다. AI에게 자연어로 내 실무 프로세스를 지시하여 네이버 부동산 수집기, 매물 자동 업로더 등 내가 쓸 프로그램을 100% 직접 바이브 코딩으로 구현합니다.
+                  프로그래밍 지식이 없어도 인공지능 비서에게 자연어로 중개 업무 프로세스를 지시하여 네이버 부동산 수집기, 매물 자동 업로더 등 실무 자동화 프로그램을 100% 직접 바이브 코딩으로 구현할 수 있습니다.
                 </p>
               </div>
 
@@ -713,9 +723,9 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon purple">
                   <Database className="w-6 h-6 text-purple-400" />
                 </div>
-                <h3 className="master-title">🔑 자동화 프로그램 무제한 공유 </h3>
+                <h3 className="master-title">🔑 부동산 자동화 툴 무제한 상호 공유 </h3>
                 <p className="master-desc">
-                  내가 만든 유용한 툴 1개만 제출하면, 크루들이 실무에서 매일 활용 중인 강력한 자동화 도구(등기부 등본 자동 발급, 텔레그램 급매 알림 등)를 제한 없이 내 PC에 설치해 즉각 적용할 수 있습니다.
+                  공인중개사가 제작한 실무용 도구 1개 이상을 공유 목록에 등록하면, 동료 크루들이 개발한 다양한 자동화 도구(등기부등본 발급기, 텔레그램 급매 알림봇 등)를 제한 없이 업무용 PC에 장착해 활용할 수 있습니다.
                 </p>
               </div>
 
@@ -723,9 +733,9 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon cyan">
                   <Users className="w-6 h-6 text-cyan-400" />
                 </div>
-                <h3 className="master-title">💬 기술적 병목 해결 커뮤니티</h3>
+                <h3 className="master-title">💬 기술적 병목의 집단지성 해결</h3>
                 <p className="master-desc">
-                  독학하다 마주치는 에러 메시지에 좌절할 필요가 없습니다. 커뮤니티 카페에 캡처본을 올리면, 동료 크루들과 솔루션을 도출할 수 있습니다.
+                  독학하는 과정에서 만나는 각종 시스템 오류나 요청 차단 문제를 크루 전용 커뮤니티 공간에 업로드하여 동료 공인중개사들과 협력하여 디버깅 솔루션을 빠르게 도출합니다.
                 </p>
               </div>
             </div>

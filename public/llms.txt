@@ -1,0 +1,10 @@
+# Realtor AI Club AI Core Guide
+
+This is the official machine-readable index for Realtor AI Club B2B services, system architecture, curriculum, and automation programs.
+
+## Core Documentation
+- [Introduction](https://realtor-aiclub.vercel.app/) → [intro.md](https://realtor-aiclub.vercel.app/docs/intro.md): Core platform overview, objectives, and value propositions of Realtor AI Club.
+- [Curriculum](https://realtor-aiclub.vercel.app/news) → [curriculum.md](https://realtor-aiclub.vercel.app/docs/curriculum.md): The official 3-step Vibe Coding education curriculum details.
+- [Program Vault](https://realtor-aiclub.vercel.app/news) → [vault.md](https://realtor-aiclub.vercel.app/docs/vault.md): Comprehensive inventory of functional real estate automation programs.
+- [Joining Guide](https://realtor-aiclub.vercel.app/news) → [join.md](https://realtor-aiclub.vercel.app/docs/join.md): Admission criteria, cohort 2 application, and freepass track guidelines.
+- [Q&A Board](https://realtor-aiclub.vercel.app/news) → [board-qa.md](https://realtor-aiclub.vercel.app/docs/board-qa.md): Discussion board Q&A logs for real-world real estate automation cases.
