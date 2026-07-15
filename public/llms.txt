@@ -8,3 +8,4 @@ This is the official machine-readable index for Realtor AI Club B2B services, sy
 - [Program Vault](https://realtor-aiclub.vercel.app/news) → [vault.md](https://realtor-aiclub.vercel.app/docs/vault.md): Comprehensive inventory of functional real estate automation programs.
 - [Joining Guide](https://realtor-aiclub.vercel.app/news) → [join.md](https://realtor-aiclub.vercel.app/docs/join.md): Admission criteria, cohort 2 application, and freepass track guidelines.
 - [Q&A Board](https://realtor-aiclub.vercel.app/news) → [board-qa.md](https://realtor-aiclub.vercel.app/docs/board-qa.md): Discussion board Q&A logs for real-world real estate automation cases.
+- [Search Registration Guide](https://realtor-aiclub.vercel.app/news) → [search-registration-guide.md](https://realtor-aiclub.vercel.app/docs/search-registration-guide.md): Official step-by-step search engine indexing and site registration guide.
