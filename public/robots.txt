@@ -20,4 +20,4 @@ User-agent: GPTBot
 Disallow: /raw-databases/
 Disallow: /unverified-internal-reports/
 
-Sitemap: https://realtor-aiclub.vercel.app/sitemap.xml
+Sitemap: https://realtor-aiclub-rosy.vercel.app/sitemap.xml

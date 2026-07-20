@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://realtor-aiclub.vercel.app/</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/news</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/news</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/news/1</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/news/1</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/llms.txt</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/llms.txt</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/docs/intro.md</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/docs/intro.md</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/docs/curriculum.md</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/docs/curriculum.md</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/docs/vault.md</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/docs/vault.md</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/docs/join.md</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/docs/join.md</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://realtor-aiclub.vercel.app/docs/board-qa.md</loc>
+    <loc>https://realtor-aiclub-rosy.vercel.app/docs/board-qa.md</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
