@@ -1,3 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private-user-data/
+
 User-agent: OAI-SearchBot
 Allow: /
 Clean-param: utm_source
