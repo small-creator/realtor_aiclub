@@ -25,6 +25,16 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebSite",
+          "@id": "https://realtor-aiclub-rosy.vercel.app/#website",
+          "url": "https://realtor-aiclub-rosy.vercel.app",
+          "name": "중개사 AI 클럽",
+          "description": "공인중개사가 바이브 코딩으로 네이버 부동산 크롤링 및 중개업 자동화 프로그램을 직접 개발·공유하는 공인중개사 AI 자동화 커뮤니티입니다.",
+          "publisher": {
+            "@id": "https://realtor-aiclub-rosy.vercel.app/#organization"
+          }
+        },
+        {
           "@type": "Organization",
           "@id": "https://realtor-aiclub-rosy.vercel.app/#organization",
           "name": "중개사 AI 클럽",
@@ -32,13 +42,35 @@
           "description": "공인중개사가 바이브 코딩(Vibe Coding) 기법으로 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전문 AI 커뮤니티 플랫폼"
         },
         {
-          "@type": "EducationalOrganization",
-          "@id": "https://realtor-aiclub-rosy.vercel.app/#education",
-          "name": "중개사 AI 클럽 정규 교육 과정",
+          "@type": "Course",
+          "@id": "https://realtor-aiclub-rosy.vercel.app/#course",
+          "name": "중개사 AI 클럽 3강 바이브 코딩 실무 교육 과정",
           "description": "자연어 지시어로 프로그램을 100% 직접 개발 및 자동화하는 3강 바이브 코딩 실무 교육 과정",
-          "parentOrganization": {
+          "provider": {
             "@id": "https://realtor-aiclub-rosy.vercel.app/#organization"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://realtor-aiclub-rosy.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "중개사 AI 클럽은 어떤 커뮤니티인가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "공인중개사가 바이브 코딩으로 네이버 부동산 크롤링 및 중개업 자동화 프로그램을 직접 개발하고 공유하는 공인중개사 전용 AI 자동화 커뮤니티입니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "코딩을 모르는 공인중개사도 참여 가능한가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "네, 자연어 지시어로 프로그램을 제작하는 바이브 코딩 기법을 활용하므로 코딩 경험이 없어도 100% 실무 자동화 프로그램을 개발할 수 있습니다."
+              }
+            }
+          ]
         },
         {
           "@type": "Person",
