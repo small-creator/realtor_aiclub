@@ -1494,19 +1494,19 @@ ${smsInputs.agentName}입니다.
                 <h2 className="section-title" style={{ fontSize: '32px', margin: 0 }}>중개사AI클럽 정규과정 대기</h2>
                 <p className="section-desc" style={{ marginTop: '12px', fontSize: '16px', lineHeight: '1.6', color: 'var(--color-text-secondary)' }}>
                   현재 정규과정은 조기 마감되었습니다.<br />
-                  다음 크루 추가 모집 공지는 아래 <strong>중개업 자동화 커뮤니티 공식 단톡방</strong>에서 가장 먼저 공지됩니다.
+                  아래 대기 신청 폼을 작성해 주시면 정규과정 오픈 시 가장 먼저 신청 링크를 발송해 드립니다.
                 </p>
               </div>
 
               <div style={{ marginTop: '16px', width: '100%', maxWidth: '400px' }}>
                 <a
-                  href="https://open.kakao.com/o/gNO9I4Jh"
+                  href="https://forms.gle/mSQzhdjp92T1xaGt7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cta-button"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '16px 0', fontSize: '16px', textDecoration: 'none', width: '100%' }}
                 >
-                  공식 단톡방 입장하여 공지 대기하기 <ArrowRight className="w-4 h-4" />
+                  정규과정 대기 신청하기 <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
