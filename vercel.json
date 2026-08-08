@@ -28,19 +28,7 @@
     },
     {
       "source": "/news/:id",
-      "destination": "/news-detail.html?id=:id"
-    },
-    {
-      "source": "/(news|admin|news-write)",
-      "destination": "/$1.html"
-    },
-    {
-      "source": "/data/board.json",
-      "destination": "/data/board.json"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/news-detail?id=:id"
     }
   ]
 }
