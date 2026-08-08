@@ -93,6 +93,7 @@ function renderMarkdown(src) {
   let html = '';
   let inCode = false, codeLines = [];
   let listType = '', listItems = [];
+  let inTable = false, tableRows = [];
 
   function flushList() {
     if (!listItems.length) return '';
@@ -103,10 +104,29 @@ function renderMarkdown(src) {
     return r;
   }
 
+  function flushTable() {
+    if (!tableRows.length) return '';
+    let tHtml = '<div class="overflow-x-auto my-4"><table class="w-full text-left border-collapse border border-gray-800 text-sm">';
+    tableRows.forEach((row, idx) => {
+      const cells = row.split('|').slice(1, -1).map(c => c.trim());
+      if (idx === 0) {
+        tHtml += '<thead class="bg-gray-900 border-b border-gray-800 text-cyan-400"><tr>' + cells.map(c => `<th class="p-3 border-r border-gray-800 font-semibold">${inline(c)}</th>`).join('') + '</tr></thead><tbody>';
+      } else if (row.includes('---')) {
+        return;
+      } else {
+        tHtml += '<tr class="border-b border-gray-800/60 hover:bg-gray-800/30">' + cells.map(c => `<td class="p-3 border-r border-gray-800/60 text-gray-300">${inline(c)}</td>`).join('') + '</tr>';
+      }
+    });
+    tHtml += '</tbody></table></div>';
+    tableRows = []; inTable = false;
+    return tHtml;
+  }
+
   function inline(text) {
     return text.split('`').map((p, i) => {
       if (i % 2 === 1) return `<code class="bg-gray-800 px-1 rounded text-sm font-mono text-cyan-400">${escapeHtml(p)}</code>`;
       let s = escapeHtml(p);
+      s = s.replace(/!\[([^\]]*)\]\((https?:\/\/[^)]+)\)/g, '<img src="$2" alt="$1" class="my-3 rounded-lg max-w-full h-auto">');
       s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
       s = s.replace(/~~(.+?)~~/g, '<del>$1</del>');
@@ -118,35 +138,43 @@ function renderMarkdown(src) {
   for (const line of lines) {
     if (line.startsWith('```')) {
       if (inCode) {
-        html += flushList() + `<pre class="bg-gray-900 border border-gray-800 rounded-lg p-4 overflow-x-auto my-3"><code class="text-sm font-mono text-gray-300">${escapeHtml(codeLines.join('\n'))}</code></pre>`;
+        html += flushList() + flushTable() + `<pre class="bg-gray-900 border border-gray-800 rounded-lg p-4 overflow-x-auto my-3"><code class="text-sm font-mono text-gray-300">${escapeHtml(codeLines.join('\n'))}</code></pre>`;
         inCode = false; codeLines = [];
       } else {
-        html += flushList(); inCode = true;
+        html += flushList() + flushTable(); inCode = true;
       }
       continue;
     }
     if (inCode) { codeLines.push(line); continue; }
 
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      html += flushList();
+      tableRows.push(line.trim());
+      continue;
+    } else if (tableRows.length > 0) {
+      html += flushTable();
+    }
+
     const hm = line.match(/^(#{1,6})\s+(.*)/);
     if (hm) {
-      html += flushList();
+      html += flushList() + flushTable();
       const sz = ['text-2xl', 'text-xl', 'text-lg', 'text-base', 'text-sm', 'text-xs'][hm[1].length - 1];
       html += `<h${hm[1].length} class="${sz} font-bold my-3 text-cyan-400">${inline(hm[2])}</h${hm[1].length}>`;
       continue;
     }
-    if (/^-{3,}$/.test(line.trim())) { html += flushList() + '<hr class="my-4 border-gray-800">'; continue; }
-    if (line.startsWith('> ')) { html += flushList() + `<blockquote class="border-l-4 border-cyan-500 pl-4 my-2 text-gray-400 italic">${inline(line.slice(2))}</blockquote>`; continue; }
+    if (/^-{3,}$/.test(line.trim())) { html += flushList() + flushTable() + '<hr class="my-4 border-gray-800">'; continue; }
+    if (line.startsWith('> ')) { html += flushList() + flushTable() + `<blockquote class="border-l-4 border-cyan-500 pl-4 my-2 text-gray-400 italic">${inline(line.slice(2))}</blockquote>`; continue; }
 
     const ulm = line.match(/^[-*]\s+(.*)/);
     if (ulm) { if (listType && listType !== 'ul') html += flushList(); listType = 'ul'; listItems.push(inline(ulm[1])); continue; }
     const olm = line.match(/^\d+\.\s+(.*)/);
     if (olm) { if (listType && listType !== 'ol') html += flushList(); listType = 'ol'; listItems.push(inline(olm[1])); continue; }
 
-    html += flushList();
+    html += flushList() + flushTable();
     if (line.trim() === '') { html += '<br>'; continue; }
     html += `<p class="my-1 leading-relaxed">${inline(line)}</p>`;
   }
-  html += flushList();
+  html += flushList() + flushTable();
   if (inCode) html += `<pre class="bg-gray-900 border border-gray-800 rounded-lg p-4 overflow-x-auto my-3"><code class="text-sm font-mono text-gray-300">${escapeHtml(codeLines.join('\n'))}</code></pre>`;
   return html;
 }
