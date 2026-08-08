@@ -10,6 +10,15 @@
           "value": "application/xml; charset=utf-8"
         }
       ]
+    },
+    {
+      "source": "/data/board.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -24,6 +33,10 @@
     {
       "source": "/(news|admin|news-write)",
       "destination": "/$1.html"
+    },
+    {
+      "source": "/data/board.json",
+      "destination": "/data/board.json"
     },
     {
       "source": "/(.*)",
