@@ -150,7 +150,7 @@ function renderList(posts) {
   container.innerHTML = posts.map(p => {
     const summary = markdownToText(p.content || '').slice(0, 120);
     const categoryColor = p.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
-    return `<div class="news-item flex flex-col gap-2 p-lg rounded-xl cursor-pointer" onclick="location.href='/news/${p.id}'">
+    return `<div class="news-item flex flex-col gap-2 p-lg rounded-xl cursor-pointer" onclick="location.href='news-detail.html?id=${p.id}'">
       <div class="flex items-center gap-3">
         <span class="px-2.5 py-0.5 rounded-full font-label-sm text-[11px] font-bold ${categoryColor}">${escapeHtml(p.category||'')}</span>
         <span class="text-muted font-label-sm text-xs">${escapeHtml(p.date||'')}</span>
