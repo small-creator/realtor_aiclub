@@ -33,7 +33,8 @@ async function _getFileData() {
   const cfg = await loadConfig();
   const tok = String(cfg.github_token || '').replace(/\s+/g, '');
   if (!tok || tok === 'YOUR_GITHUB_TOKEN') return null;
-  const url = `https://api.github.com/repos/${cfg.github_owner}/${cfg.github_repo}/contents/${cfg.data_file_path || 'data/board.json'}`;
+  const filePath = cfg.data_file_path || 'public/data/board.json';
+  const url = `https://api.github.com/repos/${cfg.github_owner}/${cfg.github_repo}/contents/${filePath}`;
   const headers = { 'Accept': 'application/vnd.github+json', 'Authorization': 'token ' + tok };
   try {
     const r = await fetch(url, { headers });
@@ -45,11 +46,22 @@ async function _getFileData() {
 async function getPosts() {
   try {
     const meta = await _getFileData();
-    if (!meta) return [];
-    const raw = atob(meta.content.replace(/\s/g, ''));
-    const decoded = decodeURIComponent(raw.split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-    return JSON.parse(decoded);
-  } catch (e) { return []; }
+    if (meta && meta.content) {
+      const raw = atob(meta.content.replace(/\s/g, ''));
+      const decoded = decodeURIComponent(raw.split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      return JSON.parse(decoded);
+    }
+  } catch (e) {}
+
+  try {
+    const r = await fetch('/data/board.json?v=' + Date.now());
+    if (r.ok) {
+      const list = await r.json();
+      if (Array.isArray(list)) return list;
+    }
+  } catch (e) {}
+
+  return [];
 }
 
 async function savePosts(posts) {
