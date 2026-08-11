@@ -27,6 +27,10 @@
       "destination": "/api/config.js"
     },
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap.js"
+    },
+    {
       "source": "/news/:id",
       "destination": "/news-detail?id=:id"
     }

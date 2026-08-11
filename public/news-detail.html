@@ -129,6 +129,13 @@ async function init() {
   }
 
   document.title = `${post.title} | 중개사 AI 클럽`;
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.appendChild(canonical);
+  }
+  canonical.href = `https://realtor-aiclub-rosy.vercel.app/news-detail?id=${post.id}`;
   const categoryColor = post.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
 
   container.innerHTML = `
