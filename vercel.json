@@ -32,7 +32,15 @@
     },
     {
       "source": "/news/:id",
-      "destination": "/news-detail?id=:id"
+      "destination": "/api/news-detail?id=:id"
+    },
+    {
+      "source": "/news-detail",
+      "destination": "/api/news-detail"
+    },
+    {
+      "source": "/news-detail.html",
+      "destination": "/api/news-detail"
     }
   ]
 }
