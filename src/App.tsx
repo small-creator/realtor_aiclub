@@ -31,7 +31,24 @@ import {
   HelpCircle,
   FileCode,
   Gift,
-  Laptop
+  Laptop,
+  AlertCircle,
+  XCircle,
+  CheckCircle2,
+  GraduationCap,
+  Rocket,
+  Zap,
+  Download,
+  RefreshCw,
+  Send,
+  Terminal,
+  Bot,
+  Wrench,
+  BookOpen,
+  Info,
+  Bell,
+  Share2,
+  Check
 } from 'lucide-react'
 
 type CategoryType = 'all' | 'doc' | 'scout' | 'ad' | 'copy' | 'report' | 'crm' | 'alert'
@@ -638,23 +655,40 @@ ${smsInputs.agentName}입니다.
             </div>
             
             <div className="pain-grid" style={{ marginBottom: '40px' }}>
-              <div className="pain-item reveal reveal-delay-1">
-                <span className="pain-tag">PROBLEM 01</span>
-                <h3 className="pain-title">😩 매물 광고와 마케팅의 늪</h3>
+              <div className="pain-item reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                  <span className="pain-tag">PROBLEM 01</span>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Clock className="w-5 h-5 text-amber-400" />
+                  </div>
+                </div>
+                <h3 className="pain-title">매물 광고와 마케팅의 비효율</h3>
                 <p className="pain-desc">
                   매일 반복되는 단순 매물 등록과 블로그 포스팅에 진이 빠져, 정작 중요한 고객 미팅과 현장 임장 시간이 부족합니다.
                 </p>
               </div>
-              <div className="pain-item reveal reveal-delay-2">
-                <span className="pain-tag">PROBLEM 02</span>
-                <h3 className="pain-title">😩 내 업무와 겉도는 AI 도입 장벽</h3>
+
+              <div className="pain-item reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                  <span className="pain-tag">PROBLEM 02</span>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Layers className="w-5 h-5 text-purple-400" />
+                  </div>
+                </div>
+                <h3 className="pain-title">내 업무와 겉도는 AI 도입 장벽</h3>
                 <p className="pain-desc">
                   다들 AI, AI 하지만 내 업무 특성에 맞추어 실제로 적용할 방법이 막막합니다.
                 </p>
               </div>
-              <div className="pain-item reveal reveal-delay-3">
-                <span className="pain-tag">PROBLEM 03</span>
-                <h3 className="pain-title">😩 내 손발이 편해지지 않는 실무 강의</h3>
+
+              <div className="pain-item reveal reveal-delay-3" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                  <span className="pain-tag">PROBLEM 03</span>
+                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(6, 182, 212, 0.12)', border: '1px solid rgba(6, 182, 212, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <BookOpen className="w-5 h-5 text-cyan-400" />
+                  </div>
+                </div>
+                <h3 className="pain-title">현업 적용이 어려운 이론 위주 강의</h3>
                 <p className="pain-desc">
                   비싼 AI 강의와 프롬프트 강좌를 들었지만, 실제 내 업무를 덜어주는 나만의 자동화 도구는 하나도 얻지 못했습니다.
                 </p>
@@ -665,33 +699,36 @@ ${smsInputs.agentName}입니다.
               <table className="compare-table">
                 <thead>
                   <tr>
-                    <th>업무 구분</th>
-                    <th>❌ 기존 수동 방식</th>
-                    <th>✨ AI 자동화 방식</th>
+                    <th><Layers className="w-4 h-4 text-slate-400 inline-block mr-1.5 align-middle" />업무 구분</th>
+                    <th><XCircle className="w-4 h-4 text-red-400 inline-block mr-1.5 align-middle" />기존 수동 방식</th>
+                    <th><CheckCircle2 className="w-4 h-4 text-emerald-400 inline-block mr-1.5 align-middle" />AI 자동화 방식</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>매물 수집 및 동향 분석</strong></td>
+                    <td><Search className="w-4 h-4 text-blue-400 inline-block mr-2 align-middle" /><strong>매물 수집 및 동향 분석</strong></td>
                     <td>매일 1시간 이상 소요 (직접 검색 및 엑셀 수동 정리)</td>
-                    <td><strong>단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
+                    <td><strong className="text-emerald-400">단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
                   </tr>
                   <tr>
-                    <td><strong>블로그 마케팅 자동화</strong></td>
+                    <td><FileText className="w-4 h-4 text-purple-400 inline-block mr-2 align-middle" /><strong>블로그 마케팅 자동화</strong></td>
                     <td>매물 정보 기획, 원고 작성, 썸네일 제작 등 최소 1시간 이상</td>
-                    <td><strong>5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
+                    <td><strong className="text-emerald-400">5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
                   </tr>
                   <tr>
-                    <td><strong>매물광고 자동화</strong></td>
+                    <td><Send className="w-4 h-4 text-cyan-400 inline-block mr-2 align-middle" /><strong>매물광고 자동화</strong></td>
                     <td>CP사, 블로그, 당근 등 플랫폼마다 개별 등록 (2시간)</td>
-                    <td><strong>5분 이내 완료</strong> (매물광고 신규 & 재등록 자동화)</td>
+                    <td><strong className="text-emerald-400">5분 이내 완료</strong> (매물광고 신규 & 재등록 자동화)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <div className="master-footer reveal" style={{ backgroundColor: 'rgba(20, 20, 32, 0.5)' }}>
-              <h4 className="master-title" style={{ fontSize: '18px', marginBottom: '8px' }}>🤝 혼자가 아닌, 함께 만들어가는 집단지성 커뮤니티</h4>
+              <h4 className="master-title" style={{ fontSize: '18px', marginBottom: '8px' }}>
+                <Users className="w-5 h-5 text-blue-400 inline-block mr-2 align-middle" />
+                혼자가 아닌, 함께 만들어가는 집단지성 커뮤니티
+              </h4>
               <p className="master-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>
                 <strong>서로의 기술적 병목을 같이 고민하고, 완성된 각자의 도구를 아낌없이 공유(Share)하는 집단지성 커뮤니티</strong>입니다.
               </p>
@@ -713,7 +750,7 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon blue">
                   <Code className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="master-title">🛠️ 공인중개사 자동화 도구 직접 구축</h3>
+                <h3 className="master-title">공인중개사 자동화 도구 직접 구축</h3>
                 <p className="master-desc">
                   프로그래밍 지식이 없어도 인공지능 비서에게 자연어로 중개 업무 프로세스를 지시하여 네이버 부동산 수집기, 매물 자동 업로더 등 실무 자동화 프로그램을 100% 직접 바이브 코딩으로 구현할 수 있습니다.
                 </p>
@@ -723,7 +760,7 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon purple">
                   <Database className="w-6 h-6 text-purple-400" />
                 </div>
-                <h3 className="master-title">🔑 부동산 자동화 툴 무제한 상호 공유 </h3>
+                <h3 className="master-title">부동산 자동화 툴 무제한 상호 공유</h3>
                 <p className="master-desc">
                   공인중개사가 제작한 실무용 도구 1개 이상을 공유 목록에 등록하면, 동료 크루들이 개발한 다양한 자동화 도구(등기부등본 발급기, 텔레그램 급매 알림봇 등)를 제한 없이 업무용 PC에 장착해 활용할 수 있습니다.
                 </p>
@@ -733,7 +770,7 @@ ${smsInputs.agentName}입니다.
                 <div className="master-icon cyan">
                   <Users className="w-6 h-6 text-cyan-400" />
                 </div>
-                <h3 className="master-title">💬 기술적 병목의 집단지성 해결</h3>
+                <h3 className="master-title">기술적 병목의 집단지성 해결</h3>
                 <p className="master-desc">
                   독학하는 과정에서 만나는 각종 시스템 오류나 요청 차단 문제를 크루 전용 커뮤니티 공간에 업로드하여 동료 공인중개사들과 협력하여 디버깅 솔루션을 빠르게 도출합니다.
                 </p>
@@ -756,27 +793,32 @@ ${smsInputs.agentName}입니다.
               <div className="category-bar">
                 {(
                   [
-                    { id: 'all', label: '전체 보기' },
-                    { id: 'doc', label: '공적 서류' },
-                    { id: 'scout', label: '매물 수집' },
-                    { id: 'ad', label: '매물 광고' },
-                    { id: 'copy', label: '상담·콘텐츠' },
-                    { id: 'report', label: '보고서·뉴스레터' },
-                    { id: 'crm', label: 'CRM·고객관리' },
-                    { id: 'alert', label: '영업·알림' }
-                  ] as { id: CategoryType; label: string }[]
-                ).map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setFilterCategory(cat.id)
-                      setShowAllPrograms(false)
-                    }}
-                    className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
+                    { id: 'all', label: '전체 보기', icon: Layers },
+                    { id: 'doc', label: '공적 서류', icon: FileCode },
+                    { id: 'scout', label: '매물 수집', icon: Search },
+                    { id: 'ad', label: '매물 광고', icon: Send },
+                    { id: 'copy', label: '상담·콘텐츠', icon: MessageSquare },
+                    { id: 'report', label: '보고서·뉴스레터', icon: FileText },
+                    { id: 'crm', label: 'CRM·고객관리', icon: Users },
+                    { id: 'alert', label: '영업·알림', icon: Clock }
+                  ] as { id: CategoryType; label: string; icon: React.ElementType }[]
+                ).map(cat => {
+                  const IconComp = cat.icon
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setFilterCategory(cat.id)
+                        setShowAllPrograms(false)
+                      }}
+                      className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <IconComp className="w-3.5 h-3.5" />
+                      {cat.label}
+                    </button>
+                  )
+                })}
               </div>
             </VStack>
 
@@ -788,14 +830,15 @@ ${smsInputs.agentName}입니다.
                   className={`vault-card reveal reveal-delay-${(idx % 4) + 1}`}
                 >
                   <div className="flex-row justify-between items-center" style={{ display: 'flex' }}>
-                    <span className="vault-tag">
+                    <span className="vault-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                       {
-                        prog.category === 'doc' ? '공적 서류' :
-                        prog.category === 'scout' ? '매물 수집' :
-                        prog.category === 'ad' ? '매물 광고' :
-                        prog.category === 'copy' ? '상담·카피' :
-                        prog.category === 'report' ? '보고서' :
-                        prog.category === 'crm' ? 'CRM' : '영업·알림'
+                        prog.category === 'doc' ? <><FileCode className="w-3 h-3" /> 공적 서류</> :
+                        prog.category === 'scout' ? <><Search className="w-3 h-3" /> 매물 수집</> :
+                        prog.category === 'ad' ? <><Send className="w-3 h-3" /> 매물 광고</> :
+                        prog.category === 'copy' ? <><MessageSquare className="w-3 h-3" /> 상담·카피</> :
+                        prog.category === 'report' ? <><FileText className="w-3 h-3" /> 보고서</> :
+                        prog.category === 'crm' ? <><Users className="w-3 h-3" /> CRM</> : 
+                        <><Clock className="w-3 h-3" /> 영업·알림</>
                       }
                     </span>
                     <span className="vault-dev">{prog.developer.split(' ').pop()}</span>
@@ -809,7 +852,7 @@ ${smsInputs.agentName}입니다.
                   </p>
                   <div className="vault-card-footer">
                     <span className="vault-impact">
-                      <CheckCircle className="w-3.5 h-3.5" />
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
                       {prog.impact}
                     </span>
                     <span className="vault-more">자세히 보기</span>
@@ -852,9 +895,9 @@ ${smsInputs.agentName}입니다.
               <div className="master-card reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                 <div>
                   <div className="master-icon blue">
-                    <Laptop className="w-6 h-6 text-blue-400" />
+                    <GraduationCap className="w-6 h-6 text-blue-400" />
                   </div>
-                  <h3 className="master-title">🏫 정규 교육 과정</h3>
+                  <h3 className="master-title">정규 교육 과정</h3>
                   <p className="master-desc" style={{ marginBottom: '20px' }}>
                     채팅으로 AI에게 개발 지시를 내려 실무 자동화 프로그램을 내 손으로 100% 직접 개발하고 완성하는 밀착 집중 트랙입니다.
                   </p>
@@ -862,18 +905,19 @@ ${smsInputs.agentName}입니다.
                 <button 
                   onClick={() => setShowCurriculumModal(true)} 
                   className="cta-button" 
-                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'block', textAlign: 'center', cursor: 'pointer' }}
+                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
                 >
-                  커리큘럼 확인하기 ⚡
+                  <span>커리큘럼 확인하기</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="master-card reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                 <div>
                   <div className="master-icon purple">
-                    <Sparkles className="w-6 h-6 text-purple-400" />
+                    <Rocket className="w-6 h-6 text-purple-400" />
                   </div>
-                  <h3 className="master-title">🚀 프리패스 트랙</h3>
+                  <h3 className="master-title">프리패스 트랙</h3>
                   <p className="master-desc" style={{ marginBottom: '20px' }}>
                     이미 제작하여 실무에 사용 중인 본인의 자동화 툴 1개 이상을 공유(기여)하고, 교육 수강 없이 즉각 비밀 창고 전체를 이용하는 트랙입니다.
                   </p>
@@ -881,9 +925,10 @@ ${smsInputs.agentName}입니다.
                 <button 
                   onClick={() => setShowQuizModal(true)} 
                   className="cta-button" 
-                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'block', textAlign: 'center', cursor: 'pointer' }}
+                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
                 >
-                  합격 가능성 진단하기 🔍
+                  <span>합격 가능성 진단하기</span>
+                  <Search className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -893,8 +938,8 @@ ${smsInputs.agentName}입니다.
                 <thead>
                   <tr>
                     <th>항목</th>
-                    <th>🏫 정규 교육 과정</th>
-                    <th>🚀 프리패스 트랙</th>
+                    <th><GraduationCap className="w-4 h-4 text-blue-400 inline-block mr-1.5 align-middle" />정규 교육 과정</th>
+                    <th><Rocket className="w-4 h-4 text-purple-400 inline-block mr-1.5 align-middle" />프리패스 트랙</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -937,29 +982,37 @@ ${smsInputs.agentName}입니다.
                     onClick={() => runVibeSimulation('crawl')}
                     className={`prompt-chip ${vibePromptType === 'crawl' ? 'active' : ''}`}
                     disabled={isGenerating}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    ⚡ 네이버 부동산 매물 엑셀 크롤러
+                    <Search className="w-3.5 h-3.5" />
+                    네이버 부동산 매물 엑셀 크롤러
                   </button>
                   <button
                     onClick={() => runVibeSimulation('adauto')}
                     className={`prompt-chip ${vibePromptType === 'adauto' ? 'active' : ''}`}
                     disabled={isGenerating}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    ⚡ 매물 광고 자동 등록 및 예약 관리
+                    <Send className="w-3.5 h-3.5" />
+                    매물 광고 자동 등록 및 예약 관리
                   </button>
                   <button
                     onClick={() => runVibeSimulation('agent')}
                     className={`prompt-chip ${vibePromptType === 'agent' ? 'active' : ''}`}
                     disabled={isGenerating}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    ⚡ 매물번호 입력 100% 포스팅 에이전트팀
+                    <Bot className="w-3.5 h-3.5" />
+                    매물번호 입력 포스팅 에이전트팀
                   </button>
                   <button
                     onClick={() => runVibeSimulation('compile')}
                     className={`prompt-chip ${vibePromptType === 'compile' ? 'active' : ''}`}
                     disabled={isGenerating}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    ⚡ 윈도우 단독 프로그램 .exe 빌드
+                    <Laptop className="w-3.5 h-3.5" />
+                    윈도우 단독 프로그램 .exe 빌드
                   </button>
                 </div>
 
@@ -982,7 +1035,7 @@ ${smsInputs.agentName}입니다.
 
                   <div style={{ marginTop: '24px' }}>
                     <Button
-                      label={isGenerating ? "Vibe Code 빌딩 중..." : "바이브 코드 생성 및 실행 ⚡"}
+                      label={isGenerating ? "Vibe Code 빌딩 중..." : "바이브 코드 생성 및 실행"}
                       variant="primary"
                       onClick={() => runVibeSimulation(vibePromptType)}
                       isDisabled={isGenerating}
@@ -1079,10 +1132,16 @@ ${smsInputs.agentName}입니다.
                                 <div style={{ padding: '5px 10px', color: '#8b949e', fontSize: '10px' }}>...외 43건</div>
                               </div>
                               <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
-                                <div style={{ background: '#238636', borderRadius: '6px', padding: '5px 12px', color: 'white', fontSize: '11px' }}>📥 엑셀 다운로드</div>
-                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 12px', color: '#c9d1d9', fontSize: '11px' }}>🔄 새로고침</div>
+                                <div style={{ background: '#238636', borderRadius: '6px', padding: '5px 12px', color: 'white', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <Download className="w-3 h-3" /> 엑셀 다운로드
+                                </div>
+                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 12px', color: '#c9d1d9', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <RefreshCw className="w-3 h-3" /> 새로고침
+                                </div>
                               </div>
-                              <div style={{ marginTop: '10px', padding: '6px 10px', background: 'rgba(35, 134, 54, 0.1)', borderRadius: '6px', color: '#3fb950', fontSize: '10px' }}>✅ 수집 완료: 47건 | naver_listings.xlsx 저장됨</div>
+                              <div style={{ marginTop: '10px', padding: '6px 10px', background: 'rgba(35, 134, 54, 0.1)', borderRadius: '6px', color: '#3fb950', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <CheckCircle className="w-3 h-3 text-emerald-400" /> 수집 완료: 47건 | naver_listings.xlsx 저장됨
+                              </div>
                             </div>
                           )}
                           {vibePromptType === 'adauto' && (
@@ -1096,12 +1155,17 @@ ${smsInputs.agentName}입니다.
                                 </div>
                               </div>
                               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
-                                {[['✅', '래미안푸르지오 32평 매매', '18.5억', '등록완료'], ['✅', '래미안푸르지오 34평 전세', '8.0억', '등록완료'], ['✅', '아현힐스테이트 25평 매매', '12.3억', '등록완료'], ['⏳', '공덕파크자이 28평 매매', '15.1억', '대기중']].map((item, i) => (
+                                {[
+                                  { name: '래미안푸르지오 32평 매매', price: '18.5억', status: '등록완료', done: true },
+                                  { name: '래미안푸르지오 34평 전세', price: '8.0억', status: '등록완료', done: true },
+                                  { name: '아현힐스테이트 25평 매매', price: '12.3억', status: '등록완료', done: true },
+                                  { name: '공덕파크자이 28평 매매', price: '15.1억', status: '대기중', done: false }
+                                ].map((item, i) => (
                                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 10px', background: '#161b22', borderRadius: '6px', border: '1px solid #21262d' }}>
-                                    <span>{item[0]}</span>
-                                    <span style={{ color: '#c9d1d9', fontSize: '11px', flex: 1 }}>{item[1]}</span>
-                                    <span style={{ color: '#8b949e', fontSize: '10px' }}>{item[2]}</span>
-                                    <span style={{ color: item[3] === '등록완료' ? '#3fb950' : '#d29922', fontSize: '10px', fontWeight: 700 }}>{item[3]}</span>
+                                    {item.done ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Clock className="w-3.5 h-3.5 text-amber-400" />}
+                                    <span style={{ color: '#c9d1d9', fontSize: '11px', flex: 1 }}>{item.name}</span>
+                                    <span style={{ color: '#8b949e', fontSize: '10px' }}>{item.price}</span>
+                                    <span style={{ color: item.status === '등록완료' ? '#3fb950' : '#d29922', fontSize: '10px', fontWeight: 700 }}>{item.status}</span>
                                   </div>
                                 ))}
                                 <div style={{ color: '#8b949e', fontSize: '10px', paddingLeft: '4px' }}>...외 8건 대기 중</div>
@@ -1110,8 +1174,8 @@ ${smsInputs.agentName}입니다.
                                 <div style={{ width: '75%', height: '100%', background: 'linear-gradient(90deg, #2563eb, #3b82f6)', borderRadius: '2px' }} />
                               </div>
                               <div style={{ display: 'flex', gap: '8px' }}>
-                                <div style={{ background: 'linear-gradient(135deg, #2563eb, #3b82f6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>▶ 일괄 등록 시작</div>
-                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 14px', color: '#c9d1d9', fontSize: '11px' }}>⏰ 예약 설정</div>
+                                <div style={{ background: 'linear-gradient(135deg, #2563eb, #3b82f6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>일괄 등록 시작</div>
+                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 14px', color: '#c9d1d9', fontSize: '11px' }}>예약 설정</div>
                               </div>
                             </div>
                           )}
@@ -1120,12 +1184,12 @@ ${smsInputs.agentName}입니다.
                               <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', alignItems: 'center' }}>
                                 <span style={{ color: '#8b949e', fontSize: '11px' }}>매물번호</span>
                                 <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '6px', padding: '5px 10px', color: '#c9d1d9', fontSize: '12px', width: '100px' }}>24067</div>
-                                <div style={{ background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>▶ 실행</div>
+                                <div style={{ background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>실행</div>
                               </div>
                               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '14px' }}>
                                 {['정보수집봇', '웹검색봇', '글작성봇', '썸네일봇', '업로드봇'].map((name, i) => (
                                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    <span style={{ color: '#3fb950', fontSize: '11px' }}>🟢</span>
+                                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#3fb950' }} />
                                     <span style={{ color: '#c9d1d9', fontSize: '11px', width: '70px' }}>{name}</span>
                                     <div style={{ flex: 1, height: '6px', background: '#21262d', borderRadius: '3px', overflow: 'hidden' }}>
                                       <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #238636, #3fb950)', borderRadius: '3px' }} />
@@ -1135,7 +1199,9 @@ ${smsInputs.agentName}입니다.
                                 ))}
                               </div>
                               <div style={{ padding: '8px 12px', background: 'rgba(35, 134, 54, 0.1)', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ color: '#3fb950', fontSize: '11px', fontWeight: 700 }}>📝 블로그 포스팅 완료!</span>
+                                <span style={{ color: '#3fb950', fontSize: '11px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  <CheckCircle className="w-3.5 h-3.5" /> 블로그 포스팅 완료
+                                </span>
                                 <div style={{ background: '#238636', borderRadius: '6px', padding: '4px 10px', color: 'white', fontSize: '10px' }}>결과 보기</div>
                               </div>
                             </div>
@@ -1146,12 +1212,22 @@ ${smsInputs.agentName}입니다.
                                 <div style={{ fontSize: '11px', color: '#8b949e', marginBottom: '4px' }}>중개업 종합 자동화 도구</div>
                               </div>
                               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                                {[['📊', '매물 수집', '#2563eb'], ['📢', '광고 등록', '#7c3aed'], ['📝', '블로그 작성', '#0891b2'], ['📄', '서류 발급', '#059669']].map((item, i) => (
-                                  <div key={i} style={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '8px', padding: '12px', textAlign: 'center', cursor: 'default' }}>
-                                    <div style={{ fontSize: '20px', marginBottom: '4px' }}>{item[0]}</div>
-                                    <div style={{ color: '#c9d1d9', fontSize: '11px', fontWeight: 600 }}>{item[1]}</div>
-                                  </div>
-                                ))}
+                                {[
+                                  { icon: Database, name: '매물 수집', color: '#2563eb' },
+                                  { icon: Send, name: '광고 등록', color: '#7c3aed' },
+                                  { icon: FileText, name: '블로그 작성', color: '#0891b2' },
+                                  { icon: FileCode, name: '서류 발급', color: '#059669' }
+                                ].map((item, i) => {
+                                  const IconComp = item.icon
+                                  return (
+                                    <div key={i} style={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '8px', padding: '12px', textAlign: 'center', cursor: 'default' }}>
+                                      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '6px' }}>
+                                        <IconComp className="w-5 h-5 text-blue-400" />
+                                      </div>
+                                      <div style={{ color: '#c9d1d9', fontSize: '11px', fontWeight: 600 }}>{item.name}</div>
+                                    </div>
+                                  )
+                                })}
                               </div>
                               <div style={{ border: '1px solid #21262d', borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
                                 <div style={{ color: '#8b949e', fontSize: '10px', fontWeight: 700, marginBottom: '6px' }}>최근 실행 이력</div>
@@ -1163,7 +1239,7 @@ ${smsInputs.agentName}입니다.
                                 ))}
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', color: '#484f58', fontSize: '9px' }}>
-                                <span>버전 1.0.0</span><span>|</span><span>🟢 상태: 정상</span>
+                                <span>버전 1.0.0</span><span>|</span><span>상태: 정상</span>
                               </div>
                             </div>
                           )}
@@ -1242,7 +1318,10 @@ ${smsInputs.agentName}입니다.
                 </div>
 
                 <div className="master-footer" style={{ marginBottom: '12px', background: 'rgba(255,255,255,0.02)' }}>
-                  <h4 className="master-title" style={{ fontSize: '17px', marginBottom: '8px' }}>🤖 "바이브 코딩(Vibe Coding)이란 무엇인가요?"</h4>
+                  <h4 className="master-title" style={{ fontSize: '17px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Bot className="w-5 h-5 text-blue-400" />
+                    "바이브 코딩(Vibe Coding)이란 무엇인가요?"
+                  </h4>
                   <p className="master-desc" style={{ fontSize: '13.5px', lineHeight: '1.6' }}>
                     개발자가 직접 알고리즘을 한 줄씩 코딩하던 과거를 지나, 중개사는 자연어로 컴퓨터에게 **역할(Role), 목표(Goal), 형식(Format)**만 지시하고 실제 복잡한 코드는 AI가 빌딩하게 만드는 현대적 개발 기법입니다. 영어 단어 하나 모르는 왕초보도 마우스 클릭과 간단한 단어 매칭만으로 결과물을 뽑아낼 수 있습니다.
                   </p>
@@ -1252,15 +1331,18 @@ ${smsInputs.agentName}입니다.
                   <div className="timeline-item">
                     <div className="timeline-badge">1강</div>
                     <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3>웹 정보 수집 및 단순 반복 업무 자동화 실무</h3>
+                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Search className="w-5 h-5 text-blue-400" />
+                        웹 정보 수집 및 단순 반복 업무 자동화 실무
+                      </h3>
                       <p className="master-desc" style={{ marginBottom: '16px' }}>
                         인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 매물광고 같은 반복 작업을 컴퓨터가 스스로 대신하게 만듭니다.
                       </p>
                       <ul className="timeline-list">
-                        <li><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 or 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
-                        <li><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
-                        <li><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
-                        <li><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 or 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
                       </ul>
                     </div>
                   </div>
@@ -1268,15 +1350,18 @@ ${smsInputs.agentName}입니다.
                   <div className="timeline-item">
                     <div className="timeline-badge">2강</div>
                     <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3>나만의 AI 직원 채용 및 단독 프로그램 제작</h3>
+                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Bot className="w-5 h-5 text-purple-400" />
+                        나만의 AI 직원 채용 및 단독 프로그램 제작
+                      </h3>
                       <p className="master-desc" style={{ marginBottom: '16px' }}>
                         매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 에이전트 워크플로우를 설계하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
                       </p>
                       <ul className="timeline-list">
-                        <li><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
-                        <li><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
-                        <li><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
-                        <li><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
                       </ul>
                     </div>
                   </div>
@@ -1284,15 +1369,18 @@ ${smsInputs.agentName}입니다.
                   <div className="timeline-item">
                     <div className="timeline-badge">3강</div>
                     <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3>나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연</h3>
+                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Wrench className="w-5 h-5 text-cyan-400" />
+                        나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연
+                      </h3>
                       <p className="master-desc" style={{ marginBottom: '16px' }}>
                         2강까지 습득한 기술을 바탕으로 수강생들이 기획한 중개업 자동화 아이디어를 실제 프로그램으로 구현하기 위해 설계 프로세스를 컨설팅받고 작동 모델을 직접 눈으로 확인합니다.
                       </p>
                       <ul className="timeline-list">
-                        <li><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
-                        <li><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
-                        <li><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
-                        <li><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
+                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
                       </ul>
                     </div>
                   </div>
@@ -1357,8 +1445,11 @@ ${smsInputs.agentName}입니다.
                               <span style={{ fontSize: '12.5px', color: 'var(--color-text-secondary)', display: 'block', marginTop: '6px', marginBottom: '12px' }}>
                                 이미 AI나 툴의 이해도가 훌륭하십니다. 교육 참가를 거치지 않고 나만의 자동화 도구를 기여하여 즉시 비밀창고를 무제한 잠금 해제할 수 있습니다.
                               </span>
-                              <div style={{ padding: '10px 14px', backgroundColor: 'rgba(6, 182, 212, 0.1)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '8px', fontSize: '12px', color: 'var(--color-cyan)', textAlign: 'left', lineHeight: '1.5' }}>
-                                💡 <strong>신청 방법:</strong> 공유 가능한 프로그램을 본인의 구글 드라이브에 업로드한 후, 아래 '프리패스 신청하기' 버튼을 통해 연결되는 1:1 오픈채팅방에 해당 공유 링크를 함께 전달해 주세요.
+                              <div style={{ padding: '10px 14px', backgroundColor: 'rgba(6, 182, 212, 0.1)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '8px', fontSize: '12px', color: 'var(--color-cyan)', textAlign: 'left', lineHeight: '1.5', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                <Info className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                                <div>
+                                  <strong>신청 방법:</strong> 공유 가능한 프로그램을 본인의 구글 드라이브에 업로드한 후, 아래 '프리패스 신청하기' 버튼을 통해 연결되는 1:1 오픈채팅방에 해당 공유 링크를 함께 전달해 주세요.
+                                </div>
                               </div>
                             </>
                           ) : (
