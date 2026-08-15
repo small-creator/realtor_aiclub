@@ -601,7 +601,17 @@ ${smsInputs.agentName}입니다.
               <span className="logo-text">중개사 AI 클럽</span>
             </div>
           </div>
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <nav className="nav-links">
+              <a 
+                href="/news.html" 
+                className="nav-link" 
+                style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '10px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', transition: 'all 0.2s', fontSize: '13.5px' }}
+              >
+                <TrendingUp className="w-4 h-4 text-cyan-400" />
+                <span>AI 실무 인사이트</span>
+              </a>
+            </nav>
             <a href="#join" className="cta-button">
               크루 합류하기
             </a>
