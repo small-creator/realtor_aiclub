@@ -577,20 +577,75 @@ ${smsInputs.agentName}입니다.
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed')
+          // 한 번 등장한 요소는 관찰 해제 — 되돌아 스크롤해도 재실행되지 않게
+          observer.unobserve(entry.target)
         }
       })
     }, observerOptions)
-    
-    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+
+    const revealElements = document.querySelectorAll(
+      '.reveal, .reveal-left, .reveal-right, .reveal-mask, .reveal-scale, .reveal-blur'
+    )
     revealElements.forEach(el => observer.observe(el))
-    
+
     return () => {
-      revealElements.forEach(el => observer.unobserve(el))
+      observer.disconnect()
     }
   }, [filteredPrograms.length, vibePromptType, quizStep, showAllPrograms])
 
+  // 모션 전용: 스크롤 진행 바(A1) · 헤더 스크롤 상태(B1) · 커서 스포트라이트(A8)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    // 스크롤 최대치는 캐시해 두고 크기가 바뀔 때만 다시 잰다 (핸들러 안에서 레이아웃을 읽지 않기 위해).
+    // rAF 로 감싸지 않는다 — 일부 임베디드 뷰에서 rAF 가 굶으면 헤더·진행 바가 영영 갱신되지 않는다.
+    let maxScroll = 0
+    const measure = () => {
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    }
+
+    const onScroll = () => {
+      const y = window.scrollY
+      const progress = maxScroll > 0 ? Math.min(y / maxScroll, 1) : 0
+      document.documentElement.style.setProperty('--sp', String(progress))
+      document.querySelector('.header')?.classList.toggle('scrolled', y > 60)
+    }
+
+    const onResize = () => {
+      measure()
+      onScroll()
+    }
+
+    const onMove = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      const card = target?.closest?.('.spotlight') as HTMLElement | null
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    }
+
+    measure()
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+    document.addEventListener('mousemove', onMove, { passive: true })
+
+    // 카드가 펼쳐지거나 폰트가 늦게 붙어 문서 높이가 바뀌어도 진행 바가 어긋나지 않게
+    const ro = new ResizeObserver(onResize)
+    ro.observe(document.body)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+      document.removeEventListener('mousemove', onMove)
+      ro.disconnect()
+    }
+  }, [])
+
   return (
     <div className="min-h-screen bg-[#07070a] text-slate-100 flex flex-col font-sans overflow-x-hidden gradient-bg">
+      <div className="scroll-progress" aria-hidden="true" />
       <header className="header">
         <div className="container flex-row items-center justify-between">
           <div className="logo-container">
@@ -627,7 +682,7 @@ ${smsInputs.agentName}입니다.
               <span>대한민국 최초 공인중개사 AI 커뮤니티</span>
             </div>
 
-            <h1 className="hero-title reveal reveal-delay-1">
+            <h1 className="hero-title reveal-mask reveal-delay-1">
               AI를 활용하는 상위 1% 중개사들의 <br />
               <span className="glow-text">중개업 자동화 비밀기지</span>
             </h1>
@@ -665,7 +720,7 @@ ${smsInputs.agentName}입니다.
             </div>
             
             <div className="pain-grid" style={{ marginBottom: '40px' }}>
-              <div className="pain-item reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className="pain-item spotlight reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                   <span className="pain-tag">PROBLEM 01</span>
                   <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -678,7 +733,7 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="pain-item reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className="pain-item spotlight reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                   <span className="pain-tag">PROBLEM 02</span>
                   <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -691,7 +746,7 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="pain-item reveal reveal-delay-3" style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className="pain-item spotlight reveal reveal-delay-3" style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                   <span className="pain-tag">PROBLEM 03</span>
                   <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(6, 182, 212, 0.12)', border: '1px solid rgba(6, 182, 212, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -705,7 +760,7 @@ ${smsInputs.agentName}입니다.
               </div>
             </div>
             
-            <div className="compare-table-container reveal reveal-delay-4" style={{ marginBottom: '40px' }}>
+            <div className="compare-table-container compare-anim reveal reveal-delay-4" style={{ marginBottom: '40px' }}>
               <table className="compare-table">
                 <thead>
                   <tr>
@@ -756,7 +811,7 @@ ${smsInputs.agentName}입니다.
             </div>
 
             <div className="master-grid">
-              <div className="master-card reveal reveal-delay-1">
+              <div className="master-card spotlight reveal reveal-delay-1">
                 <div className="master-icon blue">
                   <Code className="w-6 h-6 text-blue-400" />
                 </div>
@@ -766,7 +821,7 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="master-card reveal reveal-delay-2">
+              <div className="master-card spotlight reveal reveal-delay-2">
                 <div className="master-icon purple">
                   <Database className="w-6 h-6 text-purple-400" />
                 </div>
@@ -776,7 +831,7 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="master-card reveal reveal-delay-3">
+              <div className="master-card spotlight reveal reveal-delay-3">
                 <div className="master-icon cyan">
                   <Users className="w-6 h-6 text-cyan-400" />
                 </div>
@@ -837,7 +892,8 @@ ${smsInputs.agentName}입니다.
                 <div
                   key={prog.id}
                   onClick={() => setSelectedProgram(prog)}
-                  className={`vault-card reveal reveal-delay-${(idx % 4) + 1}`}
+                  className="vault-card spotlight reveal-scale"
+                  style={{ '--i': (idx % 3) + Math.floor(idx / 3) } as React.CSSProperties}
                 >
                   <div className="flex-row justify-between items-center" style={{ display: 'flex' }}>
                     <span className="vault-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
@@ -901,8 +957,8 @@ ${smsInputs.agentName}입니다.
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', maxWidth: '800px', margin: '0 auto' }}>
-              <div className="master-card reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+            <div className="track-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', maxWidth: '800px', margin: '0 auto' }}>
+              <div className="master-card spotlight reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                 <div>
                   <div className="master-icon blue">
                     <GraduationCap className="w-6 h-6 text-blue-400" />
@@ -922,7 +978,7 @@ ${smsInputs.agentName}입니다.
                 </button>
               </div>
 
-              <div className="master-card reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+              <div className="master-card spotlight reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                 <div>
                   <div className="master-icon purple">
                     <Rocket className="w-6 h-6 text-purple-400" />
@@ -943,7 +999,7 @@ ${smsInputs.agentName}입니다.
               </div>
             </div>
 
-            <div className="compare-table-container reveal reveal-delay-3" style={{ marginTop: '48px', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div className="compare-table-container compare-anim reveal reveal-delay-3" style={{ marginTop: '48px', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
               <table className="compare-table">
                 <thead>
                   <tr>
@@ -1055,7 +1111,7 @@ ${smsInputs.agentName}입니다.
                 </div>
               </div>
 
-              <div className="console-panel reveal-right">
+              <div className={`console-panel reveal-right${isGenerating ? ' is-running' : ''}`}>
                 <div className="console-header">
                   <div className="console-dots">
                     <div className="console-dot red" />
@@ -1106,7 +1162,7 @@ ${smsInputs.agentName}입니다.
                   )}
                   
                   {vibeStep === 3 && (
-                    <div style={{ marginTop: '16px' }}>
+                    <div className="vibe-success" style={{ marginTop: '16px' }}>
                       <div style={{ color: '#10b981', fontWeight: 'bold', fontFamily: 'monospace', marginBottom: '12px' }}>
                         {'> [SUCCESS] 빌딩 완료! 실행 프로그램 미리보기:'}
                       </div>
@@ -1523,25 +1579,25 @@ ${smsInputs.agentName}입니다.
 
             <div className="testimonials-panel reveal">
               <div className="testimonial-grid">
-                <div className="testimonial-card">
+                <div className="testimonial-card reveal-scale" style={{ '--i': 0 } as React.CSSProperties}>
                   <p className="testimonial-quote">
                     "결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다."
                   </p>
                   <span className="testimonial-author">— 개업 공인중개사</span>
                 </div>
-                <div className="testimonial-card">
+                <div className="testimonial-card reveal-scale" style={{ '--i': 1 } as React.CSSProperties}>
                   <p className="testimonial-quote">
                     "영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다."
                   </p>
                   <span className="testimonial-author">— 개업 공인중개사</span>
                 </div>
-                <div className="testimonial-card">
+                <div className="testimonial-card reveal-scale" style={{ '--i': 2 } as React.CSSProperties}>
                   <p className="testimonial-quote">
                     "막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다."
                   </p>
                   <span className="testimonial-author">— 소속 공인중개사</span>
                 </div>
-                <div className="testimonial-card">
+                <div className="testimonial-card reveal-scale" style={{ '--i': 3 } as React.CSSProperties}>
                   <p className="testimonial-quote">
                     "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다... 하하하."
                   </p>

@@ -11,3 +11,6 @@ git_push.bat
 public/config/git_config.json
 
 
+
+# 모션 작업 롤백용 원본 스냅샷
+_rollback/
