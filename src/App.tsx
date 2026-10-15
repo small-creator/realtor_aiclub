@@ -1648,22 +1648,22 @@ ${smsInputs.agentName}입니다.
                 <Sparkles className="w-8 h-8 text-cyan-400" />
               </div>
               <div>
-                <h2 className="section-title" style={{ fontSize: '32px', margin: 0 }}>중개사AI클럽 정규과정 대기</h2>
+                <h2 className="section-title" style={{ fontSize: '32px', margin: 0 }}>중개사AI클럽 정규과정 신청하기</h2>
                 <p className="section-desc" style={{ marginTop: '12px', fontSize: '16px', lineHeight: '1.6', color: 'var(--color-text-secondary)' }}>
-                  현재 정규과정은 조기 마감되었습니다.<br />
-                  아래 대기방에 입장해 주시면 정규과정 오픈 시 가장 먼저 신청 링크를 안내해 드립니다.
+                  지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다.<br />
+                  강의 수강 후 중개사AI클럽에 크루로 합류하실 수 있습니다.
                 </p>
               </div>
 
               <div style={{ marginTop: '16px', width: '100%', maxWidth: '400px' }}>
                 <a
-                  href="https://open.kakao.com/o/g0MWAjKi"
+                  href="https://cojungsa.liveklass.com/classes/317917"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cta-button"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '16px 0', fontSize: '16px', textDecoration: 'none', width: '100%' }}
                 >
-                  정규과정 대기방 입장하기 <ArrowRight className="w-4 h-4" />
+                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
