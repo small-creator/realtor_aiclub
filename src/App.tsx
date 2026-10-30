@@ -1657,7 +1657,7 @@ ${smsInputs.agentName}입니다.
 
               <div style={{ marginTop: '16px', width: '100%', maxWidth: '400px' }}>
                 <a
-                  href="https://cojungsa.liveklass.com/classes/317917"
+                  href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cta-button"
