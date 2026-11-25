@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="theme-color" content="#0f111a">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <title>게시글 상세 | 중개사 AI 클럽</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -106,8 +108,8 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
     </a>
   </div>
 
-  <article id="post-container" class="detail-card rounded-2xl p-lg md:p-xl">
-    <div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 불러오는 중...</div>
+  <article id="post-container" class="detail-card rounded-2xl p-lg md:p-xl" aria-live="polite">
+    <div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 불러오는 중…</div>
   </article>
 
   <div id="admin-actions" class="hidden mt-lg gap-base">

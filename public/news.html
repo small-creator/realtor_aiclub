@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="theme-color" content="#0f111a">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <title>AI 뉴스 &amp; 개발 팁 | 중개사 AI 클럽</title>
 <meta name="description" content="공인중개사를 위한 AI 실무 자동화, GEO 마케팅, 무료 매물장·통화녹음 분석 등 실전 AI 뉴스와 개발 팁을 제공합니다.">
 <link rel="canonical" href="https://realtor-aiclub-rosy.vercel.app/news">
@@ -122,8 +124,8 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
       
       <div class="mb-lg">
         <div class="relative flex items-center bg-surface-container rounded-xl px-base py-3 border border-border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
-          <span class="material-symbols-outlined text-muted mr-3">search</span>
-          <input id="search-input" class="bg-transparent border-none focus:ring-0 w-full font-body-lg text-on-surface placeholder:text-muted focus:outline-none" placeholder="뉴스 제목이나 내용을 검색해 보세요" type="text">
+          <span class="material-symbols-outlined text-muted mr-3" aria-hidden="true">search</span>
+          <input id="search-input" name="q" aria-label="뉴스 검색" autocomplete="off" class="bg-transparent border-none focus:ring-0 w-full font-body-lg text-on-surface placeholder:text-muted focus:outline-none" placeholder="뉴스 제목이나 내용을 검색해 보세요…" type="text">
         </div>
       </div>
 
@@ -136,8 +138,8 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
         <button data-cat="개발팁" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">개발팁</button>
       </div>
 
-      <div id="news-list" class="space-y-4">
-        <div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 불러오는 중...</div>
+      <div id="news-list" class="space-y-4" aria-live="polite">
+        <div class="py-xl text-center text-muted font-body-md text-body-md">게시글을 불러오는 중…</div>
       </div>
       <div id="pagination" class="flex justify-center mt-xl gap-2 hidden"></div>
     </div>
@@ -198,7 +200,7 @@ function renderList(posts) {
     const categoryColor = getCategoryColor(p.category);
     const videoId = extractYoutubeId(p);
     const thumbHtml = videoId
-      ? `<div class="relative w-full sm:w-48 aspect-video sm:aspect-auto sm:h-28 shrink-0 rounded-lg overflow-hidden bg-black border border-border"><img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="${escapeHtml(p.title||'')}" class="w-full h-full object-cover" loading="lazy"><span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-bold text-white flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-red-500">play_arrow</span>영상</span></div>`
+      ? `<div class="relative w-full sm:w-48 aspect-video sm:aspect-auto sm:h-28 shrink-0 rounded-lg overflow-hidden bg-black border border-border"><img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="${escapeHtml(p.title||'')}" width="320" height="180" class="w-full h-full object-cover" loading="lazy"><span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-bold text-white flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-red-500" aria-hidden="true">play_arrow</span>영상</span></div>`
       : '';
     return `<a href="/news/${p.id}" class="news-item flex flex-col sm:flex-row gap-4 p-lg rounded-xl cursor-pointer block no-underline">
       ${thumbHtml}
@@ -208,7 +210,7 @@ function renderList(posts) {
           <span class="text-muted font-label-sm text-xs">${escapeHtml(p.date||'')}</span>
         </div>
         <h2 class="font-heading-md text-lg font-bold text-on-surface mt-0.5">${escapeHtml(p.title||'')}</h2>
-        <p class="text-grey-600 font-body-md text-body-md line-clamp-2 leading-relaxed">${escapeHtml(summary)}${summary.length>=120?'...':''}</p>
+        <p class="text-grey-600 font-body-md text-body-md line-clamp-2 leading-relaxed">${escapeHtml(summary)}${summary.length>=120?'…':''}</p>
       </div>
     </a>`;
   }).join('');

@@ -647,14 +647,27 @@ ${smsInputs.agentName}입니다.
     }
   }, [])
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedProgram(null)
+        setShowCurriculumModal(false)
+        setShowQuizModal(false)
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
+
   return (
     <div className="page-shell">
+      <a href="#main-content" className="visually-hidden">본문으로 건너뛰기</a>
       <div className="scroll-progress" aria-hidden="true" />
       <header className="header">
         <div className="container flex-row items-center justify-between">
           <div className="logo-container">
             <div className="logo-icon">
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <span className="logo-text">중개사 AI 클럽</span>
@@ -663,7 +676,7 @@ ${smsInputs.agentName}입니다.
           <div className="header-actions">
             <nav className="nav-links">
               <a href="/news" className="nav-link">
-                <TrendingUp className="w-4 h-4 dusk-accent" />
+                <TrendingUp className="w-4 h-4 dusk-accent" aria-hidden="true" />
                 <span>AI 실무 인사이트</span>
               </a>
             </nav>
@@ -674,7 +687,7 @@ ${smsInputs.agentName}입니다.
         </div>
       </header>
 
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow">
         <section id="hero" className="hero-section">
           <div className="container hero-stage">
             <div className="hero-copy">
@@ -854,7 +867,7 @@ ${smsInputs.agentName}입니다.
                       }}
                       className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
                     >
-                      <IconComp className="w-3.5 h-3.5" />
+                      <IconComp className="w-3.5 h-3.5" aria-hidden="true" />
                       {cat.label}
                     </button>
                   )
@@ -866,33 +879,41 @@ ${smsInputs.agentName}입니다.
               {filteredPrograms.slice(0, showAllPrograms ? undefined : 9).map((prog) => (
                 <div
                   key={prog.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setSelectedProgram(prog)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedProgram(prog)
+                    }
+                  }}
                   className="vault-card spotlight"
                 >
                   <div className="flex-row justify-between items-center">
                     <span className="vault-tag">
                       {
-                        prog.category === 'doc' ? <><FileCode className="w-3 h-3" /> 공적 서류</> :
-                        prog.category === 'scout' ? <><Search className="w-3 h-3" /> 매물 수집</> :
-                        prog.category === 'ad' ? <><Send className="w-3 h-3" /> 매물 광고</> :
-                        prog.category === 'copy' ? <><MessageSquare className="w-3 h-3" /> 상담·카피</> :
-                        prog.category === 'report' ? <><FileText className="w-3 h-3" /> 보고서</> :
-                        prog.category === 'crm' ? <><Users className="w-3 h-3" /> CRM</> :
-                        <><Clock className="w-3 h-3" /> 영업·알림</>
+                        prog.category === 'doc' ? <><FileCode className="w-3 h-3" aria-hidden="true" /> 공적 서류</> :
+                        prog.category === 'scout' ? <><Search className="w-3 h-3" aria-hidden="true" /> 매물 수집</> :
+                        prog.category === 'ad' ? <><Send className="w-3 h-3" aria-hidden="true" /> 매물 광고</> :
+                        prog.category === 'copy' ? <><MessageSquare className="w-3 h-3" aria-hidden="true" /> 상담·카피</> :
+                        prog.category === 'report' ? <><FileText className="w-3 h-3" aria-hidden="true" /> 보고서</> :
+                        prog.category === 'crm' ? <><Users className="w-3 h-3" aria-hidden="true" /> CRM</> :
+                        <><Clock className="w-3 h-3" aria-hidden="true" /> 영업·알림</>
                       }
                     </span>
                     <span className="vault-dev">{prog.developer.split(' ').pop()}</span>
                   </div>
                   <h3 className="vault-title">
                     <span>{prog.name}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 dusk-muted flex-shrink-0" />
+                    <ArrowUpRight className="w-3.5 h-3.5 dusk-muted flex-shrink-0" aria-hidden="true" />
                   </h3>
                   <p className="vault-desc">
                     {prog.description}
                   </p>
                   <div className="vault-card-footer">
                     <span className="vault-impact">
-                      <CheckCircle className="w-3.5 h-3.5" />
+                      <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" />
                       {prog.impact}
                     </span>
                     <span className="vault-more">자세히 보기</span>
@@ -941,7 +962,7 @@ ${smsInputs.agentName}입니다.
                   className="cta-button cta-button--block"
                 >
                   <span>커리큘럼 확인하기</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
 
@@ -957,7 +978,7 @@ ${smsInputs.agentName}입니다.
                   className="secondary-button cta-button--block"
                 >
                   <span>합격 가능성 진단하기</span>
-                  <Search className="w-4 h-4" />
+                  <Search className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -1010,7 +1031,7 @@ ${smsInputs.agentName}입니다.
                     className={`prompt-chip ${vibePromptType === 'crawl' ? 'active' : ''}`}
                     disabled={isGenerating}
                   >
-                    <Search className="w-4 h-4 dusk-accent" />
+                    <Search className="w-4 h-4 dusk-accent" aria-hidden="true" />
                     네이버 부동산 매물 엑셀 크롤러
                   </button>
                   <button
@@ -1018,7 +1039,7 @@ ${smsInputs.agentName}입니다.
                     className={`prompt-chip ${vibePromptType === 'adauto' ? 'active' : ''}`}
                     disabled={isGenerating}
                   >
-                    <Send className="w-4 h-4 dusk-accent" />
+                    <Send className="w-4 h-4 dusk-accent" aria-hidden="true" />
                     매물 광고 자동 등록 및 예약 관리
                   </button>
                   <button
@@ -1026,7 +1047,7 @@ ${smsInputs.agentName}입니다.
                     className={`prompt-chip ${vibePromptType === 'agent' ? 'active' : ''}`}
                     disabled={isGenerating}
                   >
-                    <Bot className="w-4 h-4 dusk-accent" />
+                    <Bot className="w-4 h-4 dusk-accent" aria-hidden="true" />
                     매물번호 입력 포스팅 에이전트팀
                   </button>
                   <button
@@ -1034,7 +1055,7 @@ ${smsInputs.agentName}입니다.
                     className={`prompt-chip ${vibePromptType === 'compile' ? 'active' : ''}`}
                     disabled={isGenerating}
                   >
-                    <Laptop className="w-4 h-4 dusk-accent" />
+                    <Laptop className="w-4 h-4 dusk-accent" aria-hidden="true" />
                     윈도우 단독 프로그램 .exe 빌드
                   </button>
                 </div>
@@ -1042,14 +1063,14 @@ ${smsInputs.agentName}입니다.
                 <div className="form-panel">
                   <div className="flex-col gap-4">
                     <h3 className="pain-title flex-row items-center gap-2">
-                      <Laptop className="w-5 h-5 dusk-accent" />
+                      <Laptop className="w-5 h-5 dusk-accent" aria-hidden="true" />
                       자연어로 지시한 바이브 코딩 명령문
                     </h3>
                     <div className="prompt-quote-box">
-                      {vibePromptType === 'crawl' && '"네이버 부동산 API의 특정 단지번호를 가져와서 엑셀 파일로 바로 변환해 주는 파이썬 프로그램을 작성해 줘."'}
-                      {vibePromptType === 'adauto' && '"이실장넷과 부동산뱅크에 자동 로그인해서, 엑셀에 정리된 매물 목록을 한 번에 일괄 등록하고 예약 관리까지 해 주는 RPA 프로그램을 만들어 줘."'}
-                      {vibePromptType === 'agent' && '"매물번호만 입력해 주면, 정보수집/웹검색/글작성/썸네일생성/업로더 역할이 체인을 이루어 최종 블로그에 글을 등록하는 에이전트 팀을 구성해 줘."'}
-                      {vibePromptType === 'compile' && '"완성된 파이썬 스크립트 파일을 코딩 모르는 사무원도 원클릭으로 쓸 수 있도록 단독 윈도우 실행프로그램(.exe)으로 패키징 빌드해 줘."'}
+                      {vibePromptType === 'crawl' && '“네이버 부동산 API의 특정 단지번호를 가져와서 엑셀 파일로 바로 변환해 주는 파이썬 프로그램을 작성해 줘.”'}
+                      {vibePromptType === 'adauto' && '“이실장넷과 부동산뱅크에 자동 로그인해서, 엑셀에 정리된 매물 목록을 한 번에 일괄 등록하고 예약 관리까지 해 주는 RPA 프로그램을 만들어 줘.”'}
+                      {vibePromptType === 'agent' && '“매물번호만 입력해 주면, 정보수집/웹검색/글작성/썸네일생성/업로더 역할이 체인을 이루어 최종 블로그에 글을 등록하는 에이전트 팀을 구성해 줘.”'}
+                      {vibePromptType === 'compile' && '“완성된 파이썬 스크립트 파일을 코딩 모르는 사무원도 원클릭으로 쓸 수 있도록 단독 윈도우 실행프로그램(.exe)으로 패키징 빌드해 줘.”'}
                     </div>
                   </div>
 
@@ -1076,7 +1097,7 @@ ${smsInputs.agentName}입니다.
                   {vibeStep === 0 && (
                     <div className="console-empty">
                       <div className="console-empty-icon">
-                        <Code className="w-5 h-5 dusk-muted" />
+                        <Code className="w-5 h-5 dusk-muted" aria-hidden="true" />
                       </div>
                       <p className="dusk-ink-2">바이브 컴파일러 출력 대기 중</p>
                       <p className="dusk-muted">왼쪽 지시어 항목을 선택하고 실행을 클릭해 주세요.</p>
@@ -1137,11 +1158,11 @@ ${smsInputs.agentName}입니다.
                                 <div className="sim-note">…외 43건</div>
                               </div>
                               <div className="sim-toolbar" style={{ marginTop: '12px' }}>
-                                <span className="sim-pill"><Download className="w-3 h-3" /> 엑셀 다운로드</span>
-                                <span className="sim-pill sim-pill--muted"><RefreshCw className="w-3 h-3" /> 새로고침</span>
+                                <span className="sim-pill"><Download className="w-3 h-3" aria-hidden="true" /> 엑셀 다운로드</span>
+                                <span className="sim-pill sim-pill--muted"><RefreshCw className="w-3 h-3" aria-hidden="true" /> 새로고침</span>
                               </div>
                               <div className="sim-status-bar">
-                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" /> 수집 완료: 47건 (naver_listings.xlsx 저장됨)</span>
+                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" aria-hidden="true" /> 수집 완료: 47건 (naver_listings.xlsx 저장됨)</span>
                               </div>
                             </div>
                           )}
@@ -1160,7 +1181,7 @@ ${smsInputs.agentName}입니다.
                                   { name: '공덕파크자이 28평 매매', price: '15.1억', status: '대기중', done: false }
                                 ].map((item, i) => (
                                   <div key={i} className="sim-list-row">
-                                    {item.done ? <CheckCircle className="w-3.5 h-3.5 dusk-accent" /> : <Clock className="w-3.5 h-3.5 dusk-accent-2" />}
+                                    {item.done ? <CheckCircle className="w-3.5 h-3.5 dusk-accent" aria-hidden="true" /> : <Clock className="w-3.5 h-3.5 dusk-accent-2" aria-hidden="true" />}
                                     <span className="dusk-ink flex-grow">{item.name}</span>
                                     <span className="dusk-muted">{item.price}</span>
                                     <span className={item.done ? 'dusk-accent' : 'dusk-accent-2'}>{item.status}</span>
@@ -1196,7 +1217,7 @@ ${smsInputs.agentName}입니다.
                                 ))}
                               </div>
                               <div className="sim-status-bar">
-                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" /> 블로그 포스팅 완료</span>
+                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" aria-hidden="true" /> 블로그 포스팅 완료</span>
                                 <span className="sim-pill">결과 보기</span>
                               </div>
                             </div>
@@ -1213,7 +1234,7 @@ ${smsInputs.agentName}입니다.
                                   const IconComp = item.icon
                                   return (
                                     <div key={i} className="sim-module-card">
-                                      <IconComp className="w-5 h-5 dusk-accent" />
+                                      <IconComp className="w-5 h-5 dusk-accent" aria-hidden="true" />
                                       <span>{item.name}</span>
                                     </div>
                                   )
@@ -1243,7 +1264,7 @@ ${smsInputs.agentName}입니다.
 
         {selectedProgram && (
           <div className="modal-backdrop" onClick={() => setSelectedProgram(null)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content" role="dialog" aria-modal="true" aria-label={selectedProgram.name} onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setSelectedProgram(null)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
@@ -1264,7 +1285,7 @@ ${smsInputs.agentName}입니다.
                   <ul className="modal-features-list">
                     {selectedProgram.features.map((feat, idx) => (
                       <li key={idx} className="modal-feature-item">
-                        <Check className="w-4 h-4 dusk-accent flex-shrink-0" />
+                        <Check className="w-4 h-4 dusk-accent flex-shrink-0" aria-hidden="true" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -1287,7 +1308,7 @@ ${smsInputs.agentName}입니다.
 
         {showCurriculumModal && (
           <div className="modal-backdrop" onClick={() => setShowCurriculumModal(false)}>
-            <div className="modal-content modal-content--wide" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content modal-content--wide" role="dialog" aria-modal="true" aria-label="정규과정 핵심 마스터 커리큘럼" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowCurriculumModal(false)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
@@ -1302,7 +1323,7 @@ ${smsInputs.agentName}입니다.
 
                 <div className="master-footer">
                   <h4 className="master-footer-title">
-                    <Bot className="w-5 h-5 dusk-accent" />
+                    <Bot className="w-5 h-5 dusk-accent" aria-hidden="true" />
                     바이브 코딩(Vibe Coding)이란 무엇인가요?
                   </h4>
                   <p className="master-desc">
@@ -1313,49 +1334,49 @@ ${smsInputs.agentName}입니다.
                 <div className="timeline">
                   <div className="timeline-content">
                     <h3>
-                      <Search className="w-5 h-5 dusk-accent" />
+                      <Search className="w-5 h-5 dusk-accent" aria-hidden="true" />
                       <span>1강: 웹 정보 수집 및 단순 반복 업무 자동화 실무</span>
                     </h3>
                     <p className="master-desc">
                       인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 매물광고 같은 반복 작업을 컴퓨터가 스스로 대신하게 만듭니다.
                     </p>
                     <ul className="timeline-list">
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 또는 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 또는 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
                     </ul>
                   </div>
 
                   <div className="timeline-content">
                     <h3>
-                      <Bot className="w-5 h-5 dusk-accent-2" />
+                      <Bot className="w-5 h-5 dusk-accent-2" aria-hidden="true" />
                       <span>2강: 나만의 AI 직원 채용 및 단독 프로그램 제작</span>
                     </h3>
                     <p className="master-desc">
                       매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 에이전트 워크플로우를 설계하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
                     </p>
                     <ul className="timeline-list">
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
                     </ul>
                   </div>
 
                   <div className="timeline-content">
                     <h3>
-                      <Wrench className="w-5 h-5 dusk-accent" />
+                      <Wrench className="w-5 h-5 dusk-accent" aria-hidden="true" />
                       <span>3강: 나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연</span>
                     </h3>
                     <p className="master-desc">
                       2강까지 습득한 기술을 바탕으로 수강생들이 기획한 중개업 자동화 아이디어를 실제 프로그램으로 구현하기 위해 설계 프로세스를 컨설팅받고 작동 모델을 직접 눈으로 확인합니다.
                     </p>
                     <ul className="timeline-list">
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
-                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" aria-hidden="true" /><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
                     </ul>
                   </div>
                 </div>
@@ -1366,7 +1387,7 @@ ${smsInputs.agentName}입니다.
 
         {showQuizModal && (
           <div className="modal-backdrop" onClick={() => setShowQuizModal(false)}>
-            <div className="modal-content modal-content--quiz" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content modal-content--quiz" role="dialog" aria-modal="true" aria-label="프리패스 합격 가능성 자가 진단기" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowQuizModal(false)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
@@ -1404,7 +1425,7 @@ ${smsInputs.agentName}입니다.
                   ) : (
                     <div className="flex-col gap-6 items-center" style={{ textAlign: 'center' }}>
                       <div className="join-icon-wrap">
-                        <Gift className="w-6 h-6" />
+                        <Gift className="w-6 h-6" aria-hidden="true" />
                       </div>
                       <div>
                         <h3 className="success-title">진단이 모두 완료되었습니다!</h3>
@@ -1419,7 +1440,7 @@ ${smsInputs.agentName}입니다.
                                 이미 AI나 툴의 이해도가 훌륭하십니다. 교육 참가를 거치지 않고 나만의 자동화 도구를 기여하여 즉시 비밀창고를 무제한 잠금 해제할 수 있습니다.
                               </p>
                               <div className="quiz-info-callout">
-                                <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                                <Info className="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
                                 <div>
                                   <strong>신청 방법:</strong> 공유 가능한 프로그램을 본인의 구글 드라이브에 업로드한 후, 아래 프리패스 신청하기 버튼을 통해 연결되는 1:1 오픈채팅방에 해당 공유 링크를 함께 전달해 주세요.
                                 </div>
@@ -1482,25 +1503,25 @@ ${smsInputs.agentName}입니다.
             <div className="testimonial-grid">
               <div className="testimonial-card">
                 <p className="testimonial-quote">
-                  "결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다."
+                  “결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다.”
                 </p>
                 <span className="testimonial-author">개업 공인중개사</span>
               </div>
               <div className="testimonial-card">
                 <p className="testimonial-quote">
-                  "영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다."
+                  “영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다.”
                 </p>
                 <span className="testimonial-author">개업 공인중개사</span>
               </div>
               <div className="testimonial-card">
                 <p className="testimonial-quote">
-                  "막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다."
+                  “막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다.”
                 </p>
                 <span className="testimonial-author">소속 공인중개사</span>
               </div>
               <div className="testimonial-card">
                 <p className="testimonial-quote">
-                  "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다… 하하하."
+                  “저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다… 하하하.”
                 </p>
                 <span className="testimonial-author">개업 공인중개사</span>
               </div>
@@ -1535,7 +1556,7 @@ ${smsInputs.agentName}입니다.
                   rel="noopener noreferrer"
                   className="cta-button cta-button--lg cta-button--block"
                 >
-                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
+                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -1547,7 +1568,7 @@ ${smsInputs.agentName}입니다.
         <div className="container footer-inner">
           <div className="footer-logo">
             <div className="footer-logo-box">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
             </div>
             <span className="footer-logo-text">중개사 AI 클럽</span>
           </div>
@@ -1563,8 +1584,8 @@ ${smsInputs.agentName}입니다.
       </footer>
 
       {showNotification && (
-        <div className="toast-notification">
-          <ShieldCheck className="w-4 h-4 dusk-accent" />
+        <div className="toast-notification" role="status" aria-live="polite">
+          <ShieldCheck className="w-4 h-4 dusk-accent" aria-hidden="true" />
           <span>성공적으로 클립보드에 복사되었습니다!</span>
         </div>
       )}
