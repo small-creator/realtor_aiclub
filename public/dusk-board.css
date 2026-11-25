@@ -1,0 +1,224 @@
+/* Hallmark · shape: kept · genre: modern-minimal · theme: Dusk (deal 1/3, seed korean-real-estate-agents-aec7·6ef4fc33·2026-11-25·r0) · redesign: restyle
+ * hero: kept · nav: kept · footer: kept · imagery: the product · signature: smoked-glass board cards and periwinkle pill actions on slate · dusk: fog/periwinkle-apricot/glass
+ * axes: dark/grotesk-sans/cool · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 · weakest: E, unified board pages onto Dusk OKLCH tokens with smoked glass cards, Wix Madefor typography and periwinkle/apricot signals */
+:root {
+  color-scheme: dark;
+  --color-paper: oklch(17.5% 0.014 268);
+  --color-paper-2: oklch(21% 0.016 268);
+  --color-paper-3: oklch(25% 0.017 268);
+  --color-ink: oklch(96% 0.006 75);
+  --color-ink-2: oklch(85% 0.010 262);
+  --color-muted: oklch(70% 0.016 262);
+  --color-rule: oklch(30% 0.016 266);
+  --color-light: oklch(100% 0 0);
+  --color-accent: oklch(77% 0.10 274);
+  --color-accent-ink: oklch(19% 0.035 274);
+  --color-accent-hi: oklch(84% 0.085 274);
+  --color-accent-soft: oklch(91% 0.038 274);
+  --color-accent-2: oklch(83% 0.095 62);
+  --color-focus: oklch(80% 0.10 274);
+  --color-accent-tint: oklch(77% 0.10 274 / 0.14);
+  --color-accent-border: oklch(77% 0.10 274 / 0.30);
+  --color-accent-2-tint: oklch(83% 0.095 62 / 0.14);
+  --color-accent-2-border: oklch(83% 0.095 62 / 0.30);
+  --color-border-subtle: oklch(100% 0 0 / 0.08);
+  --color-header-bg: oklch(17.5% 0.014 268 / 0.84);
+  --color-hero-glow: oklch(77% 0.10 274 / 0.10);
+  --glass: oklch(22% 0.018 268 / 0.62);
+  --glass-blur: 22px;
+  --glass-hi: inset 0 1px 0 oklch(100% 0 0 / 0.10), inset 0 0 0 1px oklch(100% 0 0 / 0.06);
+  --shadow-card: 0 1px 0 oklch(100% 0 0 / 0.06) inset, 0 28px 56px -28px oklch(8% 0.02 268 / 0.7);
+  --font-display: "Wix Madefor Display", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Wix Madefor Text", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 18px;
+  --radius-inner: 10px;
+  --radius-pill: 999px;
+}
+
+html, body {
+  overflow-x: clip;
+  background-color: var(--color-paper) !important;
+  color: var(--color-ink) !important;
+  font-family: var(--font-body) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image: radial-gradient(ellipse 68% 36% at 50% -10%, var(--color-hero-glow) 0%, transparent 72%);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.022em;
+}
+
+header {
+  background-color: var(--color-header-bg) !important;
+  border-color: var(--color-border-subtle) !important;
+}
+
+.dusk-logo-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-inner);
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-light) 35%, transparent);
+}
+
+.dusk-logo-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--color-ink);
+}
+
+.news-item,
+.detail-card,
+.form-card,
+.admin-card,
+.dusk-glass {
+  background: var(--glass) !important;
+  border: 0 !important;
+  border-radius: var(--radius-card) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.25);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.25);
+  box-shadow: var(--glass-hi), var(--shadow-card);
+}
+
+.news-item {
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.news-item:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--glass-hi), var(--shadow-card), 0 0 0 1px var(--color-accent-border) !important;
+}
+
+.dusk-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-light) 35%, transparent);
+  transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dusk-btn-primary:hover {
+  background-color: var(--color-accent-hi);
+  transform: translateY(-1px);
+}
+
+.dusk-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background-color: color-mix(in oklab, var(--color-light) 4%, transparent);
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1), border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dusk-btn-ghost:hover {
+  background-color: color-mix(in oklab, var(--color-light) 7%, transparent);
+  border-color: var(--color-accent-border);
+}
+
+.dusk-cta-card {
+  margin-top: 40px;
+  padding: 28px;
+  border-radius: var(--radius-card);
+  background: var(--glass);
+  box-shadow: var(--glass-hi), var(--shadow-card);
+  border: 1px solid var(--color-accent-border);
+}
+
+.dusk-badge-accent {
+  background-color: var(--color-accent-tint);
+  color: var(--color-accent-soft);
+  border: 1px solid var(--color-accent-border);
+}
+
+.dusk-badge-apricot {
+  background-color: var(--color-accent-2-tint);
+  color: var(--color-accent-2);
+  border: 1px solid var(--color-accent-2-border);
+}
+
+.dusk-badge-muted {
+  background-color: color-mix(in oklab, var(--color-light) 5%, transparent);
+  color: var(--color-ink-2);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.prose-content {
+  color: var(--color-ink-2) !important;
+}
+
+.prose-content strong {
+  color: var(--color-ink) !important;
+}
+
+.prose-content h1,
+.prose-content h2,
+.prose-content h3 {
+  color: var(--color-ink) !important;
+  font-weight: 500 !important;
+}
+
+.prose-content a {
+  color: var(--color-accent) !important;
+}
+
+.prose-content blockquote {
+  border-left-color: var(--color-accent) !important;
+  color: var(--color-ink-2) !important;
+}
+
+.prose-content table thead {
+  background-color: var(--color-paper-3) !important;
+  color: var(--color-accent-soft) !important;
+}
+
+.prose-content table,
+.prose-content th,
+.prose-content td {
+  border-color: var(--color-rule) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

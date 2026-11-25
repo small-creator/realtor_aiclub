@@ -13,15 +13,12 @@ function escapeHtml(s) {
 function getCategoryColor(category) {
   switch (category) {
     case '실무자동화':
-      return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      return 'dusk-badge-accent';
     case 'AI인사이트':
-      return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
     case 'GEO마케팅':
-      return 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
-    case '개발팁':
-      return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+      return 'dusk-badge-apricot';
     default:
-      return 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20';
+      return 'dusk-badge-muted';
   }
 }
 
@@ -171,14 +168,14 @@ function buildCourseCtaHtml(postId) {
   const loc = 'news_post_' + postId;
   const url = 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=' + loc;
   return `
-    <div class="mt-10 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-cyan-500/10 via-[#141420] to-purple-500/10 border border-cyan-500/25">
+    <div class="dusk-cta-card">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-2">
-          <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">중개사 AI 클럽 정규과정 VOD</span>
-          <h3 class="font-heading-lg text-xl font-bold text-on-surface">코딩을 몰라도 나만의 중개 자동화 시스템을 직접 구축하세요</h3>
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold dusk-badge-accent">중개사 AI 클럽 정규과정 VOD</span>
+          <h3 class="font-heading-lg text-xl font-medium text-on-surface">코딩을 몰라도 나만의 중개 자동화 시스템을 직접 구축하세요</h3>
           <p class="font-body-md text-sm text-grey-600 leading-relaxed">영상에서 소개한 실무 자동화 원리를 내 중개사무소 환경에 맞게 직접 구현하고, 수강 후 중개사 AI 클럽 정예 크루로 합류하실 수 있습니다.</p>
         </div>
-        <a href="${url}" target="_blank" rel="noopener noreferrer" onclick="trackNewsCourseClick('${loc}', '${url}')" class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-sm hover:opacity-90 transition-all min-h-[48px]">
+        <a href="${url}" target="_blank" rel="noopener noreferrer" onclick="trackNewsCourseClick('${loc}', '${url}')" class="dusk-btn-primary shrink-0">
           <span>정규과정 VOD 수강 신청하기</span>
           <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
         </a>

@@ -586,7 +586,6 @@ ${smsInputs.agentName}입니다.
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed')
-          // 한 번 등장한 요소는 관찰 해제 — 되돌아 스크롤해도 재실행되지 않게
           observer.unobserve(entry.target)
         }
       })
@@ -602,12 +601,9 @@ ${smsInputs.agentName}입니다.
     }
   }, [filteredPrograms.length, vibePromptType, quizStep, showAllPrograms])
 
-  // 모션 전용: 스크롤 진행 바(A1) · 헤더 스크롤 상태(B1) · 커서 스포트라이트(A8)
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    // 스크롤 최대치는 캐시해 두고 크기가 바뀔 때만 다시 잰다 (핸들러 안에서 레이아웃을 읽지 않기 위해).
-    // rAF 로 감싸지 않는다 — 일부 임베디드 뷰에서 rAF 가 굶으면 헤더·진행 바가 영영 갱신되지 않는다.
     let maxScroll = 0
     const measure = () => {
       maxScroll = document.documentElement.scrollHeight - window.innerHeight
@@ -616,7 +612,7 @@ ${smsInputs.agentName}입니다.
     const onScroll = () => {
       const y = window.scrollY
       const progress = maxScroll > 0 ? Math.min(y / maxScroll, 1) : 0
-      document.documentElement.style.setProperty('--sp', String(progress))
+      document.documentElement.style.setProperty('--scroll-progress', String(progress))
       document.querySelector('.header')?.classList.toggle('scrolled', y > 60)
     }
 
@@ -640,7 +636,6 @@ ${smsInputs.agentName}입니다.
     window.addEventListener('resize', onResize)
     document.addEventListener('mousemove', onMove, { passive: true })
 
-    // 카드가 펼쳐지거나 폰트가 늦게 붙어 문서 높이가 바뀌어도 진행 바가 어긋나지 않게
     const ro = new ResizeObserver(onResize)
     ro.observe(document.body)
 
@@ -653,26 +648,22 @@ ${smsInputs.agentName}입니다.
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#07070a] text-slate-100 flex flex-col font-sans overflow-x-hidden gradient-bg">
+    <div className="page-shell">
       <div className="scroll-progress" aria-hidden="true" />
       <header className="header">
         <div className="container flex-row items-center justify-between">
           <div className="logo-container">
             <div className="logo-icon">
-              <Sparkles className="w-5 h-5 text-white" />
+              <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <span className="logo-text">중개사 AI 클럽</span>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div className="header-actions">
             <nav className="nav-links">
-              <a 
-                href="/news.html" 
-                className="nav-link" 
-                style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '10px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', transition: 'all 0.2s', fontSize: '13.5px' }}
-              >
-                <TrendingUp className="w-4 h-4 text-cyan-400" />
+              <a href="/news" className="nav-link">
+                <TrendingUp className="w-4 h-4 dusk-accent" />
                 <span>AI 실무 인사이트</span>
               </a>
             </nav>
@@ -686,54 +677,48 @@ ${smsInputs.agentName}입니다.
       <main className="flex-grow">
         <section id="hero" className="hero-section">
           <div className="container flex-col items-center gap-6">
-            <div className="hero-badge reveal">
-              <span className="hero-badge-dot animate-ping" />
-              <span>대한민국 최초 공인중개사 AI 커뮤니티</span>
-            </div>
-
-            <h1 className="hero-title reveal-mask reveal-delay-1">
+            <h1 className="hero-title">
               AI를 활용하는 상위 1% 중개사들의 <br />
-              <span className="glow-text">중개업 자동화 비밀기지</span>
+              <span className="hero-title-emphasis">중개업 자동화 비밀기지</span>
             </h1>
 
-            <p className="hero-desc reveal reveal-delay-2">
-              함께 고민하고, 만들고, 공유하는 중개사들의 AI 커뮤니티
+            <p className="hero-desc">
+              대한민국 최초 공인중개사 AI 커뮤니티. 함께 고민하고, 만들고, 공유합니다.
             </p>
 
-            <div className="hero-buttons reveal reveal-delay-3" style={{ justifyContent: 'center' }}>
-              <a href="#join" className="cta-button" style={{ padding: '14px 48px' }}>
+            <div className="hero-buttons">
+              <a href="#join" className="cta-button cta-button--lg">
                 정식 멤버 참가하기
               </a>
             </div>
 
-            <div className="aeo-answer-box reveal reveal-delay-4" style={{ marginTop: '40px', padding: '24px', backgroundColor: 'rgba(6, 182, 212, 0.08)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '16px', maxWidth: '720px', width: '100%', textAlign: 'left' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <Sparkles className="w-5 h-5 text-cyan-400" />
-                <strong style={{ color: '#06b6d4', fontSize: '15px' }}>AI 엔진 즉각 답변 (AEO Summary)</strong>
+            <div className="aeo-answer-box">
+              <div className="aeo-answer-head">
+                <Sparkles className="w-4 h-4" />
+                <span>중개사 AI 클럽 한눈에 요약</span>
               </div>
-              <p style={{ fontSize: '14.5px', color: '#cbd5e1', lineHeight: '1.7', margin: 0 }}>
-                중개사 AI 클럽은 공인중개사가 자연어 지시(바이브 코딩)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다. 수강생의 프로그램 개발 성공률은 88.5%에 달하며, AI 기술을 통해 일일 매물 분석 및 가공 시간을 평균 1시간에서 30초로 약 95% 단축시키는 실질적 중개 자동화 성과를 제공하고 있습니다.
+              <p className="aeo-answer-body">
+                중개사 AI 클럽은 공인중개사가 자연어 지시(Vibe Coding)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다. 수강생의 프로그램 개발 성공률은 88.5%에 달하며, AI 기술을 통해 일일 매물 분석 및 가공 시간을 평균 1시간에서 30초로 약 95% 단축시키는 실질적 중개 자동화 성과를 제공하고 있습니다.
               </p>
             </div>
           </div>
         </section>
 
-        <section id="why" className="pain-section" style={{ paddingTop: '80px', paddingBottom: '80px', borderBottom: '1px solid var(--color-border)' }}>
+        <section id="why" className="section-band">
           <div className="container">
-            <div className="section-header reveal" style={{ marginBottom: '40px' }}>
-              <span className="section-subtitle">WHY REALTOR AI CLUB</span>
+            <div className="section-header">
               <h2 className="section-title">왜 중개사 AI 클럽이어야만 할까요?</h2>
               <p className="section-desc">
                 다들 AI 시대라고 소리치지만, 정작 현업 공인중개사의 실무 환경에 녹아드는 해법은 전혀 다릅니다.
               </p>
             </div>
             
-            <div className="pain-grid" style={{ marginBottom: '40px' }}>
-              <div className="pain-item spotlight reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <span className="pain-tag">PROBLEM 01</span>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Clock className="w-5 h-5 text-amber-400" />
+            <div className="pain-grid">
+              <div className="pain-item spotlight">
+                <div className="pain-item-head">
+                  <span className="pain-index">01</span>
+                  <div className="icon-well icon-well--apricot">
+                    <Clock className="w-5 h-5" />
                   </div>
                 </div>
                 <h3 className="pain-title">매물 광고와 마케팅의 비효율</h3>
@@ -742,11 +727,11 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="pain-item spotlight reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <span className="pain-tag">PROBLEM 02</span>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Layers className="w-5 h-5 text-purple-400" />
+              <div className="pain-item spotlight">
+                <div className="pain-item-head">
+                  <span className="pain-index">02</span>
+                  <div className="icon-well">
+                    <Layers className="w-5 h-5" />
                   </div>
                 </div>
                 <h3 className="pain-title">내 업무와 겉도는 AI 도입 장벽</h3>
@@ -755,11 +740,11 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="pain-item spotlight reveal reveal-delay-3" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <span className="pain-tag">PROBLEM 03</span>
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(6, 182, 212, 0.12)', border: '1px solid rgba(6, 182, 212, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <BookOpen className="w-5 h-5 text-cyan-400" />
+              <div className="pain-item spotlight">
+                <div className="pain-item-head">
+                  <span className="pain-index">03</span>
+                  <div className="icon-well">
+                    <BookOpen className="w-5 h-5" />
                   </div>
                 </div>
                 <h3 className="pain-title">현업 적용이 어려운 이론 위주 강의</h3>
@@ -769,60 +754,60 @@ ${smsInputs.agentName}입니다.
               </div>
             </div>
             
-            <div className="compare-table-container compare-anim reveal reveal-delay-4" style={{ marginBottom: '40px' }}>
+            <div className="compare-table-container">
               <table className="compare-table">
                 <thead>
                   <tr>
-                    <th><Layers className="w-4 h-4 text-slate-400 inline-block mr-1.5 align-middle" />업무 구분</th>
-                    <th><XCircle className="w-4 h-4 text-red-400 inline-block mr-1.5 align-middle" />기존 수동 방식</th>
-                    <th><CheckCircle2 className="w-4 h-4 text-emerald-400 inline-block mr-1.5 align-middle" />AI 자동화 방식</th>
+                    <th><Layers className="w-4 h-4 dusk-muted inline-block mr-1.5 align-middle" />업무 구분</th>
+                    <th><XCircle className="w-4 h-4 dusk-accent-2 inline-block mr-1.5 align-middle" />기존 수동 방식</th>
+                    <th><CheckCircle2 className="w-4 h-4 dusk-accent inline-block mr-1.5 align-middle" />AI 자동화 방식</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><Search className="w-4 h-4 text-blue-400 inline-block mr-2 align-middle" /><strong>매물 수집 및 동향 분석</strong></td>
+                    <td><Search className="w-4 h-4 dusk-accent inline-block mr-2 align-middle" /><strong>매물 수집 및 동향 분석</strong></td>
                     <td>매일 1시간 이상 소요 (직접 검색 및 엑셀 수동 정리)</td>
-                    <td><strong className="text-emerald-400">단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
+                    <td><strong className="compare-win">단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
                   </tr>
                   <tr>
-                    <td><FileText className="w-4 h-4 text-purple-400 inline-block mr-2 align-middle" /><strong>블로그 마케팅 자동화</strong></td>
+                    <td><FileText className="w-4 h-4 dusk-accent-2 inline-block mr-2 align-middle" /><strong>블로그 마케팅 자동화</strong></td>
                     <td>매물 정보 기획, 원고 작성, 썸네일 제작 등 최소 1시간 이상</td>
-                    <td><strong className="text-emerald-400">5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
+                    <td><strong className="compare-win">5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
                   </tr>
                   <tr>
-                    <td><Send className="w-4 h-4 text-cyan-400 inline-block mr-2 align-middle" /><strong>매물광고 자동화</strong></td>
+                    <td><Send className="w-4 h-4 dusk-accent inline-block mr-2 align-middle" /><strong>매물광고 자동화</strong></td>
                     <td>CP사, 블로그, 당근 등 플랫폼마다 개별 등록 (2시간)</td>
-                    <td><strong className="text-emerald-400">5분 이내 완료</strong> (매물광고 신규 & 재등록 자동화)</td>
+                    <td><strong className="compare-win">5분 이내 완료</strong> (매물광고 신규 및 재등록 자동화)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div className="master-footer reveal" style={{ backgroundColor: 'rgba(20, 20, 32, 0.5)' }}>
-              <h4 className="master-title" style={{ fontSize: '18px', marginBottom: '8px' }}>
-                <Users className="w-5 h-5 text-blue-400 inline-block mr-2 align-middle" />
+            <div className="master-footer">
+              <h4 className="master-footer-title">
+                <Users className="w-5 h-5 dusk-accent" />
                 혼자가 아닌, 함께 만들어가는 집단지성 커뮤니티
               </h4>
-              <p className="master-desc" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+              <p className="master-desc">
                 <strong>서로의 기술적 병목을 같이 고민하고, 완성된 각자의 도구를 아낌없이 공유(Share)하는 집단지성 커뮤니티</strong>입니다.
               </p>
             </div>
           </div>
         </section>
 
-        <section id="what-we-do" className="pain-section" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '80px', paddingBottom: '80px' }}>
+        <section id="what-we-do" className="section-band">
           <div className="container">
-            <div className="section-header reveal">
-              <span className="section-subtitle">WHAT WE DO</span>
+            <div className="section-header">
               <h2 className="section-title">중개사 AI 클럽은 무엇을 하는 곳인가요?</h2>
               <p className="section-desc">
-               현업 공인중개사가 실무를 간소화할 중개업 자동화 프로그램을 개발하고 공유하는 지식 협력 생태계입니다.</p>
+                현업 공인중개사가 실무를 간소화할 중개업 자동화 프로그램을 개발하고 공유하는 지식 협력 생태계입니다.
+              </p>
             </div>
 
             <div className="master-grid">
-              <div className="master-card spotlight reveal reveal-delay-1">
-                <div className="master-icon blue">
-                  <Code className="w-6 h-6 text-blue-400" />
+              <div className="master-card spotlight">
+                <div className="icon-well">
+                  <Code className="w-5 h-5" />
                 </div>
                 <h3 className="master-title">공인중개사 자동화 도구 직접 구축</h3>
                 <p className="master-desc">
@@ -830,9 +815,9 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="master-card spotlight reveal reveal-delay-2">
-                <div className="master-icon purple">
-                  <Database className="w-6 h-6 text-purple-400" />
+              <div className="master-card spotlight">
+                <div className="icon-well icon-well--apricot">
+                  <Database className="w-5 h-5" />
                 </div>
                 <h3 className="master-title">부동산 자동화 툴 무제한 상호 공유</h3>
                 <p className="master-desc">
@@ -840,9 +825,9 @@ ${smsInputs.agentName}입니다.
                 </p>
               </div>
 
-              <div className="master-card spotlight reveal reveal-delay-3">
-                <div className="master-icon cyan">
-                  <Users className="w-6 h-6 text-cyan-400" />
+              <div className="master-card spotlight">
+                <div className="icon-well">
+                  <Users className="w-5 h-5" />
                 </div>
                 <h3 className="master-title">기술적 병목의 집단지성 해결</h3>
                 <p className="master-desc">
@@ -853,81 +838,76 @@ ${smsInputs.agentName}입니다.
           </div>
         </section>
 
-        <section id="vault" className="vault-section">
-          <div className="container flex-col gap-12">
-            <div className="section-header reveal">
-              <span className="section-subtitle">EXCLUSIVE SECRET VAULT</span>
-              <h2 className="section-title"> 부동산 자동화 프로그램 비밀 창고</h2>
+        <section id="vault" className="section-band">
+          <div className="container flex-col gap-8">
+            <div className="section-header">
+              <h2 className="section-title">부동산 자동화 프로그램 비밀 창고</h2>
               <p className="section-desc">
                 우리 클럽의 가장 큰 가치는 상생의 생태계에 있습니다. 내가 만든 무기 1개를 기부하면, 아래의 이미 현업에서 매일 사용 중인 정교한 자동화 툴을 무제한 가져와 내 비즈니스에 적용할 수 있습니다.
               </p>
             </div>
 
-            <VStack gap={6} className="reveal">
-              <div className="category-bar">
-                {(
-                  [
-                    { id: 'all', label: '전체 보기', icon: Layers },
-                    { id: 'doc', label: '공적 서류', icon: FileCode },
-                    { id: 'scout', label: '매물 수집', icon: Search },
-                    { id: 'ad', label: '매물 광고', icon: Send },
-                    { id: 'copy', label: '상담·콘텐츠', icon: MessageSquare },
-                    { id: 'report', label: '보고서·뉴스레터', icon: FileText },
-                    { id: 'crm', label: 'CRM·고객관리', icon: Users },
-                    { id: 'alert', label: '영업·알림', icon: Clock }
-                  ] as { id: CategoryType; label: string; icon: React.ElementType }[]
-                ).map(cat => {
-                  const IconComp = cat.icon
-                  return (
-                    <button
-                      key={cat.id}
-                      onClick={() => {
-                        setFilterCategory(cat.id)
-                        setShowAllPrograms(false)
-                      }}
-                      className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                    >
-                      <IconComp className="w-3.5 h-3.5" />
-                      {cat.label}
-                    </button>
-                  )
-                })}
-              </div>
-            </VStack>
+            <div className="category-bar">
+              {(
+                [
+                  { id: 'all', label: '전체 보기', icon: Layers },
+                  { id: 'doc', label: '공적 서류', icon: FileCode },
+                  { id: 'scout', label: '매물 수집', icon: Search },
+                  { id: 'ad', label: '매물 광고', icon: Send },
+                  { id: 'copy', label: '상담·콘텐츠', icon: MessageSquare },
+                  { id: 'report', label: '보고서·뉴스레터', icon: FileText },
+                  { id: 'crm', label: 'CRM·고객관리', icon: Users },
+                  { id: 'alert', label: '영업·알림', icon: Clock }
+                ] as { id: CategoryType; label: string; icon: React.ElementType }[]
+              ).map(cat => {
+                const IconComp = cat.icon
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setFilterCategory(cat.id)
+                      setShowAllPrograms(false)
+                    }}
+                    className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
+                  >
+                    <IconComp className="w-3.5 h-3.5" />
+                    {cat.label}
+                  </button>
+                )
+              })}
+            </div>
 
             <div className="vault-grid">
-              {filteredPrograms.slice(0, showAllPrograms ? undefined : 9).map((prog, idx) => (
+              {filteredPrograms.slice(0, showAllPrograms ? undefined : 9).map((prog) => (
                 <div
                   key={prog.id}
                   onClick={() => setSelectedProgram(prog)}
-                  className="vault-card spotlight reveal-scale"
-                  style={{ '--i': (idx % 3) + Math.floor(idx / 3) } as React.CSSProperties}
+                  className="vault-card spotlight"
                 >
-                  <div className="flex-row justify-between items-center" style={{ display: 'flex' }}>
-                    <span className="vault-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <div className="flex-row justify-between items-center">
+                    <span className="vault-tag">
                       {
                         prog.category === 'doc' ? <><FileCode className="w-3 h-3" /> 공적 서류</> :
                         prog.category === 'scout' ? <><Search className="w-3 h-3" /> 매물 수집</> :
                         prog.category === 'ad' ? <><Send className="w-3 h-3" /> 매물 광고</> :
                         prog.category === 'copy' ? <><MessageSquare className="w-3 h-3" /> 상담·카피</> :
                         prog.category === 'report' ? <><FileText className="w-3 h-3" /> 보고서</> :
-                        prog.category === 'crm' ? <><Users className="w-3 h-3" /> CRM</> : 
+                        prog.category === 'crm' ? <><Users className="w-3 h-3" /> CRM</> :
                         <><Clock className="w-3 h-3" /> 영업·알림</>
                       }
                     </span>
                     <span className="vault-dev">{prog.developer.split(' ').pop()}</span>
                   </div>
                   <h3 className="vault-title">
-                    {prog.name}
-                    <ArrowUpRight className="w-3.5 h-3.5 text-slate-500" />
+                    <span>{prog.name}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 dusk-muted flex-shrink-0" />
                   </h3>
                   <p className="vault-desc">
                     {prog.description}
                   </p>
                   <div className="vault-card-footer">
                     <span className="vault-impact">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                      <CheckCircle className="w-3.5 h-3.5" />
                       {prog.impact}
                     </span>
                     <span className="vault-more">자세히 보기</span>
@@ -935,72 +915,68 @@ ${smsInputs.agentName}입니다.
                 </div>
               ))}
               {filteredPrograms.length === 0 && (
-                <div style={{ gridColumn: 'span 3', textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)' }}>
+                <div className="vault-empty">
                   검색어에 매칭되는 자동화 도구가 없습니다. 다른 키워드로 검색해 보세요!
                 </div>
               )}
             </div>
 
             {filteredPrograms.length > 9 && (
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }} className="reveal">
+              <div className="vault-more-wrap">
                 <button
                   onClick={() => setShowAllPrograms(!showAllPrograms)}
                   className="secondary-button"
-                  style={{ padding: '12px 32px', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                 >
-                  {showAllPrograms ? '접기 ▴' : `더보기 (${filteredPrograms.length - 9}개 더보기) ▾`}
+                  {showAllPrograms ? '접기' : `더보기 (${filteredPrograms.length - 9}개 더보기)`}
                 </button>
               </div>
             )}
           </div>
         </section>
 
-        <section id="how-to-join" className="pain-section" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '80px', paddingBottom: '80px' }}>
+        <section id="how-to-join" className="section-band">
           <div className="container">
-            <div className="section-header reveal">
-              <span className="section-subtitle">HOW TO JOIN</span>
+            <div className="section-header">
               <h2 className="section-title">중개사 AI 클럽 합류 방법</h2>
               <p className="section-desc">
-                우리 클럽은 아무나 활동할 수 없는 <strong style={{ color: '#fff', fontWeight: 600 }}>철저한 '인증제 폐쇄형 플랫폼'으로 운영</strong>됩니다.<br/>
-                <strong style={{ color: '#fff', fontWeight: 600 }}>유일한 두 가지 합류 방법</strong> 중 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
+                우리 클럽은 아무나 활동할 수 없는 <strong>철저한 인증제 폐쇄형 플랫폼으로 운영</strong>됩니다.<br />
+                <strong>유일한 두 가지 합류 방법</strong> 중 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
               </p>
             </div>
 
-            <div className="track-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', maxWidth: '800px', margin: '0 auto' }}>
-              <div className="master-card spotlight reveal reveal-delay-1" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-                <div>
-                  <div className="master-icon blue">
-                    <GraduationCap className="w-6 h-6 text-blue-400" />
+            <div className="track-grid">
+              <div className="master-card master-card--track spotlight">
+                <div className="flex-col gap-3">
+                  <div className="icon-well">
+                    <GraduationCap className="w-5 h-5" />
                   </div>
                   <h3 className="master-title">정규 교육 과정</h3>
-                  <p className="master-desc" style={{ marginBottom: '20px' }}>
+                  <p className="master-desc">
                     채팅으로 AI에게 개발 지시를 내려 실무 자동화 프로그램을 내 손으로 100% 직접 개발하고 완성하는 밀착 집중 트랙입니다.
                   </p>
                 </div>
-                <button 
-                  onClick={() => setShowCurriculumModal(true)} 
-                  className="cta-button" 
-                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
+                <button
+                  onClick={() => setShowCurriculumModal(true)}
+                  className="cta-button cta-button--block"
                 >
                   <span>커리큘럼 확인하기</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="master-card spotlight reveal reveal-delay-2" style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-                <div>
-                  <div className="master-icon purple">
-                    <Rocket className="w-6 h-6 text-purple-400" />
+              <div className="master-card master-card--track spotlight">
+                <div className="flex-col gap-3">
+                  <div className="icon-well icon-well--apricot">
+                    <Rocket className="w-5 h-5" />
                   </div>
                   <h3 className="master-title">프리패스 트랙</h3>
-                  <p className="master-desc" style={{ marginBottom: '20px' }}>
+                  <p className="master-desc">
                     이미 제작하여 실무에 사용 중인 본인의 자동화 툴 1개 이상을 공유(기여)하고, 교육 수강 없이 즉각 비밀 창고 전체를 이용하는 트랙입니다.
                   </p>
                 </div>
-                <button 
-                  onClick={() => setShowQuizModal(true)} 
-                  className="cta-button" 
-                  style={{ width: '100%', padding: '12px 0', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
+                <button
+                  onClick={() => setShowQuizModal(true)}
+                  className="cta-button cta-button--block"
                 >
                   <span>합격 가능성 진단하기</span>
                   <Search className="w-4 h-4" />
@@ -1008,13 +984,13 @@ ${smsInputs.agentName}입니다.
               </div>
             </div>
 
-            <div className="compare-table-container compare-anim reveal reveal-delay-3" style={{ marginTop: '48px', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div className="compare-table-container compare-table-container--narrow">
               <table className="compare-table">
                 <thead>
                   <tr>
                     <th>항목</th>
-                    <th><GraduationCap className="w-4 h-4 text-blue-400 inline-block mr-1.5 align-middle" />정규 교육 과정</th>
-                    <th><Rocket className="w-4 h-4 text-purple-400 inline-block mr-1.5 align-middle" />프리패스 트랙</th>
+                    <th><GraduationCap className="w-4 h-4 dusk-accent inline-block mr-1.5 align-middle" />정규 교육 과정</th>
+                    <th><Rocket className="w-4 h-4 dusk-accent-2 inline-block mr-1.5 align-middle" />프리패스 트랙</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1039,283 +1015,243 @@ ${smsInputs.agentName}입니다.
           </div>
         </section>
 
-        <section id="vibe-playground" className="playground-section" style={{ borderTop: '1px solid var(--color-border)' }}>
-          <div className="container flex-col gap-12">
-            <div className="section-header reveal">
-              <span className="section-subtitle">VIBE CODING SIMULATOR</span>
+        <section id="vibe-playground" className="section-band">
+          <div className="container flex-col gap-8">
+            <div className="section-header">
               <h2 className="section-title">정규과정 바이브 코딩 시뮬레이터</h2>
               <p className="section-desc">
-                아래에서 만들고자 하는 자동화 지시어 칩을 선택하고 실행을 클릭보세요.<br/> 
-                우리도 동일한 방식(바이브코딩)으로 나만의 중개업 자동화 프로그램을 만들어요.
+                아래에서 만들고자 하는 자동화 지시어를 선택하고 실행을 클릭해 보세요.<br />
+                우리도 동일한 방식(바이브코딩)으로 나만의 중개업 자동화 프로그램을 만듭니다.
               </p>
             </div>
 
             <div className="playground-grid">
-              <div className="flex-col gap-6 reveal-left">
+              <div className="flex-col gap-6">
                 <div className="chip-container">
                   <button
                     onClick={() => runVibeSimulation('crawl')}
                     className={`prompt-chip ${vibePromptType === 'crawl' ? 'active' : ''}`}
                     disabled={isGenerating}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <Search className="w-3.5 h-3.5" />
+                    <Search className="w-4 h-4 dusk-accent" />
                     네이버 부동산 매물 엑셀 크롤러
                   </button>
                   <button
                     onClick={() => runVibeSimulation('adauto')}
                     className={`prompt-chip ${vibePromptType === 'adauto' ? 'active' : ''}`}
                     disabled={isGenerating}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <Send className="w-3.5 h-3.5" />
+                    <Send className="w-4 h-4 dusk-accent" />
                     매물 광고 자동 등록 및 예약 관리
                   </button>
                   <button
                     onClick={() => runVibeSimulation('agent')}
                     className={`prompt-chip ${vibePromptType === 'agent' ? 'active' : ''}`}
                     disabled={isGenerating}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <Bot className="w-3.5 h-3.5" />
+                    <Bot className="w-4 h-4 dusk-accent" />
                     매물번호 입력 포스팅 에이전트팀
                   </button>
                   <button
                     onClick={() => runVibeSimulation('compile')}
                     className={`prompt-chip ${vibePromptType === 'compile' ? 'active' : ''}`}
                     disabled={isGenerating}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <Laptop className="w-3.5 h-3.5" />
+                    <Laptop className="w-4 h-4 dusk-accent" />
                     윈도우 단독 프로그램 .exe 빌드
                   </button>
                 </div>
 
-                <div className="form-panel" style={{ minHeight: '320px' }}>
+                <div className="form-panel">
                   <div className="flex-col gap-4">
-                    <h3 className="pain-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Laptop className="w-5 h-5 text-blue-400" />
+                    <h3 className="pain-title flex-row items-center gap-2">
+                      <Laptop className="w-5 h-5 dusk-accent" />
                       자연어로 지시한 바이브 코딩 명령문
                     </h3>
-                    
-                    <div style={{ backgroundColor: 'rgba(7,7,10,0.5)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.03)' }}>
-                      <p style={{ fontSize: '13.5px', color: '#cbd5e1', lineHeight: '1.6', margin: 0 }}>
-                        {vibePromptType === 'crawl' && '"네이버 부동산 API의 특정 단지번호를 가져와서 엑셀 파일로 바로 변환해 주는 파이썬 프로그램을 작성해 줘."'}
-                        {vibePromptType === 'adauto' && '"이실장넷과 부동산뱅크에 자동 로그인해서, 엑셀에 정리된 매물 목록을 한 번에 일괄 등록하고 예약 관리까지 해 주는 RPA 프로그램을 만들어 줘."'}
-                        {vibePromptType === 'agent' && '"매물번호만 입력해 주면, 정보수집/웹검색/글작성/썸네일생성/업로더 역할이 체인을 이루어 최종 블로그에 글을 등록하는 에이전트 팀을 구성해 줘."'}
-                        {vibePromptType === 'compile' && '"완성된 파이썬 스크립트 파일을 코딩 모르는 사무원도 원클릭으로 쓸 수 있도록 단독 윈도우 실행프로그램(.exe)으로 패키징 빌드해 줘."'}
-                      </p>
+                    <div className="prompt-quote-box">
+                      {vibePromptType === 'crawl' && '"네이버 부동산 API의 특정 단지번호를 가져와서 엑셀 파일로 바로 변환해 주는 파이썬 프로그램을 작성해 줘."'}
+                      {vibePromptType === 'adauto' && '"이실장넷과 부동산뱅크에 자동 로그인해서, 엑셀에 정리된 매물 목록을 한 번에 일괄 등록하고 예약 관리까지 해 주는 RPA 프로그램을 만들어 줘."'}
+                      {vibePromptType === 'agent' && '"매물번호만 입력해 주면, 정보수집/웹검색/글작성/썸네일생성/업로더 역할이 체인을 이루어 최종 블로그에 글을 등록하는 에이전트 팀을 구성해 줘."'}
+                      {vibePromptType === 'compile' && '"완성된 파이썬 스크립트 파일을 코딩 모르는 사무원도 원클릭으로 쓸 수 있도록 단독 윈도우 실행프로그램(.exe)으로 패키징 빌드해 줘."'}
                     </div>
                   </div>
 
-                  <div style={{ marginTop: '24px' }}>
-                    <Button
-                      label={isGenerating ? "Vibe Code 빌딩 중..." : "바이브 코드 생성 및 실행"}
-                      variant="primary"
-                      onClick={() => runVibeSimulation(vibePromptType)}
-                      isDisabled={isGenerating}
-                      style={{ width: '100%', padding: '14px 0' }}
-                    />
-                  </div>
+                  <button
+                    type="button"
+                    className="cta-button cta-button--block"
+                    onClick={() => runVibeSimulation(vibePromptType)}
+                    disabled={isGenerating}
+                  >
+                    {isGenerating ? '바이브 코드 빌딩 중…' : '바이브 코드 생성 및 실행'}
+                  </button>
                 </div>
               </div>
 
-              <div className={`console-panel reveal-right${isGenerating ? ' is-running' : ''}`}>
+              <div className={`console-panel${isGenerating ? ' is-running' : ''}`}>
                 <div className="console-header">
-                  <div className="console-dots">
-                    <div className="console-dot red" />
-                    <div className="console-dot yellow" />
-                    <div className="console-dot green" />
-                    <span className="console-title" style={{ marginLeft: '8px' }}>vibe-compiler-terminal.log</span>
-                  </div>
+                  <span className="console-title">vibe-compiler-terminal.log</span>
                   {vibeCodeOutput && (
-                    <span style={{ fontSize: '10px', color: '#10b981', fontWeight: 'bold' }}>
-                      [STATUS: RUNNING]
-                    </span>
+                    <span className="console-status">실행 완료</span>
                   )}
                 </div>
 
-                <div className="console-body" style={{ minHeight: '340px' }}>
+                <div className="console-body">
                   {vibeStep === 0 && (
                     <div className="console-empty">
                       <div className="console-empty-icon">
-                        <Code className="w-5 h-5 text-slate-500" />
+                        <Code className="w-5 h-5 dusk-muted" />
                       </div>
-                      <p style={{ fontSize: '13px', fontWeight: '700', color: '#94a3b8', margin: '0 0 4px 0' }}>바이브 컴파일러 출력 대기 중</p>
-                      <p style={{ fontSize: '11px', margin: 0 }}>왼쪽 지시어 칩을 선택하고 실행을 클릭해 주세요.</p>
+                      <p className="dusk-ink-2">바이브 컴파일러 출력 대기 중</p>
+                      <p className="dusk-muted">왼쪽 지시어 항목을 선택하고 실행을 클릭해 주세요.</p>
                     </div>
                   )}
 
                   {vibeStep >= 1 && (
-                    <pre className="console-pre" style={{ color: 'var(--color-text-secondary)', marginBottom: '16px' }}>
+                    <pre className="console-pre">
                       {vibeConsoleOutput}
                     </pre>
                   )}
 
                   {vibeStep >= 2 && vibeCodeOutput && (
-                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                      <p style={{ fontSize: '11px', color: 'var(--color-cyan)', fontWeight: 'bold', marginBottom: '8px', fontFamily: 'monospace' }}>
-                        # AI GENERATED PYTHON CODE
-                      </p>
+                    <div className="code-block-section">
+                      <p className="code-block-label">생성된 파이썬 코드</p>
                       <div className="editor-flex">
                         <div className="editor-line-numbers">
                           {vibeCodeOutput.split('\n').map((_, idx) => (
                             <div key={idx}>{idx + 1}</div>
                           ))}
                         </div>
-                        <pre className="console-pre" style={{ color: '#f8fafc', flexGrow: 1, overflowX: 'auto' }}>
+                        <pre className="console-pre flex-grow">
                           <code>{vibeCodeOutput}</code>
                         </pre>
                       </div>
                     </div>
                   )}
-                  
+
                   {vibeStep === 3 && (
-                    <div className="vibe-success" style={{ marginTop: '16px' }}>
-                      <div style={{ color: '#10b981', fontWeight: 'bold', fontFamily: 'monospace', marginBottom: '12px' }}>
-                        {'> [SUCCESS] 빌딩 완료! 실행 프로그램 미리보기:'}
+                    <div className="vibe-success">
+                      <div className="vibe-success-banner">
+                        빌딩 완료: 실행 프로그램 미리보기
                       </div>
-                      <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', backgroundColor: '#0d1117' }}>
-                        <div style={{ background: 'linear-gradient(180deg, #2d333b 0%, #22272e 100%)', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ff5f57' }} />
-                          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#febc2e' }} />
-                          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#28c840' }} />
-                          <span style={{ fontSize: '11px', color: '#8b949e', marginLeft: '8px', fontFamily: 'monospace' }}>
-                            {vibePromptType === 'crawl' && '네이버 부동산 매물 크롤러 v1.0'}
-                            {vibePromptType === 'adauto' && '매물 광고 자동 등록기 v1.0'}
-                            {vibePromptType === 'agent' && 'AI 에이전트팀 오케스트레이터 v1.0'}
-                            {vibePromptType === 'compile' && 'RealtorHelper.exe v1.0'}
-                          </span>
+                      <div className="sim-frame">
+                        <div className="sim-frame-head">
+                          {vibePromptType === 'crawl' && '네이버 부동산 매물 크롤러 v1.0'}
+                          {vibePromptType === 'adauto' && '매물 광고 자동 등록기 v1.0'}
+                          {vibePromptType === 'agent' && 'AI 에이전트팀 오케스트레이터 v1.0'}
+                          {vibePromptType === 'compile' && 'RealtorHelper.exe v1.0'}
                         </div>
-                        <div style={{ padding: '16px', fontFamily: 'monospace', fontSize: '12px', lineHeight: '1.7' }}>
+                        <div className="sim-frame-body">
                           {vibePromptType === 'crawl' && (
                             <div>
-                              <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', alignItems: 'center' }}>
-                                <span style={{ color: '#8b949e', fontSize: '11px' }}>단지번호</span>
-                                <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '6px', padding: '5px 10px', color: '#c9d1d9', fontSize: '12px', width: '120px' }}>107511</div>
-                                <div style={{ background: 'linear-gradient(135deg, #2563eb, #3b82f6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>수집 시작</div>
+                              <div className="sim-toolbar">
+                                <span className="dusk-muted">단지번호</span>
+                                <span className="sim-input">107511</span>
+                                <span className="sim-pill">수집 시작</span>
                               </div>
-                              <div style={{ border: '1px solid #21262d', borderRadius: '8px', overflow: 'hidden' }}>
-                                <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 60px 80px 50px', gap: '0', background: '#161b22', padding: '6px 10px', borderBottom: '1px solid #21262d', color: '#8b949e', fontSize: '10px', fontWeight: 700 }}>
+                              <div className="sim-table">
+                                <div className="sim-table-head">
                                   <span>No</span><span>매물명</span><span>거래</span><span>가격</span><span>평수</span>
                                 </div>
                                 {[['1', '래미안푸르지오', '매매', '18.5억', '32평'], ['2', '래미안푸르지오', '매매', '19.0억', '34평'], ['3', '래미안푸르지오', '전세', '8.0억', '32평'], ['4', '힐스테이트', '매매', '17.8억', '25평']].map((row, i) => (
-                                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '40px 1fr 60px 80px 50px', padding: '5px 10px', borderBottom: '1px solid #21262d', color: '#c9d1d9', fontSize: '11px' }}>
+                                  <div key={i} className="sim-table-row">
                                     {row.map((cell, j) => <span key={j}>{cell}</span>)}
                                   </div>
                                 ))}
-                                <div style={{ padding: '5px 10px', color: '#8b949e', fontSize: '10px' }}>...외 43건</div>
+                                <div className="sim-note">…외 43건</div>
                               </div>
-                              <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
-                                <div style={{ background: '#238636', borderRadius: '6px', padding: '5px 12px', color: 'white', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <Download className="w-3 h-3" /> 엑셀 다운로드
-                                </div>
-                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 12px', color: '#c9d1d9', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <RefreshCw className="w-3 h-3" /> 새로고침
-                                </div>
+                              <div className="sim-toolbar" style={{ marginTop: '12px' }}>
+                                <span className="sim-pill"><Download className="w-3 h-3" /> 엑셀 다운로드</span>
+                                <span className="sim-pill sim-pill--muted"><RefreshCw className="w-3 h-3" /> 새로고침</span>
                               </div>
-                              <div style={{ marginTop: '10px', padding: '6px 10px', background: 'rgba(35, 134, 54, 0.1)', borderRadius: '6px', color: '#3fb950', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <CheckCircle className="w-3 h-3 text-emerald-400" /> 수집 완료: 47건 | naver_listings.xlsx 저장됨
+                              <div className="sim-status-bar">
+                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" /> 수집 완료: 47건 (naver_listings.xlsx 저장됨)</span>
                               </div>
                             </div>
                           )}
                           {vibePromptType === 'adauto' && (
                             <div>
-                              <div style={{ display: 'flex', gap: '12px', marginBottom: '14px', alignItems: 'center' }}>
-                                <span style={{ color: '#8b949e', fontSize: '11px' }}>플랫폼</span>
-                                <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '6px', padding: '5px 10px', color: '#c9d1d9', fontSize: '12px' }}>이실장넷 ▾</div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#3fb950' }} />
-                                  <span style={{ color: '#3fb950', fontSize: '10px', fontWeight: 700 }}>로그인됨</span>
-                                </div>
+                              <div className="sim-toolbar">
+                                <span className="dusk-muted">플랫폼</span>
+                                <span className="sim-input">이실장넷</span>
+                                <span className="dusk-accent">로그인됨</span>
                               </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '14px' }}>
+                              <div className="sim-list">
                                 {[
                                   { name: '래미안푸르지오 32평 매매', price: '18.5억', status: '등록완료', done: true },
                                   { name: '래미안푸르지오 34평 전세', price: '8.0억', status: '등록완료', done: true },
                                   { name: '아현힐스테이트 25평 매매', price: '12.3억', status: '등록완료', done: true },
                                   { name: '공덕파크자이 28평 매매', price: '15.1억', status: '대기중', done: false }
                                 ].map((item, i) => (
-                                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 10px', background: '#161b22', borderRadius: '6px', border: '1px solid #21262d' }}>
-                                    {item.done ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Clock className="w-3.5 h-3.5 text-amber-400" />}
-                                    <span style={{ color: '#c9d1d9', fontSize: '11px', flex: 1 }}>{item.name}</span>
-                                    <span style={{ color: '#8b949e', fontSize: '10px' }}>{item.price}</span>
-                                    <span style={{ color: item.status === '등록완료' ? '#3fb950' : '#d29922', fontSize: '10px', fontWeight: 700 }}>{item.status}</span>
+                                  <div key={i} className="sim-list-row">
+                                    {item.done ? <CheckCircle className="w-3.5 h-3.5 dusk-accent" /> : <Clock className="w-3.5 h-3.5 dusk-accent-2" />}
+                                    <span className="dusk-ink flex-grow">{item.name}</span>
+                                    <span className="dusk-muted">{item.price}</span>
+                                    <span className={item.done ? 'dusk-accent' : 'dusk-accent-2'}>{item.status}</span>
                                   </div>
                                 ))}
-                                <div style={{ color: '#8b949e', fontSize: '10px', paddingLeft: '4px' }}>...외 8건 대기 중</div>
+                                <div className="sim-note">…외 8건 대기 중</div>
                               </div>
-                              <div style={{ height: '4px', background: '#21262d', borderRadius: '2px', marginBottom: '12px' }}>
-                                <div style={{ width: '75%', height: '100%', background: 'linear-gradient(90deg, #2563eb, #3b82f6)', borderRadius: '2px' }} />
+                              <div className="sim-progress">
+                                <div className="sim-progress-fill" />
                               </div>
-                              <div style={{ display: 'flex', gap: '8px' }}>
-                                <div style={{ background: 'linear-gradient(135deg, #2563eb, #3b82f6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>일괄 등록 시작</div>
-                                <div style={{ background: '#30363d', borderRadius: '6px', padding: '5px 14px', color: '#c9d1d9', fontSize: '11px' }}>예약 설정</div>
+                              <div className="sim-toolbar">
+                                <span className="sim-pill">일괄 등록 시작</span>
+                                <span className="sim-pill sim-pill--muted">예약 설정</span>
                               </div>
                             </div>
                           )}
                           {vibePromptType === 'agent' && (
                             <div>
-                              <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', alignItems: 'center' }}>
-                                <span style={{ color: '#8b949e', fontSize: '11px' }}>매물번호</span>
-                                <div style={{ background: '#161b22', border: '1px solid #30363d', borderRadius: '6px', padding: '5px 10px', color: '#c9d1d9', fontSize: '12px', width: '100px' }}>24067</div>
-                                <div style={{ background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)', borderRadius: '6px', padding: '5px 14px', color: 'white', fontSize: '11px', fontWeight: 700 }}>실행</div>
+                              <div className="sim-toolbar">
+                                <span className="dusk-muted">매물번호</span>
+                                <span className="sim-input">24067</span>
+                                <span className="sim-pill">실행</span>
                               </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '14px' }}>
+                              <div className="sim-list">
                                 {['정보수집봇', '웹검색봇', '글작성봇', '썸네일봇', '업로드봇'].map((name, i) => (
-                                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#3fb950' }} />
-                                    <span style={{ color: '#c9d1d9', fontSize: '11px', width: '70px' }}>{name}</span>
-                                    <div style={{ flex: 1, height: '6px', background: '#21262d', borderRadius: '3px', overflow: 'hidden' }}>
-                                      <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #238636, #3fb950)', borderRadius: '3px' }} />
+                                  <div key={i} className="sim-list-row">
+                                    <span className="dusk-ink" style={{ width: '76px' }}>{name}</span>
+                                    <div className="sim-progress flex-grow" style={{ marginBottom: 0 }}>
+                                      <div className="sim-progress-fill sim-progress-fill--full" />
                                     </div>
-                                    <span style={{ color: '#3fb950', fontSize: '10px', fontWeight: 700 }}>완료</span>
+                                    <span className="dusk-accent">완료</span>
                                   </div>
                                 ))}
                               </div>
-                              <div style={{ padding: '8px 12px', background: 'rgba(35, 134, 54, 0.1)', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ color: '#3fb950', fontSize: '11px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <CheckCircle className="w-3.5 h-3.5" /> 블로그 포스팅 완료
-                                </span>
-                                <div style={{ background: '#238636', borderRadius: '6px', padding: '4px 10px', color: 'white', fontSize: '10px' }}>결과 보기</div>
+                              <div className="sim-status-bar">
+                                <span className="flex-row items-center gap-2"><CheckCircle className="w-3.5 h-3.5" /> 블로그 포스팅 완료</span>
+                                <span className="sim-pill">결과 보기</span>
                               </div>
                             </div>
                           )}
                           {vibePromptType === 'compile' && (
                             <div>
-                              <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                                <div style={{ fontSize: '11px', color: '#8b949e', marginBottom: '4px' }}>중개업 종합 자동화 도구</div>
-                              </div>
-                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
+                              <div className="sim-module-grid">
                                 {[
-                                  { icon: Database, name: '매물 수집', color: '#2563eb' },
-                                  { icon: Send, name: '광고 등록', color: '#7c3aed' },
-                                  { icon: FileText, name: '블로그 작성', color: '#0891b2' },
-                                  { icon: FileCode, name: '서류 발급', color: '#059669' }
+                                  { icon: Database, name: '매물 수집' },
+                                  { icon: Send, name: '광고 등록' },
+                                  { icon: FileText, name: '블로그 작성' },
+                                  { icon: FileCode, name: '서류 발급' }
                                 ].map((item, i) => {
                                   const IconComp = item.icon
                                   return (
-                                    <div key={i} style={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '8px', padding: '12px', textAlign: 'center', cursor: 'default' }}>
-                                      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '6px' }}>
-                                        <IconComp className="w-5 h-5 text-blue-400" />
-                                      </div>
-                                      <div style={{ color: '#c9d1d9', fontSize: '11px', fontWeight: 600 }}>{item.name}</div>
+                                    <div key={i} className="sim-module-card">
+                                      <IconComp className="w-5 h-5 dusk-accent" />
+                                      <span>{item.name}</span>
                                     </div>
                                   )
                                 })}
                               </div>
-                              <div style={{ border: '1px solid #21262d', borderRadius: '8px', padding: '10px', marginBottom: '10px' }}>
-                                <div style={{ color: '#8b949e', fontSize: '10px', fontWeight: 700, marginBottom: '6px' }}>최근 실행 이력</div>
+                              <div className="sim-log-box">
+                                <div className="dusk-muted" style={{ marginBottom: '6px' }}>최근 실행 이력</div>
                                 {[['14:30', '매물 수집 47건 완료'], ['14:35', '블로그 포스팅 3건 자동 등록'], ['14:40', '이실장넷 광고 12건 갱신']].map((log, i) => (
-                                  <div key={i} style={{ display: 'flex', gap: '10px', marginBottom: '3px' }}>
-                                    <span style={{ color: '#484f58', fontSize: '10px' }}>{log[0]}</span>
-                                    <span style={{ color: '#8b949e', fontSize: '10px' }}>{log[1]}</span>
+                                  <div key={i} className="flex-row gap-3">
+                                    <span className="dusk-muted num">{log[0]}</span>
+                                    <span className="dusk-ink-2">{log[1]}</span>
                                   </div>
                                 ))}
                               </div>
-                              <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', color: '#484f58', fontSize: '9px' }}>
-                                <span>버전 1.0.0</span><span>|</span><span>상태: 정상</span>
-                              </div>
+                              <div className="dusk-muted">버전 1.0.0 (상태 정상)</div>
                             </div>
                           )}
                         </div>
@@ -1328,46 +1264,42 @@ ${smsInputs.agentName}입니다.
           </div>
         </section>
 
-
         {selectedProgram && (
           <div className="modal-backdrop" onClick={() => setSelectedProgram(null)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setSelectedProgram(null)} className="modal-close">
+              <button onClick={() => setSelectedProgram(null)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
-              
+
               <div className="flex-col gap-6">
-                <div>
-                  <span className="vault-tag" style={{ display: 'inline-block', marginBottom: '12px' }}>
-                    비밀창고 등록번호: {selectedProgram.id.toUpperCase()}
-                  </span>
-                  <h3 className="section-title" style={{ fontSize: '24px', margin: 0, textAlign: 'left' }}>{selectedProgram.name}</h3>
-                  <p className="vault-dev" style={{ marginTop: '6px', fontSize: '12px' }}>{selectedProgram.developer}</p>
-                </div>
-
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px' }}>
-                  <h4 className="track-label" style={{ marginBottom: '8px' }}>도구 기능 요약</h4>
-                  <p className="master-desc" style={{ fontSize: '13.5px' }}>{selectedProgram.description}</p>
+                <div className="flex-col gap-2">
+                  <h3 className="master-title">{selectedProgram.name}</h3>
+                  <p className="vault-dev">{selectedProgram.developer} (등록번호 {selectedProgram.id.toUpperCase()})</p>
                 </div>
 
                 <div>
-                  <h4 className="track-label" style={{ marginBottom: '8px' }}>핵심 기능 목록</h4>
+                  <h4 className="track-label">도구 기능 요약</h4>
+                  <p className="master-desc">{selectedProgram.description}</p>
+                </div>
+
+                <div>
+                  <h4 className="track-label">핵심 기능 목록</h4>
                   <ul className="modal-features-list">
                     {selectedProgram.features.map((feat, idx) => (
                       <li key={idx} className="modal-feature-item">
-                        <span className="modal-feature-dot" />
-                        {feat}
+                        <Check className="w-4 h-4 dusk-accent flex-shrink-0" />
+                        <span>{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="modal-card-bottom" style={{ marginTop: '8px' }}>
-                  <div>
-                    <span className="vault-dev" style={{ display: 'block' }}>검증된 현장 성과</span>
-                    <span className="vault-impact" style={{ fontSize: '14px', fontWeight: '700' }}>{selectedProgram.impact}</span>
+                <div className="modal-card-bottom">
+                  <div className="flex-col gap-2">
+                    <span className="vault-dev">검증된 현장 성과</span>
+                    <span className="vault-impact">{selectedProgram.impact}</span>
                   </div>
-                  <button className="modal-btn-disabled">
+                  <button className="modal-btn-disabled" disabled>
                     크루 전용 다운로드
                   </button>
                 </div>
@@ -1378,86 +1310,76 @@ ${smsInputs.agentName}입니다.
 
         {showCurriculumModal && (
           <div className="modal-backdrop" onClick={() => setShowCurriculumModal(false)}>
-            <div className="modal-content" style={{ maxWidth: '900px', width: '95%', maxHeight: '90vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowCurriculumModal(false)} className="modal-close">
+            <div className="modal-content modal-content--wide" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setShowCurriculumModal(false)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
-              
-              <div className="container flex-col gap-12" style={{ padding: '24px 0 0 0' }}>
-                <div className="section-header">
-                  <span className="section-subtitle">정규과정 교육</span>
-                  <h2 className="section-title" style={{ fontSize: '26px' }}>정규과정 핵심 마스터 커리큘럼</h2>
+
+              <div className="flex-col gap-6">
+                <div className="section-header" style={{ marginBottom: 0 }}>
+                  <h2 className="section-title">정규과정 핵심 마스터 커리큘럼</h2>
                   <p className="section-desc">
                     코딩 문법을 단 한 줄도 외우지 않습니다. AI에게 역할, 목표, 형식을 지시하여 원하는 실무 프로그램을 100% 온전하게 완성해 냅니다.
                   </p>
                 </div>
 
-                <div className="master-footer" style={{ marginBottom: '12px', background: 'rgba(255,255,255,0.02)' }}>
-                  <h4 className="master-title" style={{ fontSize: '17px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Bot className="w-5 h-5 text-blue-400" />
-                    "바이브 코딩(Vibe Coding)이란 무엇인가요?"
+                <div className="master-footer">
+                  <h4 className="master-footer-title">
+                    <Bot className="w-5 h-5 dusk-accent" />
+                    바이브 코딩(Vibe Coding)이란 무엇인가요?
                   </h4>
-                  <p className="master-desc" style={{ fontSize: '13.5px', lineHeight: '1.6' }}>
-                    개발자가 직접 알고리즘을 한 줄씩 코딩하던 과거를 지나, 중개사는 자연어로 컴퓨터에게 **역할(Role), 목표(Goal), 형식(Format)**만 지시하고 실제 복잡한 코드는 AI가 빌딩하게 만드는 현대적 개발 기법입니다. 영어 단어 하나 모르는 왕초보도 마우스 클릭과 간단한 단어 매칭만으로 결과물을 뽑아낼 수 있습니다.
+                  <p className="master-desc">
+                    개발자가 직접 알고리즘을 한 줄씩 코딩하던 과거를 지나, 중개사는 자연어로 컴퓨터에게 역할(Role), 목표(Goal), 형식(Format)만 지시하고 실제 복잡한 코드는 AI가 빌딩하게 만드는 현대적 개발 기법입니다. 영어 단어 하나 모르는 왕초보도 마우스 클릭과 간단한 단어 매칭만으로 결과물을 뽑아낼 수 있습니다.
                   </p>
                 </div>
 
-                <div className="timeline" style={{ textAlign: 'left' }}>
-                  <div className="timeline-item">
-                    <div className="timeline-badge">1강</div>
-                    <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Search className="w-5 h-5 text-blue-400" />
-                        웹 정보 수집 및 단순 반복 업무 자동화 실무
-                      </h3>
-                      <p className="master-desc" style={{ marginBottom: '16px' }}>
-                        인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 매물광고 같은 반복 작업을 컴퓨터가 스스로 대신하게 만듭니다.
-                      </p>
-                      <ul className="timeline-list">
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 or 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
-                      </ul>
-                    </div>
+                <div className="timeline">
+                  <div className="timeline-content">
+                    <h3>
+                      <Search className="w-5 h-5 dusk-accent" />
+                      <span>1강: 웹 정보 수집 및 단순 반복 업무 자동화 실무</span>
+                    </h3>
+                    <p className="master-desc">
+                      인터넷에 흩어진 수많은 매물 정보를 한 번에 수집하고, 매일 내 마우스와 키보드가 반복하던 매물광고 같은 반복 작업을 컴퓨터가 스스로 대신하게 만듭니다.
+                    </p>
+                    <ul className="timeline-list">
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>네이버 부동산 매물 데이터 수집</strong>: 아파트 단지 또는 지역의 매물 목록 전체(가격, 면적, 층수 등)를 순식간에 깔끔한 엑셀 파일로 추출하는 결과물을 만듭니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>차단 없는 무제한 매물 크롤링</strong>: 수백 번 수집해도 네이버 시스템으로부터 접근 차단을 당하지 않고 안정적으로 대량 데이터를 가져오는 노하우를 습득합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>네이버 블로그 포스팅 자동화</strong>: 네이버블로그에 자동으로 로그인해서 블로그 콘텐츠를 작성하는 스크립트를 구현합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>매물 광고 자동화</strong>: 지긋지긋한 매물광고를 자동화하는 프로그램의 설계 로직을 확인합니다.</li>
+                    </ul>
                   </div>
 
-                  <div className="timeline-item">
-                    <div className="timeline-badge">2강</div>
-                    <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Bot className="w-5 h-5 text-purple-400" />
-                        나만의 AI 직원 채용 및 단독 프로그램 제작
-                      </h3>
-                      <p className="master-desc" style={{ marginBottom: '16px' }}>
-                        매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 에이전트 워크플로우를 설계하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
-                      </p>
-                      <ul className="timeline-list">
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
-                      </ul>
-                    </div>
+                  <div className="timeline-content">
+                    <h3>
+                      <Bot className="w-5 h-5 dusk-accent-2" />
+                      <span>2강: 나만의 AI 직원 채용 및 단독 프로그램 제작</span>
+                    </h3>
+                    <p className="master-desc">
+                      매물 번호만 입력하면 정보 검색부터 디자인, 업로드까지 알아서 끝내는 에이전트 워크플로우를 설계하고, 다른 직원이나 동료도 클릭 한 번으로 쓸 수 있는 실행 파일로 만듭니다.
+                    </p>
+                    <ul className="timeline-list">
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>매물 번호 한 줄로 블로그 자동 포스팅</strong>: 매물 번호만 쓰면 AI 비서들이 알아서 매물 정보를 수집하고, 콘텐츠를 작성하고, 썸네일과 함께 블로그에 업로드까지 마칩니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>AI가 추천하는 내 부동산 홈페이지</strong>: AI가 추천하고 인용할 수 있는 나만의 디지털 자산이 되는 내 부동산 홈페이지를 만들고 배포합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>생성형 엔진 최적화</strong>: AI 시대의 바뀐 검색 트렌드에 맞추어 내 부동산이 AI가 고객에게 추천해 유입으로 연결되는 구조를 내재화합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>원클릭 실행 프로그램(.exe) 변환</strong>: 개발 언어나 코드 프로그램을 켤 필요 없이, 바탕화면에 놓인 아이콘을 더블클릭하는 것만으로 작동하는 윈도우용 실행 프로그램을 만들어 냅니다.</li>
+                    </ul>
                   </div>
 
-                  <div className="timeline-item">
-                    <div className="timeline-badge">3강</div>
-                    <div className="timeline-content" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                      <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Wrench className="w-5 h-5 text-cyan-400" />
-                        나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연
-                      </h3>
-                      <p className="master-desc" style={{ marginBottom: '16px' }}>
-                        2강까지 습득한 기술을 바탕으로 수강생들이 기획한 중개업 자동화 아이디어를 실제 프로그램으로 구현하기 위해 설계 프로세스를 컨설팅받고 작동 모델을 직접 눈으로 확인합니다.
-                      </p>
-                      <ul className="timeline-list">
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
-                        <li><Check className="w-3.5 h-3.5 text-emerald-400 inline mr-1.5" /><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
-                      </ul>
-                    </div>
+                  <div className="timeline-content">
+                    <h3>
+                      <Wrench className="w-5 h-5 dusk-accent" />
+                      <span>3강: 나만의 맞춤형 중개 업무 자동화 프로그램 설계 및 시연</span>
+                    </h3>
+                    <p className="master-desc">
+                      2강까지 습득한 기술을 바탕으로 수강생들이 기획한 중개업 자동화 아이디어를 실제 프로그램으로 구현하기 위해 설계 프로세스를 컨설팅받고 작동 모델을 직접 눈으로 확인합니다.
+                    </p>
+                    <ul className="timeline-list">
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>중개업 자동화 프로그램 수요 조사</strong>: 수강생들이 현업에서 직접 자동화하고 싶은 개별 업무(수집, 알림 등)를 발굴하고 검토하는 세션입니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>자연어 지시 및 상세 설계 프로세스</strong>: 기획안을 바탕으로 AI 비서들에게 역할, 목표, 형식을 어떻게 하달하고 프로그램을 구성할지 설계 단계를 학습합니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>구현 가능성 컨설팅</strong>: 제안한 자동화 도구의 구현 가능성과 예상되는 허들(차단, 데이터 매칭 등)을 짚고 최적의 대안을 코칭받습니다.</li>
+                      <li><Check className="w-3.5 h-3.5 dusk-accent inline mr-1.5" /><strong>핵심 자동화 프로그램 실물 라이브 시연</strong>: 수요조사에서 선정된 실제 중개업 자동화 시나리오를 바탕으로 직접 동작하는 프로그램 구현 과정을 시연합니다.</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -1467,31 +1389,30 @@ ${smsInputs.agentName}입니다.
 
         {showQuizModal && (
           <div className="modal-backdrop" onClick={() => setShowQuizModal(false)}>
-            <div className="modal-content" style={{ maxWidth: '700px', width: '95%', maxHeight: '90vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowQuizModal(false)} className="modal-close">
+            <div className="modal-content modal-content--quiz" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setShowQuizModal(false)} className="modal-close" aria-label="닫기">
                 ✕
               </button>
-              
-              <div className="container flex-col gap-8" style={{ padding: '24px 0 0 0' }}>
-                <div className="section-header">
-                  <span className="section-subtitle">ELIGIBILITY CHECK</span>
-                  <h2 className="section-title" style={{ fontSize: '24px' }}>프리패스 합격 가능성 자가 진단기</h2>
+
+              <div className="flex-col gap-6">
+                <div className="section-header" style={{ marginBottom: 0 }}>
+                  <h2 className="section-title">프리패스 합격 가능성 자가 진단기</h2>
                   <p className="section-desc">
                     간단한 3가지 질문을 통해 내게 가장 적합한 교육 과정을 진단받으세요. 진단 결과는 하단의 등록 신청서에 즉시 반영됩니다.
                   </p>
                 </div>
 
-                <div className="quiz-card-box" style={{ maxWidth: '100%', background: 'rgba(255,255,255,0.02)', padding: '24px' }}>
+                <div className="quiz-card-box">
                   {quizStep < quizQuestions.length ? (
-                    <VStack gap={6}>
-                      <div className="flex-row items-center justify-between" style={{ display: 'flex' }}>
-                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--color-purple)' }}>질문 {quizStep + 1} / {quizQuestions.length}</span>
-                        <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>진행 중</span>
+                    <div className="flex-col gap-6">
+                      <div className="flex-row items-center justify-between">
+                        <span className="dusk-accent-2 num">질문 {quizStep + 1} / {quizQuestions.length}</span>
+                        <span className="dusk-muted">진행 중</span>
                       </div>
-                      <h3 className="master-title" style={{ fontSize: '18px', minHeight: '50px', textAlign: 'left' }}>
+                      <h3 className="master-title">
                         {quizQuestions[quizStep].q}
                       </h3>
-                      <VStack gap={3}>
+                      <div className="flex-col gap-3">
                         {quizQuestions[quizStep].a.map((opt, idx) => (
                           <button
                             key={idx}
@@ -1501,72 +1422,70 @@ ${smsInputs.agentName}입니다.
                             {opt}
                           </button>
                         ))}
-                      </VStack>
-                    </VStack>
+                      </div>
+                    </div>
                   ) : (
-                    <VStack gap={6} style={{ textAlign: 'center', alignItems: 'center' }}>
-                      <div className="success-icon" style={{ backgroundColor: 'rgba(139, 92, 246, 0.1)', borderColor: 'rgba(139, 92, 246, 0.25)' }}>
-                        <Gift className="w-8 h-8 text-purple-400" />
+                    <div className="flex-col gap-6 items-center" style={{ textAlign: 'center' }}>
+                      <div className="join-icon-wrap">
+                        <Gift className="w-6 h-6" />
                       </div>
                       <div>
                         <h3 className="success-title">진단이 모두 완료되었습니다!</h3>
-                        <p className="success-desc" style={{ marginTop: '8px' }}>
-                          중개사님의 진단 결과 추천되는 최적의 매칭 트랙은 아래와 같습니다:
+                        <p className="success-desc">
+                          중개사님의 진단 결과 추천되는 최적의 매칭 트랙은 아래와 같습니다.
                         </p>
-                        <div style={{ margin: '20px 0', padding: '16px 24px', backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div className="quiz-result-box">
                           {quizResult === 'fasttrack' ? (
                             <>
-                              <span style={{ fontSize: '18px', fontWeight: '900', color: 'var(--color-cyan)', display: 'block' }}>[프리패스 트랙] 즉시 즉시 합류 대상!</span>
-                              <span style={{ fontSize: '12.5px', color: 'var(--color-text-secondary)', display: 'block', marginTop: '6px', marginBottom: '12px' }}>
+                              <strong className="dusk-accent">프리패스 트랙: 즉시 합류 대상</strong>
+                              <p className="master-desc" style={{ marginTop: '8px' }}>
                                 이미 AI나 툴의 이해도가 훌륭하십니다. 교육 참가를 거치지 않고 나만의 자동화 도구를 기여하여 즉시 비밀창고를 무제한 잠금 해제할 수 있습니다.
-                              </span>
-                              <div style={{ padding: '10px 14px', backgroundColor: 'rgba(6, 182, 212, 0.1)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '8px', fontSize: '12px', color: 'var(--color-cyan)', textAlign: 'left', lineHeight: '1.5', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                                <Info className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                              </p>
+                              <div className="quiz-info-callout">
+                                <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
                                 <div>
-                                  <strong>신청 방법:</strong> 공유 가능한 프로그램을 본인의 구글 드라이브에 업로드한 후, 아래 '프리패스 신청하기' 버튼을 통해 연결되는 1:1 오픈채팅방에 해당 공유 링크를 함께 전달해 주세요.
+                                  <strong>신청 방법:</strong> 공유 가능한 프로그램을 본인의 구글 드라이브에 업로드한 후, 아래 프리패스 신청하기 버튼을 통해 연결되는 1:1 오픈채팅방에 해당 공유 링크를 함께 전달해 주세요.
                                 </div>
                               </div>
                             </>
                           ) : (
                             <>
-                              <span style={{ fontSize: '18px', fontWeight: '900', color: 'var(--color-blue)', display: 'block' }}>[정규과정 참가 트랙]</span>
-                              <span style={{ fontSize: '12.5px', color: 'var(--color-text-secondary)', display: 'block', marginTop: '6px' }}>
+                              <strong className="dusk-accent">정규과정 참가 트랙</strong>
+                              <p className="master-desc" style={{ marginTop: '8px' }}>
                                 기초부터 탄탄하게 다지는 정규 교육 참가를 권장합니다. 코중사와 함께 정규과정을 통해 중개업 자동화 프로그램을 직접 빌드할 수 있는 능력을 탑재합니다.
-                              </span>
+                              </p>
                             </>
                           )}
                         </div>
-                        <p style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
-                          * 진단 완료 결과에 따라 하단 합류 신청서의 트랙이 자동으로 설정되었습니다.
+                        <p className="vault-dev">
+                          진단 완료 결과에 따라 하단 합류 안내 트랙이 자동으로 설정되었습니다.
                         </p>
                       </div>
-                      <HStack gap={4} style={{ display: 'flex', width: '100%', maxWidth: '300px' }}>
+                      <div className="flex-row gap-3" style={{ width: '100%', maxWidth: '340px' }}>
                         {quizResult === 'fasttrack' ? (
-                          <a 
-                            href="https://open.kakao.com/o/suLtTcYh" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="cta-button" 
-                            style={{ flex: 1, padding: '12px 0', textDecoration: 'none', display: 'block', textAlign: 'center' }} 
+                          <a
+                            href="https://open.kakao.com/o/suLtTcYh"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="cta-button flex-grow"
                             onClick={() => setShowQuizModal(false)}
                           >
                             프리패스 신청하기
                           </a>
                         ) : (
-                          <a 
-                            href="#join" 
-                            className="cta-button" 
-                            style={{ flex: 1, padding: '12px 0', textDecoration: 'none', display: 'block', textAlign: 'center' }} 
+                          <a
+                            href="#join"
+                            className="cta-button flex-grow"
                             onClick={() => setShowQuizModal(false)}
                           >
                             신청서 확인하기
                           </a>
                         )}
-                        <button onClick={resetQuiz} className="secondary-button" style={{ flex: 1, padding: '12px 0' }}>
+                        <button onClick={resetQuiz} className="secondary-button flex-grow">
                           다시 검사하기
                         </button>
-                      </HStack>
-                    </VStack>
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1574,43 +1493,40 @@ ${smsInputs.agentName}입니다.
           </div>
         )}
 
-
-
-        <section id="reviews" className="reviews-section" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '80px', paddingBottom: '80px' }}>
-          <div className="container flex-col gap-12">
-            <div className="section-header reveal">
-              <span className="section-subtitle">CREW REVIEWS</span>
+        <section id="reviews" className="section-band">
+          <div className="container flex-col gap-8">
+            <div className="section-header">
               <h2 className="section-title">정규과정 이수 후기</h2>
               <p className="section-desc">
                 막막한 두려움을 안고 출발한 현업 중개사들이 직접 부딪히며 느낀 솔직한 이야기입니다.
               </p>
             </div>
 
-            <div className="testimonials-panel reveal">
+            <div className="testimonials-panel">
               <div className="testimonial-grid">
-                <div className="testimonial-card reveal-scale" style={{ '--i': 0 } as React.CSSProperties}>
+                <div className="testimonial-card">
                   <p className="testimonial-quote">
                     "결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다."
                   </p>
-                  <span className="testimonial-author">— 개업 공인중개사</span>
+                  <span className="testimonial-author">개업 공인중개사</span>
                 </div>
-                <div className="testimonial-card reveal-scale" style={{ '--i': 1 } as React.CSSProperties}>
+                <div className="testimonial-card">
                   <p className="testimonial-quote">
                     "영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다."
                   </p>
-                  <span className="testimonial-author">— 개업 공인중개사</span>
+                  <span className="testimonial-author">개업 공인중개사</span>
                 </div>
-                <div className="testimonial-card reveal-scale" style={{ '--i': 2 } as React.CSSProperties}>
+                <div className="testimonial-card">
                   <p className="testimonial-quote">
                     "막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다."
                   </p>
-                  <span className="testimonial-author">— 소속 공인중개사</span>
+                  <span className="testimonial-author">소속 공인중개사</span>
                 </div>
-                <div className="testimonial-card reveal-scale" style={{ '--i': 3 } as React.CSSProperties}>
+                <div className="testimonial-card">
                   <p className="testimonial-quote">
-                    "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다... 하하하."
+                    "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다… 하하하."
                   </p>
-                  <span className="testimonial-author">— 개업 공인중개사</span>
+                  <span className="testimonial-author">개업 공인중개사</span>
                 </div>
               </div>
             </div>
@@ -1619,31 +1535,11 @@ ${smsInputs.agentName}입니다.
 
         <section className="vision-section">
           <div className="container">
-            <div className="vision-box reveal" style={{ padding: '60px 24px', textAlign: 'center', background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 70%)' }}>
-              <span className="section-subtitle" style={{ display: 'block', marginBottom: '16px', letterSpacing: '0.2em' }}>OUR VISION</span>
-              <p style={{ 
-                fontSize: 'clamp(14px, 2.2vw, 18px)', 
-                color: 'var(--color-text-secondary)',
-                marginBottom: '10px',
-                fontWeight: '500',
-                letterSpacing: '-0.01em',
-                wordBreak: 'keep-all',
-                opacity: 0.85
-              }}>
+            <div className="vision-box">
+              <p className="vision-lead">
                 단순한 도구 사용자를 넘어 중개업 자동화를 직접 구현하는
               </p>
-              <h2 style={{ 
-                fontSize: 'clamp(20px, 4.2vw, 32px)', 
-                fontWeight: '900', 
-                lineHeight: '1.4', 
-                background: 'linear-gradient(135deg, #ffffff 0%, var(--color-cyan) 60%, var(--color-blue) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                maxWidth: '900px',
-                margin: '0 auto',
-                letterSpacing: '-0.02em',
-                wordBreak: 'keep-all'
-              }}>
+              <h2 className="vision-title">
                 AI 활용 공인중개사들의 초격차 생태계 구축
               </h2>
             </div>
@@ -1651,30 +1547,31 @@ ${smsInputs.agentName}입니다.
         </section>
 
         <section id="join" className="join-section">
-          <div className="join-card reveal" style={{ maxWidth: '700px', margin: '0 auto' }}>
-            <div className="flex-col gap-6" style={{ width: '100%', alignItems: 'center', textAlign: 'center' }}>
-              <div className="success-icon" style={{ backgroundColor: 'rgba(6, 182, 212, 0.1)', borderColor: 'rgba(6, 182, 212, 0.25)', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-                <Sparkles className="w-8 h-8 text-cyan-400" />
-              </div>
-              <div>
-                <h2 className="section-title" style={{ fontSize: '32px', margin: 0 }}>중개사AI클럽 정규과정 신청하기</h2>
-                <p className="section-desc" style={{ marginTop: '12px', fontSize: '16px', lineHeight: '1.6', color: 'var(--color-text-secondary)' }}>
-                  지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다.<br />
-                  강의 수강 후 중개사AI클럽에 크루로 합류하실 수 있습니다.
-                </p>
-              </div>
+          <div className="container">
+            <div className="join-card">
+              <div className="flex-col gap-6 items-center">
+                <div className="join-icon-wrap">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div className="flex-col gap-3 items-center">
+                  <h2 className="section-title">중개사AI클럽 정규과정 신청하기</h2>
+                  <p className="section-desc">
+                    지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다.<br />
+                    강의 수강 후 중개사AI클럽에 크루로 합류하실 수 있습니다.
+                  </p>
+                </div>
 
-              <div style={{ marginTop: '16px', width: '100%', maxWidth: '400px' }}>
-                <a
-                  href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
-                  onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cta-button"
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '16px 0', fontSize: '16px', textDecoration: 'none', width: '100%' }}
-                >
-                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
-                </a>
+                <div className="join-cta-wrap">
+                  <a
+                    href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
+                    onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cta-button cta-button--lg cta-button--block"
+                  >
+                    정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -1682,18 +1579,18 @@ ${smsInputs.agentName}입니다.
       </main>
 
       <footer className="footer">
-        <div className="container flex-row items-center justify-between">
+        <div className="container footer-inner">
           <div className="footer-logo">
             <div className="footer-logo-box">
-              <Sparkles className="w-3.5 h-3.5 text-slate-400" />
+              <Sparkles className="w-3.5 h-3.5" />
             </div>
             <span className="footer-logo-text">중개사 AI 클럽</span>
           </div>
-          <div>
+          <div className="footer-meta">
             <div>
-              &copy; 2026 중개사 AI 클럽. Co-Build · Share · Synergize. 모든 문서 자료는 정예 크루 독점적 자산입니다.
+              &copy; 2026 중개사 AI 클럽 (Co-Build, Share, Synergize). 모든 문서 자료는 정예 크루 독점적 자산입니다.
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
+            <div className="footer-cookie">
               본 사이트는 방문 분석을 위해 Google Analytics와 Meta 픽셀(쿠키)을 사용합니다.
             </div>
           </div>
@@ -1702,7 +1599,7 @@ ${smsInputs.agentName}입니다.
 
       {showNotification && (
         <div className="toast-notification">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <ShieldCheck className="w-4 h-4 dusk-accent" />
           <span>성공적으로 클립보드에 복사되었습니다!</span>
         </div>
       )}
