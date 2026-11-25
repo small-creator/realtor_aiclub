@@ -1690,7 +1690,12 @@ ${smsInputs.agentName}입니다.
             <span className="footer-logo-text">중개사 AI 클럽</span>
           </div>
           <div>
-            &copy; 2026 중개사 AI 클럽. Co-Build · Share · Synergize. 모든 문서 자료는 정예 크루 독점적 자산입니다.
+            <div>
+              &copy; 2026 중개사 AI 클럽. Co-Build · Share · Synergize. 모든 문서 자료는 정예 크루 독점적 자산입니다.
+            </div>
+            <div style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
+              본 사이트는 방문 분석을 위해 Google Analytics와 Meta 픽셀(쿠키)을 사용합니다.
+            </div>
           </div>
         </div>
       </footer>
