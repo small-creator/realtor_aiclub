@@ -29,8 +29,8 @@
   --glass-blur: 22px;
   --glass-hi: inset 0 1px 0 oklch(100% 0 0 / 0.10), inset 0 0 0 1px oklch(100% 0 0 / 0.06);
   --shadow-card: 0 1px 0 oklch(100% 0 0 / 0.06) inset, 0 28px 56px -28px oklch(8% 0.02 268 / 0.7);
-  --font-display: "Wix Madefor Display", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Wix Madefor Text", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --radius-card: 18px;
   --radius-inner: 10px;
   --radius-pill: 999px;
@@ -55,7 +55,7 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.022em;
 }
 
@@ -193,7 +193,7 @@ header {
 .prose-content h2,
 .prose-content h3 {
   color: var(--color-ink) !important;
-  font-weight: 500 !important;
+  font-weight: 700 !important;
 }
 
 .prose-content a {

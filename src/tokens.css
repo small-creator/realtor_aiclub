@@ -38,11 +38,11 @@
   --color-terminal-row: oklch(17% 0.014 268);
   --color-hero-glow: oklch(77% 0.10 274 / 0.11);
   --color-hero-glow-2: oklch(83% 0.095 62 / 0.06);
-  --font-display: "Wix Madefor Display", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Wix Madefor Text", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --radius-card: 18px; --radius-inner: 10px; --radius-pill: 999px; --rule-hair: 1px;
-  --tracking-display: -0.022em; --display-weight: 500;
+  --tracking-display: -0.022em; --display-weight: 700;
   --color-bg-primary: var(--color-paper);
   --color-bg-secondary: var(--color-paper-2);
   --color-bg-card: var(--color-paper-2);
