@@ -244,7 +244,7 @@ export default async function handler(req, res) {
 
   const title = `${post.title} | 중개사 AI 클럽`;
   const summary = markdownToText(post.content || '').slice(0, 160);
-  const canonicalUrl = `https://realtor-aiclub-rosy.vercel.app/news-detail?id=${post.id}`;
+  const canonicalUrl = `https://realtor-aiclub-rosy.vercel.app/news/${post.id}`;
   const videoId = extractYoutubeId(post);
   const thumbUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '';
 

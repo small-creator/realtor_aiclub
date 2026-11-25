@@ -26,26 +26,16 @@ export default async function handler(req, res) {
     ];
   }
 
+  const latestDate = posts.reduce((max, p) => (p.date && p.date > max ? p.date : max), '2026-11-23');
+
   let postUrls = '';
   posts.forEach(p => {
-    const d = p.date || '2026-08-08';
+    const d = p.date || latestDate;
     postUrls += `
   <url>
     <loc>https://realtor-aiclub-rosy.vercel.app/news/${p.id}</loc>
     <lastmod>${d}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://realtor-aiclub-rosy.vercel.app/news-detail?id=${p.id}</loc>
-    <lastmod>${d}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://realtor-aiclub-rosy.vercel.app/news-detail.html?id=${p.id}</loc>
-    <lastmod>${d}</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>`;
   });
@@ -54,19 +44,19 @@ export default async function handler(req, res) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://realtor-aiclub-rosy.vercel.app/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>${latestDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://realtor-aiclub-rosy.vercel.app/news</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>${latestDate}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>${postUrls}
   <url>
     <loc>https://realtor-aiclub-rosy.vercel.app/llms.txt</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>${latestDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

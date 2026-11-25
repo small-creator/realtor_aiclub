@@ -84,21 +84,23 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
 
 <header class="bg-canvas/80 backdrop-blur-md border-b border-border fixed top-0 w-full z-50">
   <nav class="flex justify-between items-center h-20 px-base md:px-xxl max-w-7xl mx-auto w-full">
-    <a href="/" class="font-display-lg text-display-lg text-primary flex items-center gap-2">
-      <span class="material-symbols-outlined text-[28px] text-cyan-400">sparkles</span>
-      <span>중개사 AI 클럽</span>
+    <a href="/" class="flex items-center gap-3 no-underline">
+      <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563ec,#8b5cf6);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,99,236,0.3);flex-shrink:0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+      </div>
+      <span style="font-size:20px;font-weight:800;letter-spacing:-0.5px;background:linear-gradient(to right,#60a5fa,#38bdf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">중개사 AI 클럽</span>
     </a>
     <div class="hidden md:flex items-center gap-xl">
       <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/">홈페이지</a>
-      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="news.html">AI 뉴스 &amp; 팁</a>
-      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="admin.html">관리자</a>
+      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="/news">AI 뉴스 &amp; 팁</a>
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/admin.html">관리자</a>
     </div>
   </nav>
 </header>
 
 <main class="pt-32 pb-xxl px-base md:px-xxl max-w-4xl mx-auto w-full min-h-screen">
   <div class="mb-lg">
-    <a href="news.html" class="inline-flex items-center gap-2 text-grey-600 hover:text-primary transition-colors font-body-md text-body-md min-h-[44px]">
+    <a href="/news" class="inline-flex items-center gap-2 text-grey-600 hover:text-primary transition-colors font-body-md text-body-md min-h-[44px]">
       <span class="material-symbols-outlined">arrow_back</span>목록으로 돌아가기
     </a>
   </div>
@@ -129,15 +131,15 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
   <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="/">
     <span class="material-symbols-outlined">home</span><span class="text-[10px]">홈</span>
   </a>
-  <a class="flex flex-col items-center gap-1 text-primary font-bold min-w-[44px] min-h-[44px] justify-center" href="news.html">
+  <a class="flex flex-col items-center gap-1 text-primary font-bold min-w-[44px] min-h-[44px] justify-center" href="/news">
     <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">newspaper</span><span class="text-[10px]">소식</span>
   </a>
-  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="admin.html">
+  <a class="flex flex-col items-center gap-1 text-grey-600 min-w-[44px] min-h-[44px] justify-center" href="/admin.html">
     <span class="material-symbols-outlined">person</span><span class="text-[10px]">관리</span>
   </a>
 </div>
 
-<script src="db.js"></script>
+<script src="/db.js"></script>
 <script>
 const params = new URLSearchParams(location.search);
 const postId = Number(params.get('id') || location.pathname.split('/').pop());
@@ -159,7 +161,7 @@ async function init() {
     canonical.rel = 'canonical';
     document.head.appendChild(canonical);
   }
-  canonical.href = `https://realtor-aiclub-rosy.vercel.app/news-detail?id=${post.id}`;
+  canonical.href = `https://realtor-aiclub-rosy.vercel.app/news/${post.id}`;
   const categoryColor = getCategoryColor(post.category);
 
   container.innerHTML = `
@@ -217,14 +219,14 @@ async function init() {
     const actions = document.getElementById('admin-actions');
     actions.classList.remove('hidden');
     actions.classList.add('flex');
-    document.getElementById('edit-btn').onclick = () => location.href = `news-write.html?id=${post.id}`;
+    document.getElementById('edit-btn').onclick = () => location.href = `/news-write.html?id=${post.id}`;
     document.getElementById('delete-btn').onclick = async () => {
       if (!confirm('이 게시글을 삭제하시겠습니까?')) return;
       document.getElementById('delete-btn').disabled = true;
       document.getElementById('delete-btn').textContent = '삭제 중...';
       try {
         await deletePost(post.id);
-        location.href = 'news.html';
+        location.href = '/news';
       } catch(e) {
         alert('삭제 실패: ' + e.message);
         document.getElementById('delete-btn').disabled = false;

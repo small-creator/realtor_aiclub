@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>AI 뉴스 &amp; 개발 팁 | 중개사 AI 클럽</title>
+<meta name="description" content="공인중개사를 위한 AI 실무 자동화, GEO 마케팅, 무료 매물장·통화녹음 분석 등 실전 AI 뉴스와 개발 팁을 제공합니다.">
+<link rel="canonical" href="https://realtor-aiclub-rosy.vercel.app/news">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://realtor-aiclub-rosy.vercel.app/news">
+<meta property="og:title" content="AI 뉴스 &amp; 개발 팁 | 중개사 AI 클럽">
+<meta property="og:description" content="공인중개사를 위한 AI 실무 자동화, GEO 마케팅, 무료 매물장·통화녹음 분석 등 실전 AI 뉴스와 개발 팁을 제공합니다.">
+<meta property="og:site_name" content="중개사 AI 클럽">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -91,14 +98,16 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
 
 <header class="bg-canvas/80 backdrop-blur-md border-b border-border fixed top-0 w-full z-50">
   <nav class="flex justify-between items-center h-20 px-base md:px-xxl max-w-7xl mx-auto w-full">
-    <a href="/" class="font-display-lg text-display-lg text-primary flex items-center gap-2">
-      <span class="material-symbols-outlined text-[28px] text-cyan-400">sparkles</span>
-      <span>중개사 AI 클럽</span>
+    <a href="/" class="flex items-center gap-3 no-underline">
+      <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563ec,#8b5cf6);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(37,99,236,0.3);flex-shrink:0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+      </div>
+      <span style="font-size:20px;font-weight:800;letter-spacing:-0.5px;background:linear-gradient(to right,#60a5fa,#38bdf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">중개사 AI 클럽</span>
     </a>
     <div class="hidden md:flex items-center gap-xl">
       <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/">홈페이지</a>
-      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="news.html">AI 뉴스 &amp; 팁</a>
-      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="admin.html">관리자</a>
+      <a class="text-primary font-bold border-b-2 border-primary pb-1" href="/news">AI 뉴스 &amp; 팁</a>
+      <a class="text-grey-600 font-medium hover:text-primary transition-colors" href="/admin.html">관리자</a>
     </div>
   </nav>
 </header>
@@ -173,7 +182,7 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
   </a>
 </div>
 
-<script src="db.js"></script>
+<script src="/db.js"></script>
 <script>
 let allPosts = [];
 let activeCategory = 'all';
@@ -191,7 +200,7 @@ function renderList(posts) {
     const thumbHtml = videoId
       ? `<div class="relative w-full sm:w-48 aspect-video sm:aspect-auto sm:h-28 shrink-0 rounded-lg overflow-hidden bg-black border border-border"><img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="${escapeHtml(p.title||'')}" class="w-full h-full object-cover" loading="lazy"><span class="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 text-[10px] font-bold text-white flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-red-500">play_arrow</span>영상</span></div>`
       : '';
-    return `<a href="news-detail.html?id=${p.id}" class="news-item flex flex-col sm:flex-row gap-4 p-lg rounded-xl cursor-pointer block no-underline">
+    return `<a href="/news/${p.id}" class="news-item flex flex-col sm:flex-row gap-4 p-lg rounded-xl cursor-pointer block no-underline">
       ${thumbHtml}
       <div class="flex flex-col gap-2 flex-1 min-w-0">
         <div class="flex items-center gap-3">
