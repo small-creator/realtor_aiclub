@@ -676,29 +676,47 @@ ${smsInputs.agentName}입니다.
 
       <main className="flex-grow">
         <section id="hero" className="hero-section">
-          <div className="container flex-col items-center gap-6">
-            <h1 className="hero-title">
-              AI를 활용하는 상위 1% 중개사들의 <br />
-              <span className="hero-title-emphasis">중개업 자동화 비밀기지</span>
-            </h1>
+          <div className="container hero-stage">
+            <div className="hero-copy">
+              <h1 className="hero-title">
+                AI를 활용하는 상위 1% 중개사들의 중개업 자동화 비밀기지
+              </h1>
 
-            <p className="hero-desc">
-              대한민국 최초 공인중개사 AI 커뮤니티. 함께 고민하고, 만들고, 공유합니다.
-            </p>
+              <p className="hero-desc">
+                대한민국 최초 공인중개사 AI 커뮤니티. 함께 고민하고, 만들고, 공유합니다.
+              </p>
 
-            <div className="hero-buttons">
-              <a href="#join" className="cta-button cta-button--lg">
-                정식 멤버 참가하기
-              </a>
+              <div className="hero-buttons">
+                <a href="#join" className="cta-button cta-button--lg">
+                  정식 멤버 참가하기
+                </a>
+                <a href="#vault" className="secondary-button">
+                  비밀창고 둘러보기
+                </a>
+              </div>
             </div>
 
-            <div className="aeo-answer-box">
-              <div className="aeo-answer-head">
-                <Sparkles className="w-4 h-4" />
-                <span>중개사 AI 클럽 한눈에 요약</span>
+            <div className="hero-ledger">
+              <div className="hero-ledger-head">
+                <span>중개사 AI 클럽 실무 자동화 지표</span>
+                <span className="hero-ledger-status">실시간 운영 중</span>
+              </div>
+              <div className="hero-figures">
+                <div className="hero-figure-item">
+                  <span className="hero-figure-val">88.5%</span>
+                  <span className="hero-figure-label">수강생 프로그램 개발 성공률</span>
+                </div>
+                <div className="hero-figure-item">
+                  <span className="hero-figure-val hero-figure-val--apricot">30초</span>
+                  <span className="hero-figure-label">일일 매물 분석·가공 (기존 1시간)</span>
+                </div>
+                <div className="hero-figure-item">
+                  <span className="hero-figure-val">95%</span>
+                  <span className="hero-figure-label">반복 실무 시간 단축 효과</span>
+                </div>
               </div>
               <p className="aeo-answer-body">
-                중개사 AI 클럽은 공인중개사가 자연어 지시(Vibe Coding)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다. 수강생의 프로그램 개발 성공률은 88.5%에 달하며, AI 기술을 통해 일일 매물 분석 및 가공 시간을 평균 1시간에서 30초로 약 95% 단축시키는 실질적 중개 자동화 성과를 제공하고 있습니다.
+                중개사 AI 클럽은 공인중개사가 자연어 지시(Vibe Coding)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다.
               </p>
             </div>
           </div>
@@ -706,132 +724,97 @@ ${smsInputs.agentName}입니다.
 
         <section id="why" className="section-band">
           <div className="container">
-            <div className="section-header">
+            <div className="split-header">
               <h2 className="section-title">왜 중개사 AI 클럽이어야만 할까요?</h2>
               <p className="section-desc">
                 다들 AI 시대라고 소리치지만, 정작 현업 공인중개사의 실무 환경에 녹아드는 해법은 전혀 다릅니다.
               </p>
             </div>
-            
-            <div className="pain-grid">
-              <div className="pain-item spotlight">
-                <div className="pain-item-head">
-                  <span className="pain-index">01</span>
-                  <div className="icon-well icon-well--apricot">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                </div>
-                <h3 className="pain-title">매물 광고와 마케팅의 비효율</h3>
+
+            <div className="editorial-rows">
+              <div className="editorial-row">
+                <h3 className="pain-title">01. 매물 광고와 마케팅의 비효율</h3>
                 <p className="pain-desc">
                   매일 반복되는 단순 매물 등록과 블로그 포스팅에 진이 빠져, 정작 중요한 고객 미팅과 현장 임장 시간이 부족합니다.
                 </p>
               </div>
 
-              <div className="pain-item spotlight">
-                <div className="pain-item-head">
-                  <span className="pain-index">02</span>
-                  <div className="icon-well">
-                    <Layers className="w-5 h-5" />
-                  </div>
-                </div>
-                <h3 className="pain-title">내 업무와 겉도는 AI 도입 장벽</h3>
+              <div className="editorial-row">
+                <h3 className="pain-title">02. 내 업무와 겉도는 AI 도입 장벽</h3>
                 <p className="pain-desc">
                   다들 AI, AI 하지만 내 업무 특성에 맞추어 실제로 적용할 방법이 막막합니다.
                 </p>
               </div>
 
-              <div className="pain-item spotlight">
-                <div className="pain-item-head">
-                  <span className="pain-index">03</span>
-                  <div className="icon-well">
-                    <BookOpen className="w-5 h-5" />
-                  </div>
-                </div>
-                <h3 className="pain-title">현업 적용이 어려운 이론 위주 강의</h3>
+              <div className="editorial-row">
+                <h3 className="pain-title">03. 현업 적용이 어려운 이론 위주 강의</h3>
                 <p className="pain-desc">
                   비싼 AI 강의와 프롬프트 강좌를 들었지만, 실제 내 업무를 덜어주는 나만의 자동화 도구는 하나도 얻지 못했습니다.
                 </p>
               </div>
             </div>
-            
-            <div className="compare-table-container">
+
+            <div className="compare-well">
               <table className="compare-table">
                 <thead>
                   <tr>
-                    <th><Layers className="w-4 h-4 dusk-muted inline-block mr-1.5 align-middle" />업무 구분</th>
-                    <th><XCircle className="w-4 h-4 dusk-accent-2 inline-block mr-1.5 align-middle" />기존 수동 방식</th>
-                    <th><CheckCircle2 className="w-4 h-4 dusk-accent inline-block mr-1.5 align-middle" />AI 자동화 방식</th>
+                    <th>업무 구분</th>
+                    <th>기존 수동 방식</th>
+                    <th>AI 자동화 방식</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><Search className="w-4 h-4 dusk-accent inline-block mr-2 align-middle" /><strong>매물 수집 및 동향 분석</strong></td>
+                    <td><strong>매물 수집 및 동향 분석</strong></td>
                     <td>매일 1시간 이상 소요 (직접 검색 및 엑셀 수동 정리)</td>
                     <td><strong className="compare-win">단 30초 완성</strong> (네이버 부동산 매물 엑셀 수집기 작동)</td>
                   </tr>
                   <tr>
-                    <td><FileText className="w-4 h-4 dusk-accent-2 inline-block mr-2 align-middle" /><strong>블로그 마케팅 자동화</strong></td>
+                    <td><strong>블로그 마케팅 자동화</strong></td>
                     <td>매물 정보 기획, 원고 작성, 썸네일 제작 등 최소 1시간 이상</td>
                     <td><strong className="compare-win">5분 완성</strong> (매물 번호만 넣고 AI 작성 및 임시 저장)</td>
                   </tr>
                   <tr>
-                    <td><Send className="w-4 h-4 dusk-accent inline-block mr-2 align-middle" /><strong>매물광고 자동화</strong></td>
+                    <td><strong>매물광고 자동화</strong></td>
                     <td>CP사, 블로그, 당근 등 플랫폼마다 개별 등록 (2시간)</td>
                     <td><strong className="compare-win">5분 이내 완료</strong> (매물광고 신규 및 재등록 자동화)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <div className="master-footer">
-              <h4 className="master-footer-title">
-                <Users className="w-5 h-5 dusk-accent" />
-                혼자가 아닌, 함께 만들어가는 집단지성 커뮤니티
-              </h4>
-              <p className="master-desc">
-                <strong>서로의 기술적 병목을 같이 고민하고, 완성된 각자의 도구를 아낌없이 공유(Share)하는 집단지성 커뮤니티</strong>입니다.
-              </p>
-            </div>
           </div>
         </section>
 
-        <section id="what-we-do" className="section-band">
+        <section id="what-we-do" className="section-band--well">
           <div className="container">
-            <div className="section-header">
+            <div className="split-header">
               <h2 className="section-title">중개사 AI 클럽은 무엇을 하는 곳인가요?</h2>
               <p className="section-desc">
                 현업 공인중개사가 실무를 간소화할 중개업 자동화 프로그램을 개발하고 공유하는 지식 협력 생태계입니다.
               </p>
             </div>
 
-            <div className="master-grid">
-              <div className="master-card spotlight">
-                <div className="icon-well">
-                  <Code className="w-5 h-5" />
-                </div>
-                <h3 className="master-title">공인중개사 자동화 도구 직접 구축</h3>
+            <div className="bento-well-grid">
+              <div className="bento-well-card">
+                <h3 className="master-title">01. 공인중개사 자동화 도구 직접 구축</h3>
                 <p className="master-desc">
                   프로그래밍 지식이 없어도 인공지능 비서에게 자연어로 중개 업무 프로세스를 지시하여 네이버 부동산 수집기, 매물 자동 업로더 등 실무 자동화 프로그램을 100% 직접 바이브 코딩으로 구현할 수 있습니다.
                 </p>
               </div>
 
-              <div className="master-card spotlight">
-                <div className="icon-well icon-well--apricot">
-                  <Database className="w-5 h-5" />
-                </div>
-                <h3 className="master-title">부동산 자동화 툴 무제한 상호 공유</h3>
+              <div className="bento-well-card">
+                <h3 className="master-title">02. 부동산 자동화 툴 무제한 상호 공유</h3>
                 <p className="master-desc">
                   공인중개사가 제작한 실무용 도구 1개 이상을 공유 목록에 등록하면, 동료 크루들이 개발한 다양한 자동화 도구(등기부등본 발급기, 텔레그램 급매 알림봇 등)를 제한 없이 업무용 PC에 장착해 활용할 수 있습니다.
                 </p>
               </div>
 
-              <div className="master-card spotlight">
-                <div className="icon-well">
-                  <Users className="w-5 h-5" />
+              <div className="bento-well-card bento-well-card--wide">
+                <div>
+                  <h3 className="master-title">03. 기술적 병목의 집단지성 해결</h3>
                 </div>
-                <h3 className="master-title">기술적 병목의 집단지성 해결</h3>
                 <p className="master-desc">
-                  독학하는 과정에서 만나는 각종 시스템 오류나 요청 차단 문제를 크루 전용 커뮤니티 공간에 업로드하여 동료 공인중개사들과 협력하여 디버깅 솔루션을 빠르게 도출합니다.
+                  독학하는 과정에서 만나는 각종 시스템 오류나 요청 차단 문제를 크루 전용 커뮤니티 공간에 업로드하여 동료 공인중개사들과 협력해 디버깅 솔루션을 빠르게 도출합니다. 서로의 기술적 병목을 같이 고민하고 완성된 도구를 아낌없이 공유합니다.
                 </p>
               </div>
             </div>
@@ -840,41 +823,43 @@ ${smsInputs.agentName}입니다.
 
         <section id="vault" className="section-band">
           <div className="container flex-col gap-8">
-            <div className="section-header">
-              <h2 className="section-title">부동산 자동화 프로그램 비밀 창고</h2>
-              <p className="section-desc">
-                우리 클럽의 가장 큰 가치는 상생의 생태계에 있습니다. 내가 만든 무기 1개를 기부하면, 아래의 이미 현업에서 매일 사용 중인 정교한 자동화 툴을 무제한 가져와 내 비즈니스에 적용할 수 있습니다.
-              </p>
-            </div>
+            <div className="vault-head-row">
+              <div>
+                <h2 className="section-title">부동산 자동화 프로그램 비밀 창고</h2>
+                <p className="section-desc" style={{ marginTop: '12px' }}>
+                  내가 만든 무기 1개를 기부하면, 현업에서 매일 사용 중인 정교한 자동화 툴을 무제한 가져와 내 비즈니스에 적용할 수 있습니다.
+                </p>
+              </div>
 
-            <div className="category-bar">
-              {(
-                [
-                  { id: 'all', label: '전체 보기', icon: Layers },
-                  { id: 'doc', label: '공적 서류', icon: FileCode },
-                  { id: 'scout', label: '매물 수집', icon: Search },
-                  { id: 'ad', label: '매물 광고', icon: Send },
-                  { id: 'copy', label: '상담·콘텐츠', icon: MessageSquare },
-                  { id: 'report', label: '보고서·뉴스레터', icon: FileText },
-                  { id: 'crm', label: 'CRM·고객관리', icon: Users },
-                  { id: 'alert', label: '영업·알림', icon: Clock }
-                ] as { id: CategoryType; label: string; icon: React.ElementType }[]
-              ).map(cat => {
-                const IconComp = cat.icon
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setFilterCategory(cat.id)
-                      setShowAllPrograms(false)
-                    }}
-                    className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
-                  >
-                    <IconComp className="w-3.5 h-3.5" />
-                    {cat.label}
-                  </button>
-                )
-              })}
+              <div className="category-bar">
+                {(
+                  [
+                    { id: 'all', label: '전체 보기', icon: Layers },
+                    { id: 'doc', label: '공적 서류', icon: FileCode },
+                    { id: 'scout', label: '매물 수집', icon: Search },
+                    { id: 'ad', label: '매물 광고', icon: Send },
+                    { id: 'copy', label: '상담·콘텐츠', icon: MessageSquare },
+                    { id: 'report', label: '보고서·뉴스레터', icon: FileText },
+                    { id: 'crm', label: 'CRM·고객관리', icon: Users },
+                    { id: 'alert', label: '영업·알림', icon: Clock }
+                  ] as { id: CategoryType; label: string; icon: React.ElementType }[]
+                ).map(cat => {
+                  const IconComp = cat.icon
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setFilterCategory(cat.id)
+                        setShowAllPrograms(false)
+                      }}
+                      className={`category-button ${filterCategory === cat.id ? 'active' : ''}`}
+                    >
+                      <IconComp className="w-3.5 h-3.5" />
+                      {cat.label}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
 
             <div className="vault-grid">
@@ -934,23 +919,19 @@ ${smsInputs.agentName}입니다.
           </div>
         </section>
 
-        <section id="how-to-join" className="section-band">
+        <section id="how-to-join" className="section-band--elevated">
           <div className="container">
-            <div className="section-header">
+            <div className="split-header">
               <h2 className="section-title">중개사 AI 클럽 합류 방법</h2>
               <p className="section-desc">
-                우리 클럽은 아무나 활동할 수 없는 <strong>철저한 인증제 폐쇄형 플랫폼으로 운영</strong>됩니다.<br />
-                <strong>유일한 두 가지 합류 방법</strong> 중 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
+                철저한 <strong>인증제 폐쇄형 플랫폼</strong>으로 운영됩니다. 중개사님의 현재 상황에 알맞은 트랙을 선택해 주세요.
               </p>
             </div>
 
             <div className="track-grid">
-              <div className="master-card master-card--track spotlight">
+              <div className="track-panel-primary">
                 <div className="flex-col gap-3">
-                  <div className="icon-well">
-                    <GraduationCap className="w-5 h-5" />
-                  </div>
-                  <h3 className="master-title">정규 교육 과정</h3>
+                  <h3 className="master-title">정규 교육 과정 (입문 및 실무 완성)</h3>
                   <p className="master-desc">
                     채팅으로 AI에게 개발 지시를 내려 실무 자동화 프로그램을 내 손으로 100% 직접 개발하고 완성하는 밀착 집중 트랙입니다.
                   </p>
@@ -964,19 +945,16 @@ ${smsInputs.agentName}입니다.
                 </button>
               </div>
 
-              <div className="master-card master-card--track spotlight">
+              <div className="track-panel-secondary">
                 <div className="flex-col gap-3">
-                  <div className="icon-well icon-well--apricot">
-                    <Rocket className="w-5 h-5" />
-                  </div>
-                  <h3 className="master-title">프리패스 트랙</h3>
+                  <h3 className="master-title">프리패스 트랙 (기개발자 즉시 합류)</h3>
                   <p className="master-desc">
                     이미 제작하여 실무에 사용 중인 본인의 자동화 툴 1개 이상을 공유(기여)하고, 교육 수강 없이 즉각 비밀 창고 전체를 이용하는 트랙입니다.
                   </p>
                 </div>
                 <button
                   onClick={() => setShowQuizModal(true)}
-                  className="cta-button cta-button--block"
+                  className="secondary-button cta-button--block"
                 >
                   <span>합격 가능성 진단하기</span>
                   <Search className="w-4 h-4" />
@@ -984,13 +962,13 @@ ${smsInputs.agentName}입니다.
               </div>
             </div>
 
-            <div className="compare-table-container compare-table-container--narrow">
+            <div className="compare-table-container">
               <table className="compare-table">
                 <thead>
                   <tr>
                     <th>항목</th>
-                    <th><GraduationCap className="w-4 h-4 dusk-accent inline-block mr-1.5 align-middle" />정규 교육 과정</th>
-                    <th><Rocket className="w-4 h-4 dusk-accent-2 inline-block mr-1.5 align-middle" />프리패스 트랙</th>
+                    <th>정규 교육 과정</th>
+                    <th>프리패스 트랙</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1017,11 +995,10 @@ ${smsInputs.agentName}입니다.
 
         <section id="vibe-playground" className="section-band">
           <div className="container flex-col gap-8">
-            <div className="section-header">
+            <div className="split-header">
               <h2 className="section-title">정규과정 바이브 코딩 시뮬레이터</h2>
               <p className="section-desc">
-                아래에서 만들고자 하는 자동화 지시어를 선택하고 실행을 클릭해 보세요.<br />
-                우리도 동일한 방식(바이브코딩)으로 나만의 중개업 자동화 프로그램을 만듭니다.
+                만들고자 하는 자동화 지시어를 선택하고 실행을 클릭해 보세요. 동일한 방식(바이브코딩)으로 나만의 중개업 자동화 프로그램을 만듭니다.
               </p>
             </div>
 
@@ -1494,48 +1471,42 @@ ${smsInputs.agentName}입니다.
         )}
 
         <section id="reviews" className="section-band">
-          <div className="container flex-col gap-8">
-            <div className="section-header">
+          <div className="container">
+            <div className="split-header">
               <h2 className="section-title">정규과정 이수 후기</h2>
               <p className="section-desc">
                 막막한 두려움을 안고 출발한 현업 중개사들이 직접 부딪히며 느낀 솔직한 이야기입니다.
               </p>
             </div>
 
-            <div className="testimonials-panel">
-              <div className="testimonial-grid">
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다."
-                  </p>
-                  <span className="testimonial-author">개업 공인중개사</span>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다."
-                  </p>
-                  <span className="testimonial-author">개업 공인중개사</span>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다."
-                  </p>
-                  <span className="testimonial-author">소속 공인중개사</span>
-                </div>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">
-                    "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다… 하하하."
-                  </p>
-                  <span className="testimonial-author">개업 공인중개사</span>
-                </div>
+            <div className="testimonial-grid">
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "결국 코딩은 AI가 하고, 저는 역할, 목표, 형식만 잘 지시하면 되는 거더라고요. 작게 하나씩 따라 하다 보니 어느새 저도 모르게 자동화 프로그램이 만들어져 있어서 신기하고 소름 돋았습니다."
+                </p>
+                <span className="testimonial-author">개업 공인중개사</span>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "영어 단어도 이해하기 어렵고 여러 모듈이 너무 복잡해서 아예 엄두를 못 냈는데, 코중사님 유튜브를 보고 호기심에 한 번 따라 해 봤습니다. 어라 이게 되네? 하는 순간 마인드가 완전히 바뀌었습니다."
+                </p>
+                <span className="testimonial-author">개업 공인중개사</span>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "막힐 때 나오는 에러 코드를 그대로 챗창에 물어보면 된다는 강사님의 말이 가장 위로가 되었어요. 이제는 컴퓨터 앞에 앉으면 클로드부터 켜는 습관이 생겼습니다."
+                </p>
+                <span className="testimonial-author">소속 공인중개사</span>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "저의 솔직한 고백이 있다면, 제 주위에 있는 로컬 경쟁 중개사분들은 부디 평생 이 눈을 뜨지 않기만을 바랄 뿐입니다… 하하하."
+                </p>
+                <span className="testimonial-author">개업 공인중개사</span>
               </div>
             </div>
-          </div>
-        </section>
 
-        <section className="vision-section">
-          <div className="container">
-            <div className="vision-box">
+            <div className="statement-band">
               <p className="vision-lead">
                 단순한 도구 사용자를 넘어 중개업 자동화를 직접 구현하는
               </p>
@@ -1546,32 +1517,26 @@ ${smsInputs.agentName}입니다.
           </div>
         </section>
 
-        <section id="join" className="join-section">
+        <section id="join" className="section-band--well">
           <div className="container">
-            <div className="join-card">
-              <div className="flex-col gap-6 items-center">
-                <div className="join-icon-wrap">
-                  <Sparkles className="w-6 h-6" />
-                </div>
-                <div className="flex-col gap-3 items-center">
-                  <h2 className="section-title">중개사AI클럽 정규과정 신청하기</h2>
-                  <p className="section-desc">
-                    지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다.<br />
-                    강의 수강 후 중개사AI클럽에 크루로 합류하실 수 있습니다.
-                  </p>
-                </div>
+            <div className="offer-split">
+              <div>
+                <h2 className="section-title">중개사AI클럽 정규과정 신청하기</h2>
+                <p className="section-desc">
+                  지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다. 강의 수강 후 중개사AI클럽에 정예 크루로 합류하실 수 있습니다.
+                </p>
+              </div>
 
-                <div className="join-cta-wrap">
-                  <a
-                    href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
-                    onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-button cta-button--lg cta-button--block"
-                  >
-                    정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
+              <div className="offer-action-col">
+                <a
+                  href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
+                  onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-button cta-button--lg cta-button--block"
+                >
+                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>
