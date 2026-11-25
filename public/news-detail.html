@@ -160,7 +160,7 @@ async function init() {
     document.head.appendChild(canonical);
   }
   canonical.href = `https://realtor-aiclub-rosy.vercel.app/news-detail?id=${post.id}`;
-  const categoryColor = post.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+  const categoryColor = getCategoryColor(post.category);
 
   container.innerHTML = `
     <div class="mb-6 flex items-center gap-3">
@@ -170,10 +170,13 @@ async function init() {
     <h1 class="font-display-hero text-2xl md:text-3xl text-on-surface mb-6 leading-snug font-bold">${escapeHtml(post.title||'')}</h1>
     <hr class="border-border mb-8">
     <div class="prose-content font-body-lg text-body-lg text-on-surface leading-relaxed">${renderMarkdown(post.content||'')}</div>
+    ${buildCourseCtaHtml(post.id)}
   `;
 
-  const schema = {
-    "@context": "https://schema.org",
+  const videoId = extractYoutubeId(post);
+  const thumbUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '';
+  const summary = markdownToText(post.content || '').slice(0, 160);
+  const blogPosting = {
     "@type": "BlogPosting",
     "headline": post.title,
     "datePublished": post.date,
@@ -181,8 +184,25 @@ async function init() {
       "@type": "Organization",
       "name": "중개사 AI 클럽"
     },
-    "description": markdownToText(post.content || '').slice(0, 150),
+    "description": summary,
     "articleBody": markdownToText(post.content || '')
+  };
+  if (thumbUrl) blogPosting.image = thumbUrl;
+  const graph = [blogPosting];
+  if (videoId) {
+    graph.push({
+      "@type": "VideoObject",
+      "name": post.title,
+      "description": summary,
+      "thumbnailUrl": thumbUrl,
+      "uploadDate": post.date,
+      "embedUrl": `https://www.youtube.com/embed/${videoId}`,
+      "contentUrl": `https://www.youtube.com/watch?v=${videoId}`
+    });
+  }
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": graph
   };
   let script = document.getElementById('jsonld-schema');
   if (!script) {

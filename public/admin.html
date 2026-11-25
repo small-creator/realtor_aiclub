@@ -147,7 +147,7 @@ async function renderPosts() {
     return;
   }
   tbody.innerHTML = posts.map((p, i) => {
-    const categoryColor = p.category === 'AI뉴스' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+    const categoryColor = getCategoryColor(p.category);
     return `
       <tr class="hover:bg-[#1e1e2f]/20 transition-colors">
         <td class="px-lg py-4 font-body-md text-body-md text-muted">${posts.length - i}</td>

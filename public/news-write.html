@@ -81,9 +81,20 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
     <div>
       <label class="block font-heading-md text-sm text-on-surface mb-2" for="category">카테고리</label>
       <select id="category" class="w-full bg-[#0f0f15] border border-border rounded-xl px-base py-3 font-body-lg text-body-lg text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none min-h-[44px]">
+        <option value="실무자동화">실무자동화</option>
+        <option value="AI인사이트">AI인사이트</option>
+        <option value="GEO마케팅">GEO마케팅</option>
         <option value="AI뉴스">AI뉴스</option>
         <option value="개발팁">개발팁</option>
       </select>
+    </div>
+
+    <div>
+      <label class="block font-heading-md text-sm text-on-surface mb-2" for="videoId">유튜브 영상 URL 또는 ID <span class="text-muted font-label-sm text-xs font-normal">(선택 · 입력 시 썸네일 자동 표시, 본문에 @[youtube](ID) 삽입 가능)</span></label>
+      <div class="flex gap-2">
+        <input id="videoId" type="text" class="flex-1 bg-[#0f0f15] border border-border rounded-xl px-base py-3 font-body-lg text-body-lg text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none min-h-[44px]" placeholder="예: https://www.youtube.com/watch?v=yCBSGZs0g8k 또는 yCBSGZs0g8k">
+        <button type="button" id="insert-yt-btn" class="px-4 py-3 rounded-xl bg-surface-container border border-border text-cyan-400 font-bold text-xs hover:border-primary transition-all shrink-0">본문에 삽입</button>
+      </div>
     </div>
 
     <div>
@@ -136,13 +147,31 @@ let editPost = null;
 const today = new Date().toISOString().slice(0, 10);
 document.getElementById('date').value = today;
 
+function parseYoutubeIdInput(val) {
+  const s = String(val || '').trim();
+  if (!s) return '';
+  if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:v=|shorts\/|embed\/|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+
+document.getElementById('insert-yt-btn').addEventListener('click', function() {
+  const vid = parseYoutubeIdInput(document.getElementById('videoId').value);
+  if (!vid) { showError('올바른 유튜브 URL 또는 11자리 영상 ID를 입력해주세요.'); return; }
+  const ta = document.getElementById('content');
+  const tag = `\n@[youtube](${vid})\n`;
+  ta.value = ta.value ? ta.value + tag : tag.trim();
+  document.getElementById('error-msg').classList.add('hidden');
+});
+
 async function loadEditPost() {
   if (!editId) return;
   document.getElementById('page-title').textContent = '게시글 수정';
   const posts = await getPosts();
   editPost = posts.find(p => p.id === editId);
   if (!editPost) { showError('게시글을 찾을 수 없습니다.'); return; }
-  document.getElementById('category').value = editPost.category || 'AI뉴스';
+  document.getElementById('category').value = editPost.category || '실무자동화';
+  document.getElementById('videoId').value = editPost.videoId || extractYoutubeId(editPost) || '';
   document.getElementById('title').value = editPost.title || '';
   document.getElementById('date').value = editPost.date || today;
   document.getElementById('content').value = editPost.content || '';
@@ -171,6 +200,7 @@ document.getElementById('post-form').addEventListener('submit', async function(e
   btn.disabled = true;
   btn.innerHTML = '<span class="material-symbols-outlined">hourglass_empty</span>저장 중...';
 
+  const parsedVid = parseYoutubeIdInput(document.getElementById('videoId').value);
   const post = {
     id: editId || null,
     category: document.getElementById('category').value,
@@ -178,6 +208,7 @@ document.getElementById('post-form').addEventListener('submit', async function(e
     date: document.getElementById('date').value,
     content
   };
+  if (parsedVid) post.videoId = parsedVid;
 
   try {
     await savePost(post);

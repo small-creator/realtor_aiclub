@@ -10,10 +10,48 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
+function getCategoryColor(category) {
+  switch (category) {
+    case '실무자동화':
+      return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+    case 'AI인사이트':
+      return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
+    case 'GEO마케팅':
+      return 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+    case '개발팁':
+      return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+    default:
+      return 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20';
+  }
+}
+
+function extractYoutubeId(post) {
+  if (!post) return '';
+  if (post.videoId && /^[a-zA-Z0-9_-]{11}$/.test(String(post.videoId).trim())) {
+    return String(post.videoId).trim();
+  }
+  const src = String(post.content || '');
+  const patterns = [
+    /@\[youtube\]\(([a-zA-Z0-9_-]{11})\)/,
+    /img\.youtube\.com\/vi\/([a-zA-Z0-9_-]{11})/,
+    /i\.ytimg\.com\/vi\/([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/(?:watch\?v=|shorts\/|embed\/)([a-zA-Z0-9_-]{11})/,
+    /youtu\.be\/([a-zA-Z0-9_-]{11})/
+  ];
+  for (const re of patterns) {
+    const m = src.match(re);
+    if (m && m[1]) return m[1];
+  }
+  return '';
+}
+
 function markdownToText(src) {
   if (!src) return '';
   return src
     .replace(/```[\s\S]*?```/g, '')
+    .replace(/@\[youtube\]\([^)]+\)/g, '')
+    .replace(/\[!\[[^\]]*\]\([^)]+\)\]\([^)]+\)/g, '')
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
     .replace(/`([^`]*)`/g, '$1')
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/\*\*(.+?)\*\*/g, '$1')
@@ -34,7 +72,7 @@ function renderMarkdown(src) {
   let html = '';
   let inCode = false, codeLines = [];
   let listType = '', listItems = [];
-  let inTable = false, tableRows = [];
+  let tableRows = [];
 
   function flushList() {
     if (!listItems.length) return '';
@@ -59,7 +97,7 @@ function renderMarkdown(src) {
       }
     });
     tHtml += '</tbody></table></div>';
-    tableRows = []; inTable = false;
+    tableRows = [];
     return tHtml;
   }
 
@@ -67,6 +105,7 @@ function renderMarkdown(src) {
     return text.split('`').map((p, i) => {
       if (i % 2 === 1) return `<code class="bg-gray-800 px-1 rounded text-sm font-mono text-cyan-400">${escapeHtml(p)}</code>`;
       let s = escapeHtml(p);
+      s = s.replace(/\[!\[([^\]]*)\]\((https?:\/\/[^)]+)\)\]\((https?:\/\/[^)]+)\)/g, '<a href="$3" target="_blank" rel="noopener noreferrer" class="block my-3"><img src="$2" alt="$1" class="rounded-lg max-w-full h-auto"></a>');
       s = s.replace(/!\[([^\]]*)\]\((https?:\/\/[^)]+)\)/g, '<img src="$2" alt="$1" class="my-3 rounded-lg max-w-full h-auto">');
       s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
@@ -87,6 +126,14 @@ function renderMarkdown(src) {
       continue;
     }
     if (inCode) { codeLines.push(line); continue; }
+
+    const ytm = line.trim().match(/^@\[youtube\]\(([a-zA-Z0-9_-]{11})\)$/);
+    if (ytm) {
+      html += flushList() + flushTable();
+      const vid = ytm[1];
+      html += `<div class="my-6 overflow-hidden rounded-xl border border-gray-800 bg-black aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/${vid}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>`;
+      continue;
+    }
 
     if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
       html += flushList();
@@ -120,11 +167,30 @@ function renderMarkdown(src) {
   return html;
 }
 
+function buildCourseCtaHtml(postId) {
+  const loc = 'news_post_' + postId;
+  const url = 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=' + loc;
+  return `
+    <div class="mt-10 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-cyan-500/10 via-[#141420] to-purple-500/10 border border-cyan-500/25">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+          <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">중개사 AI 클럽 정규과정 VOD</span>
+          <h3 class="font-heading-lg text-xl font-bold text-on-surface">코딩을 몰라도 나만의 중개 자동화 시스템을 직접 구축하세요</h3>
+          <p class="font-body-md text-sm text-grey-600 leading-relaxed">영상에서 소개한 실무 자동화 원리를 내 중개사무소 환경에 맞게 직접 구현하고, 수강 후 중개사 AI 클럽 정예 크루로 합류하실 수 있습니다.</p>
+        </div>
+        <a href="${url}" target="_blank" rel="noopener noreferrer" onclick="trackNewsCourseClick('${loc}', '${url}')" class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-sm hover:opacity-90 transition-all min-h-[48px]">
+          <span>정규과정 VOD 수강 신청하기</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  `;
+}
+
 export default async function handler(req, res) {
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
 
-  // Determine requested post ID from query parameter or request URL
   let postId = null;
   if (req.query && req.query.id) {
     postId = Number(req.query.id);
@@ -136,7 +202,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // Load board posts from JSON file
   let posts = [];
   try {
     const p1 = path.join(process.cwd(), 'public', 'data', 'board.json');
@@ -154,13 +219,6 @@ export default async function handler(req, res) {
   if (!posts.length) {
     posts = [
       {
-        id: 2,
-        category: "GEO마케팅",
-        title: "챗GPT·제미나이가 우리 부동산을 추천할까? AI 시대, 공인중개사 필수 GEO 전략",
-        date: "2026-08-08",
-        content: "# 🤖 \"챗GPT·제미나이가 우리 부동산을 추천할까?\" AI 시대, 공인중개사 필수 GEO 전략\n\n> **[핵심 요약 (TL;DR)]**\n> - **AI 검색의 급부상**: 검색 이용자의 50% 이상이 네이버 대신 챗GPT·제미나이 등 AI 검색을 활용하고 있습니다."
-      },
-      {
         id: 1,
         category: "AI뉴스",
         title: "중개사 AI 클럽 첫 게시판 개설!",
@@ -170,10 +228,8 @@ export default async function handler(req, res) {
     ];
   }
 
-  // Find requested post or fallback to first post
-  const post = posts.find(p => p.id === postId) || posts.find(p => p.id === 1) || posts[0];
+  const post = posts.find(p => p.id === postId) || posts[0];
 
-  // Load template HTML file
   let html = '';
   try {
     const t1 = path.join(process.cwd(), 'public', 'news-detail.html');
@@ -189,9 +245,10 @@ export default async function handler(req, res) {
   const title = `${post.title} | 중개사 AI 클럽`;
   const summary = markdownToText(post.content || '').slice(0, 160);
   const canonicalUrl = `https://realtor-aiclub-rosy.vercel.app/news-detail?id=${post.id}`;
+  const videoId = extractYoutubeId(post);
+  const thumbUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '';
 
-  const schema = {
-    "@context": "https://schema.org",
+  const blogPosting = {
     "@type": "BlogPosting",
     "headline": post.title,
     "datePublished": post.date,
@@ -202,6 +259,29 @@ export default async function handler(req, res) {
     "description": summary,
     "articleBody": markdownToText(post.content || '')
   };
+  if (thumbUrl) {
+    blogPosting.image = thumbUrl;
+  }
+
+  const graph = [blogPosting];
+  if (videoId) {
+    graph.push({
+      "@type": "VideoObject",
+      "name": post.title,
+      "description": summary,
+      "thumbnailUrl": thumbUrl,
+      "uploadDate": post.date,
+      "embedUrl": `https://www.youtube.com/embed/${videoId}`,
+      "contentUrl": `https://www.youtube.com/watch?v=${videoId}`
+    });
+  }
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": graph
+  };
+
+  const ogImageTag = thumbUrl ? `<meta property="og:image" content="${thumbUrl}">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="${thumbUrl}">` : '';
 
   const metaHead = `
 <title>${escapeHtml(title)}</title>
@@ -211,16 +291,13 @@ export default async function handler(req, res) {
 <meta property="og:description" content="${escapeHtml(summary)}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="${canonicalUrl}">
+${ogImageTag}
 <script id="jsonld-schema" type="application/ld+json">${JSON.stringify(schema)}</script>
 `;
 
-  // Inject meta tags into <head>
   html = html.replace(/<title>.*?<\/title>/i, metaHead);
 
-  // Pre-render post container HTML for SSR
-  const categoryColor = post.category === 'AI뉴스'
-    ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-    : 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+  const categoryColor = getCategoryColor(post.category);
 
   const postContainerHtml = `
     <div class="mb-6 flex items-center gap-3">
@@ -230,6 +307,7 @@ export default async function handler(req, res) {
     <h1 class="font-display-hero text-2xl md:text-3xl text-on-surface mb-6 leading-snug font-bold">${escapeHtml(post.title || '')}</h1>
     <hr class="border-border mb-8">
     <div class="prose-content font-body-lg text-body-lg text-on-surface leading-relaxed">${renderMarkdown(post.content || '')}</div>
+    ${buildCourseCtaHtml(post.id)}
   `;
 
   html = html.replace(
