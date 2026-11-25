@@ -247,14 +247,27 @@ export default async function handler(req, res) {
   const canonicalUrl = `https://realtor-aiclub-rosy.vercel.app/news/${post.id}`;
   const videoId = extractYoutubeId(post);
   const thumbUrl = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '';
+  const isoDate = /^\d{4}-\d{2}-\d{2}$/.test(String(post.date || '').trim())
+    ? `${String(post.date).trim()}T09:00:00+09:00`
+    : (post.date || new Date().toISOString());
 
   const blogPosting = {
     "@type": "BlogPosting",
     "headline": post.title,
-    "datePublished": post.date,
+    "datePublished": isoDate,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    },
     "author": {
       "@type": "Organization",
-      "name": "중개사 AI 클럽"
+      "name": "중개사 AI 클럽",
+      "url": "https://realtor-aiclub-rosy.vercel.app"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "중개사 AI 클럽",
+      "url": "https://realtor-aiclub-rosy.vercel.app"
     },
     "description": summary,
     "articleBody": markdownToText(post.content || '')
@@ -270,7 +283,7 @@ export default async function handler(req, res) {
       "name": post.title,
       "description": summary,
       "thumbnailUrl": thumbUrl,
-      "uploadDate": post.date,
+      "uploadDate": isoDate,
       "embedUrl": `https://www.youtube.com/embed/${videoId}`,
       "contentUrl": `https://www.youtube.com/watch?v=${videoId}`
     });
