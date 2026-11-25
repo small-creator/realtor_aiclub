@@ -8,14 +8,12 @@
     <meta name="keywords" content="중개사 AI 클럽, 공인중개사 AI, 바이브 코딩, 부동산 크롤링, 부동산 자동화, 매물 자동 업로드, 공인중개사 커뮤니티, 부동산 AI 프로그램, 중개업자동화, 부동산프로그램, 네이버부동산크롤링, 중개실무" />
     <link rel="canonical" href="https://realtor-aiclub-rosy.vercel.app/" />
 
-    <!-- Open Graph / Facebook / KakaoTalk -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://realtor-aiclub-rosy.vercel.app/" />
     <meta property="og:title" content="중개사 AI 클럽 - 공인중개사를 위한 AI 프로그램 개발 커뮤니티" />
     <meta property="og:description" content="공인중개사가 바이브 코딩으로 네이버 부동산 크롤링 및 중개업 자동화 프로그램을 직접 개발·공유하는 공인중개사 AI 자동화 커뮤니티입니다." />
     <meta property="og:site_name" content="중개사 AI 클럽" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="중개사 AI 클럽 - 공인중개사를 위한 AI 프로그램 개발 커뮤니티" />
     <meta name="twitter:description" content="공인중개사가 바이브 코딩으로 네이버 부동산 크롤링 및 중개업 자동화 프로그램을 직접 개발·공유하는 공인중개사 AI 자동화 커뮤니티입니다." />
@@ -84,8 +82,31 @@
       ]
     }
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KSG94WDMWQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('set', 'linker', {
+        domains: ['realtor-aiclub-rosy.vercel.app', 'cojungsa.liveklass.com']
+      });
+      gtag('config', 'G-KSG94WDMWQ');
+    </script>
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1693008282444003');
+      fbq('track', 'PageView');
+    </script>
   </head>
   <body>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1693008282444003&ev=PageView&noscript=1" /></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

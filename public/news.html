@@ -63,8 +63,31 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
 .news-item { background-color: #141420; border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s ease; }
 .news-item:hover { transform: translateY(-3px); border-color: rgba(6, 182, 212, 0.4); box-shadow: 0 8px 30px rgba(6,182,212,0.1); }
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KSG94WDMWQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', 'linker', {
+    domains: ['realtor-aiclub-rosy.vercel.app', 'cojungsa.liveklass.com']
+  });
+  gtag('config', 'G-KSG94WDMWQ');
+</script>
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1693008282444003');
+  fbq('track', 'PageView');
+</script>
 </head>
 <body class="bg-canvas text-on-surface">
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1693008282444003&ev=PageView&noscript=1" /></noscript>
 
 <header class="bg-canvas/80 backdrop-blur-md border-b border-border fixed top-0 w-full z-50">
   <nav class="flex justify-between items-center h-20 px-base md:px-xxl max-w-7xl mx-auto w-full">

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { trackCourseClick, trackPageView } from './analytics'
 import { 
   Stack, 
   HStack, 
@@ -64,6 +65,14 @@ interface ProgramItem {
 }
 
 export default function App() {
+  useEffect(() => {
+    const handleRouteChange = () => {
+      trackPageView(window.location.pathname + window.location.search)
+    }
+    window.addEventListener('popstate', handleRouteChange)
+    return () => window.removeEventListener('popstate', handleRouteChange)
+  }, [])
+
   const [activeTab, setActiveTab] = useState<'blog' | 'sms' | 'briefing'>('blog')
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedResult, setGeneratedResult] = useState('')
@@ -1657,7 +1666,8 @@ ${smsInputs.agentName}입니다.
 
               <div style={{ marginTop: '16px', width: '100%', maxWidth: '400px' }}>
                 <a
-                  href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral"
+                  href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
+                  onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cta-button"
