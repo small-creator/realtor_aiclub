@@ -35,9 +35,9 @@ tailwind.config = {
         "surface-container-low": "#0f0f15",
         "on-secondary": "#ffffff",
         "surface-container-lowest": "#07070a",
-        "primary": "#06b6d4",
-        "primary-container": "rgba(6, 182, 212, 0.15)",
-        "on-primary": "#ffffff",
+        "primary": "#9aa8ff",
+        "primary-container": "rgba(154, 168, 255, 0.15)",
+        "on-primary": "#14182b",
         "error": "#ef4444",
         "outline-variant": "rgba(255, 255, 255, 0.1)",
         "surface-container-highest": "#1e1e2f",
@@ -131,11 +131,11 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; ba
 
       <div id="category-filters" class="flex flex-wrap gap-2 mb-xl">
         <button data-cat="all" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-primary text-on-primary transition-all">전체</button>
-        <button data-cat="실무자동화" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">실무자동화</button>
-        <button data-cat="AI인사이트" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">AI인사이트</button>
-        <button data-cat="GEO마케팅" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">GEO마케팅</button>
-        <button data-cat="AI뉴스" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">AI뉴스</button>
-        <button data-cat="개발팁" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all">개발팁</button>
+        <button data-cat="실무자동화" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all">실무자동화</button>
+        <button data-cat="AI인사이트" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all">AI인사이트</button>
+        <button data-cat="GEO마케팅" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all">GEO마케팅</button>
+        <button data-cat="AI뉴스" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all">AI뉴스</button>
+        <button data-cat="개발팁" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all">개발팁</button>
       </div>
 
       <div id="news-list" class="space-y-4" aria-live="polite">
@@ -237,7 +237,7 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     activeCategory = this.dataset.cat;
     document.querySelectorAll('.cat-btn').forEach(b => {
-      b.className = 'cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-on-surface transition-all';
+      b.className = 'cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-surface-container border border-border text-grey-600 hover:text-primary hover:border-primary/40 transition-all';
     });
     this.className = 'cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-primary text-on-primary transition-all';
     applyFilters();

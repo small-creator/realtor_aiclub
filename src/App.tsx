@@ -558,6 +558,17 @@ ${smsInputs.agentName}입니다.
     simulateAiTyping(response)
   }
 
+  const [videoReady, setVideoReady] = useState(false)
+  const [heroEntered, setHeroEntered] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setHeroEntered(true), 120)
+    return () => clearTimeout(t)
+  }, [])
+
+  const heroPrimaryVideoUrl = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261022_042705_33276241-8c58-4a03-b4e8-765d6c616afd.mp4'
+  const heroOverlayVideoUrl = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4'
+
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedResult)
     setIsCopied(true)
@@ -663,74 +674,92 @@ ${smsInputs.agentName}입니다.
     <div className="page-shell">
       <a href="#main-content" className="visually-hidden">본문으로 건너뛰기</a>
       <div className="scroll-progress" aria-hidden="true" />
-      <header className="header">
-        <div className="container flex-row items-center justify-between">
-          <div className="logo-container">
-            <div className="logo-icon">
-              <Sparkles className="w-5 h-5" aria-hidden="true" />
-            </div>
-            <div>
-              <span className="logo-text">중개사 AI 클럽</span>
-            </div>
-          </div>
-          <div className="header-actions">
-            <nav className="nav-links">
-              <a href="/news" className="nav-link">
-                <TrendingUp className="w-4 h-4 dusk-accent" aria-hidden="true" />
-                <span>AI 실무 인사이트</span>
-              </a>
-            </nav>
-            <a href="#join" className="cta-button">
-              크루 합류하기
-            </a>
-          </div>
+      <header className="impressive-header-wrap">
+        <div className="impressive-navbar liquid-glass">
+          <a href="#hero" className="impressive-logo">
+            <span className="logo-icon">
+              <Sparkles className="w-4 h-4" aria-hidden="true" />
+            </span>
+            <span>중개사 AI 클럽</span>
+          </a>
+          <nav className="impressive-nav-links" aria-label="주요 메뉴">
+            <a href="#why" className="impressive-nav-link">왜 AI 클럽인가</a>
+            <a href="#vault" className="impressive-nav-link">비밀창고</a>
+            <a href="#vibe-playground" className="impressive-nav-link">바이브 코딩</a>
+            <a href="/news" className="impressive-nav-link">AI 실무 인사이트</a>
+          </nav>
+          <a href="#join" className="cta-button">
+            크루 합류하기
+          </a>
         </div>
       </header>
 
       <main id="main-content" className="flex-grow">
-        <section id="hero" className="hero-section">
-          <div className="container hero-stage">
-            <div className="hero-copy">
-              <h1 className="hero-title">
-                AI를 활용하는 상위 1% 중개사들의 중개업 자동화 비밀기지
+        <section id="hero" className="impressive-hero-section">
+          <div className="hero-video-layer" aria-hidden="true">
+            <video
+              src={heroPrimaryVideoUrl}
+              className={`hero-video ${videoReady ? 'is-ready' : ''}`}
+              style={{ filter: 'saturate(0.45) contrast(1.15) brightness(0.55)' }}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onLoadedData={() => setVideoReady(true)}
+            />
+            <video
+              src={heroOverlayVideoUrl}
+              className={`hero-video-overlay ${videoReady ? 'is-ready' : ''}`}
+              style={{ opacity: videoReady ? 0.72 : 0 }}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+            <div className="hero-video-scrim" />
+          </div>
+
+          <div className="impressive-hero-inner">
+            <div className="impressive-hero-spacer" aria-hidden="true" />
+
+            <div className="impressive-center-stack">
+              <h1 className="impressive-heading">
+                <span className={`impressive-heading-line ${heroEntered ? 'is-in' : ''}`} style={{ transitionDelay: '120ms' }}>
+                  AI를 활용하는
+                </span>
+                <span className={`impressive-heading-line ${heroEntered ? 'is-in' : ''}`} style={{ transitionDelay: '240ms' }}>
+                  상위 1% 중개사들의
+                </span>
+                <span className={`impressive-heading-line impressive-heading-line--accent ${heroEntered ? 'is-in' : ''}`} style={{ transitionDelay: '360ms' }}>
+                  중개업 자동화 비밀기지
+                </span>
               </h1>
 
-              <p className="hero-desc">
-                대한민국 최초 공인중개사 AI 커뮤니티. 함께 고민하고, 만들고, 공유합니다.
+              <p className={`impressive-subheading ${heroEntered ? 'is-in' : ''}`}>
+                코딩 없이 채팅으로 실무 자동화 도구를 직접 만들고 무제한 공유합니다.
               </p>
 
-              <div className="hero-buttons">
+              <div className={`impressive-actions ${heroEntered ? 'is-in' : ''}`}>
                 <a href="#join" className="cta-button cta-button--lg">
-                  정식 멤버 참가하기
+                  <span>정식 멤버 참가하기</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
-                <a href="#vault" className="secondary-button">
-                  비밀창고 둘러보기
+                <a href="#vault" className="impressive-btn-glass liquid-glass">
+                  <span>비밀창고 둘러보기</span>
                 </a>
               </div>
             </div>
 
-            <div className="hero-ledger">
-              <div className="hero-ledger-head">
-                <span>중개사 AI 클럽 실무 자동화 지표</span>
-                <span className="hero-ledger-status">실시간 운영 중</span>
+            <div className={`impressive-bottom-tag-wrap ${heroEntered ? 'is-in' : ''}`}>
+              <div className="impressive-bottom-tag liquid-glass">
+                <span><strong>88.5%</strong> 프로그램 개발 성공률</span>
+                <span className="impressive-tag-dot" aria-hidden="true">·</span>
+                <span><strong>30초</strong> 일일 매물 분석·가공</span>
+                <span className="impressive-tag-dot" aria-hidden="true">·</span>
+                <span><strong>95%</strong> 반복 실무 시간 단축</span>
               </div>
-              <div className="hero-figures">
-                <div className="hero-figure-item">
-                  <span className="hero-figure-val">88.5%</span>
-                  <span className="hero-figure-label">수강생 프로그램 개발 성공률</span>
-                </div>
-                <div className="hero-figure-item">
-                  <span className="hero-figure-val hero-figure-val--apricot">30초</span>
-                  <span className="hero-figure-label">일일 매물 분석·가공 (기존 1시간)</span>
-                </div>
-                <div className="hero-figure-item">
-                  <span className="hero-figure-val">95%</span>
-                  <span className="hero-figure-label">반복 실무 시간 단축 효과</span>
-                </div>
-              </div>
-              <p className="aeo-answer-body">
-                중개사 AI 클럽은 공인중개사가 자연어 지시(Vibe Coding)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다.
-              </p>
             </div>
           </div>
         </section>
@@ -740,7 +769,7 @@ ${smsInputs.agentName}입니다.
             <div className="split-header">
               <h2 className="section-title">왜 중개사 AI 클럽이어야만 할까요?</h2>
               <p className="section-desc">
-                다들 AI 시대라고 소리치지만, 정작 현업 공인중개사의 실무 환경에 녹아드는 해법은 전혀 다릅니다.
+                중개사 AI 클럽은 공인중개사 채팅으로 지시(Vibe Coding)를 통해 부동산 매물 수집, 공적장부 발급, 광고 등록 등 실무 자동화 프로그램을 직접 개발하고 무제한 공유하는 공인중개사 전용 AI 플랫폼입니다.
               </p>
             </div>
 
@@ -952,7 +981,7 @@ ${smsInputs.agentName}입니다.
             <div className="track-grid">
               <div className="track-panel-primary">
                 <div className="flex-col gap-3">
-                  <h3 className="master-title">정규 교육 과정 (입문 및 실무 완성)</h3>
+                  <h3 className="master-title">정규 교육 과정</h3>
                   <p className="master-desc">
                     채팅으로 AI에게 개발 지시를 내려 실무 자동화 프로그램을 내 손으로 100% 직접 개발하고 완성하는 밀착 집중 트랙입니다.
                   </p>
@@ -968,7 +997,7 @@ ${smsInputs.agentName}입니다.
 
               <div className="track-panel-secondary">
                 <div className="flex-col gap-3">
-                  <h3 className="master-title">프리패스 트랙 (기개발자 즉시 합류)</h3>
+                  <h3 className="master-title">프리패스 트랙</h3>
                   <p className="master-desc">
                     이미 제작하여 실무에 사용 중인 본인의 자동화 툴 1개 이상을 공유(기여)하고, 교육 수강 없이 즉각 비밀 창고 전체를 이용하는 트랙입니다.
                   </p>
@@ -1526,29 +1555,40 @@ ${smsInputs.agentName}입니다.
                 <span className="testimonial-author">개업 공인중개사</span>
               </div>
             </div>
-
-            <div className="statement-band">
-              <p className="vision-lead">
-                단순한 도구 사용자를 넘어 중개업 자동화를 직접 구현하는
-              </p>
-              <h2 className="vision-title">
-                AI 활용 공인중개사들의 초격차 생태계 구축
-              </h2>
-            </div>
           </div>
         </section>
 
-        <section id="join" className="section-band--well">
-          <div className="container">
-            <div className="offer-split">
-              <div>
-                <h2 className="section-title">중개사AI클럽 정규과정 신청하기</h2>
-                <p className="section-desc">
+        <section id="join" className="join-section">
+          <div className="container join-container">
+            <div className="join-vision-header">
+              <p className="join-vision-lead">
+                단순한 도구 사용자를 넘어 중개업 자동화를 직접 구현하는
+              </p>
+              <h2 className="join-vision-title">
+                AI 활용 공인중개사들의 초격차 생태계 구축
+              </h2>
+            </div>
+
+            <div className="join-offer-card">
+              <div className="join-offer-copy">
+                <span className="join-offer-badge">OFFICIAL VOD COURSE &amp; CREW MEMBERSHIP</span>
+                <h3 className="join-offer-title">중개사AI클럽 정규과정 신청하기</h3>
+                <p className="join-offer-desc">
                   지금 바로 중개사AI클럽 정규과정 VOD 강의를 수강하실 수 있습니다. 강의 수강 후 중개사AI클럽에 정예 크루로 합류하실 수 있습니다.
                 </p>
+                <div className="join-offer-perks">
+                  <span className="join-offer-perk">
+                    <CheckCircle className="w-3.5 h-3.5 dusk-accent" aria-hidden="true" />
+                    실무 자동화 VOD 전 강좌
+                  </span>
+                  <span className="join-offer-perk">
+                    <CheckCircle className="w-3.5 h-3.5 dusk-accent" aria-hidden="true" />
+                    중개사 AI 클럽 커뮤니티 합류
+                  </span>
+                </div>
               </div>
 
-              <div className="offer-action-col">
+              <div className="join-offer-action">
                 <a
                   href="https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom"
                   onClick={() => trackCourseClick('club_bottom', 'https://cojungsa.liveklass.com/classes/317917?utm_source=club&utm_medium=referral&utm_content=club_bottom')}
@@ -1556,7 +1596,8 @@ ${smsInputs.agentName}입니다.
                   rel="noopener noreferrer"
                   className="cta-button cta-button--lg cta-button--block"
                 >
-                  정규과정 VOD 수강 신청하기 <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  <span>정규과정 VOD 수강 신청하기</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
